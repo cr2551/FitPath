@@ -197,6 +197,8 @@ class FoodRepository {
     await _dao.updateEntry(id, data);
   }
 
+  Future<FoodEntry?> entryById(int id) => _dao.entryById(id);
+
   Future<bool> deleteEntry(int id) => _dao.deleteEntry(id);
 
   /// Entries of one day, in eating order.
