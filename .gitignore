@@ -46,3 +46,12 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Generated code (run `dart run build_runner build -d` after pulling)
+*.g.dart
+*.drift.dart
+
+# Android release signing (never commit)
+/android/key.properties
+*.jks
+*.keystore
