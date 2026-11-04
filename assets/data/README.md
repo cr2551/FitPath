@@ -17,3 +17,9 @@ About 150 common generic foods: fruits, vegetables, grains, meat and fish, eggs,
 - **Before release:** spot-check values against FoodData Central and update the About screen attribution (#43).
 
 To change the list, edit the JSON (keep `"version": 1` and unique names) and run the tests. The catalog is inserted only when the database is created, so existing installs need a migration to receive new foods.
+
+## `exercises_starter.json`
+
+About 80 common strength exercises, each with a `muscleGroup` (chest, back, legs, shoulders, arms, core, full body), `equipment` (barbell, dumbbell, machine, cable, kettlebell, bodyweight, other) and an `isBodyweight` flag. Bodyweight exercises are compared by reps, not volume.
+
+Seeded by `seedExercises` and validated by `test/core/database/seed/exercise_seed_test.dart`. Users add their own exercises as custom exercises; history stores each exercise's name as a snapshot, so renaming or deleting one never changes past workouts.
