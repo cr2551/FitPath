@@ -1,13 +1,18 @@
 import 'dart:async';
 
+import 'package:fitpath/core/database/database_provider.dart';
 import 'package:fitpath/core/router/app_router.dart';
 import 'package:fitpath/core/router/routes.dart';
+import 'package:fitpath/core/theme/app_theme.dart';
 import 'package:fitpath/features/onboarding/application/onboarding_status_provider.dart';
 import 'package:fitpath/shared/models/enums.dart';
+import 'package:fitpath/shared/widgets/screen_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../helpers/test_database.dart';
 
 class _Harness {
   _Harness(this.container) : router = container.read(appRouterProvider);
@@ -17,7 +22,7 @@ class _Harness {
 
   Widget get app => UncontrolledProviderScope(
     container: container,
-    child: MaterialApp.router(routerConfig: router),
+    child: MaterialApp.router(theme: AppTheme.light, routerConfig: router),
   );
 }
 
@@ -25,8 +30,13 @@ Future<_Harness> _pump(
   WidgetTester tester, {
   bool onboardingDone = true,
 }) async {
+  final db = createTestDatabase();
+  addTearDown(db.close);
   final container = ProviderContainer(
-    overrides: [onboardingCompletedProvider.overrideWithValue(onboardingDone)],
+    overrides: [
+      onboardingCompletedProvider.overrideWithValue(onboardingDone),
+      appDatabaseProvider.overrideWithValue(db),
+    ],
   );
   addTearDown(container.dispose);
   final h = _Harness(container);
@@ -35,7 +45,12 @@ Future<_Harness> _pump(
   return h;
 }
 
-Finder _title(String title) => find.widgetWithText(AppBar, title);
+/// A screen's title, whether it uses an [AppBar] or a [ScreenHeader].
+Finder _title(String title) => find.byWidgetPredicate(
+  (w) =>
+      (w is AppBar && w.title is Text && (w.title! as Text).data == title) ||
+      (w is ScreenHeader && w.title == title),
+);
 
 void main() {
   testWidgets('every tab is reachable from the bottom navigation', (
