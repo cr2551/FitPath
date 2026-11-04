@@ -88,7 +88,7 @@ void main() {
       Routes.foodSearch(meal: MealType.lunch, date: day): 'Search foods',
       Routes.foodDetails(12): 'Food details',
       Routes.newEntry(foodId: 12, meal: MealType.snack): 'Log food',
-      Routes.editEntry(5): 'Log food',
+      Routes.editEntry(5): 'Edit entry',
       Routes.newCustomFood: 'Custom food',
       Routes.editCustomFood(12): 'Custom food',
       Routes.workouts: 'Workouts',
