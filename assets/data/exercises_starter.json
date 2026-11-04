@@ -1,0 +1,497 @@
+{
+ "version": 1,
+ "exercises": [
+  {
+   "name": "Bench press",
+   "muscleGroup": "chest",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Incline bench press",
+   "muscleGroup": "chest",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Decline bench press",
+   "muscleGroup": "chest",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Dumbbell bench press",
+   "muscleGroup": "chest",
+   "equipment": "dumbbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Incline dumbbell press",
+   "muscleGroup": "chest",
+   "equipment": "dumbbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Dumbbell fly",
+   "muscleGroup": "chest",
+   "equipment": "dumbbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Cable crossover",
+   "muscleGroup": "chest",
+   "equipment": "cable",
+   "isBodyweight": false
+  },
+  {
+   "name": "Chest press machine",
+   "muscleGroup": "chest",
+   "equipment": "machine",
+   "isBodyweight": false
+  },
+  {
+   "name": "Pec deck",
+   "muscleGroup": "chest",
+   "equipment": "machine",
+   "isBodyweight": false
+  },
+  {
+   "name": "Push-up",
+   "muscleGroup": "chest",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Dip",
+   "muscleGroup": "chest",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Deadlift",
+   "muscleGroup": "back",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Barbell row",
+   "muscleGroup": "back",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Pendlay row",
+   "muscleGroup": "back",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Dumbbell row",
+   "muscleGroup": "back",
+   "equipment": "dumbbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Pull-up",
+   "muscleGroup": "back",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Chin-up",
+   "muscleGroup": "back",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Lat pulldown",
+   "muscleGroup": "back",
+   "equipment": "cable",
+   "isBodyweight": false
+  },
+  {
+   "name": "Seated cable row",
+   "muscleGroup": "back",
+   "equipment": "cable",
+   "isBodyweight": false
+  },
+  {
+   "name": "T-bar row",
+   "muscleGroup": "back",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Face pull",
+   "muscleGroup": "back",
+   "equipment": "cable",
+   "isBodyweight": false
+  },
+  {
+   "name": "Back extension",
+   "muscleGroup": "back",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Inverted row",
+   "muscleGroup": "back",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Straight-arm pulldown",
+   "muscleGroup": "back",
+   "equipment": "cable",
+   "isBodyweight": false
+  },
+  {
+   "name": "Back squat",
+   "muscleGroup": "legs",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Front squat",
+   "muscleGroup": "legs",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Goblet squat",
+   "muscleGroup": "legs",
+   "equipment": "dumbbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Leg press",
+   "muscleGroup": "legs",
+   "equipment": "machine",
+   "isBodyweight": false
+  },
+  {
+   "name": "Romanian deadlift",
+   "muscleGroup": "legs",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Bulgarian split squat",
+   "muscleGroup": "legs",
+   "equipment": "dumbbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Walking lunge",
+   "muscleGroup": "legs",
+   "equipment": "dumbbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Bodyweight squat",
+   "muscleGroup": "legs",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Leg extension",
+   "muscleGroup": "legs",
+   "equipment": "machine",
+   "isBodyweight": false
+  },
+  {
+   "name": "Lying leg curl",
+   "muscleGroup": "legs",
+   "equipment": "machine",
+   "isBodyweight": false
+  },
+  {
+   "name": "Seated leg curl",
+   "muscleGroup": "legs",
+   "equipment": "machine",
+   "isBodyweight": false
+  },
+  {
+   "name": "Standing calf raise",
+   "muscleGroup": "legs",
+   "equipment": "machine",
+   "isBodyweight": false
+  },
+  {
+   "name": "Seated calf raise",
+   "muscleGroup": "legs",
+   "equipment": "machine",
+   "isBodyweight": false
+  },
+  {
+   "name": "Hip thrust",
+   "muscleGroup": "legs",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Glute bridge",
+   "muscleGroup": "legs",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Step-up",
+   "muscleGroup": "legs",
+   "equipment": "dumbbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Hack squat",
+   "muscleGroup": "legs",
+   "equipment": "machine",
+   "isBodyweight": false
+  },
+  {
+   "name": "Overhead press",
+   "muscleGroup": "shoulders",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Seated dumbbell press",
+   "muscleGroup": "shoulders",
+   "equipment": "dumbbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Arnold press",
+   "muscleGroup": "shoulders",
+   "equipment": "dumbbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Lateral raise",
+   "muscleGroup": "shoulders",
+   "equipment": "dumbbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Cable lateral raise",
+   "muscleGroup": "shoulders",
+   "equipment": "cable",
+   "isBodyweight": false
+  },
+  {
+   "name": "Front raise",
+   "muscleGroup": "shoulders",
+   "equipment": "dumbbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Rear delt fly",
+   "muscleGroup": "shoulders",
+   "equipment": "dumbbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Upright row",
+   "muscleGroup": "shoulders",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Shoulder press machine",
+   "muscleGroup": "shoulders",
+   "equipment": "machine",
+   "isBodyweight": false
+  },
+  {
+   "name": "Pike push-up",
+   "muscleGroup": "shoulders",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Barbell shrug",
+   "muscleGroup": "shoulders",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Barbell curl",
+   "muscleGroup": "arms",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Dumbbell curl",
+   "muscleGroup": "arms",
+   "equipment": "dumbbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Hammer curl",
+   "muscleGroup": "arms",
+   "equipment": "dumbbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Preacher curl",
+   "muscleGroup": "arms",
+   "equipment": "machine",
+   "isBodyweight": false
+  },
+  {
+   "name": "Cable curl",
+   "muscleGroup": "arms",
+   "equipment": "cable",
+   "isBodyweight": false
+  },
+  {
+   "name": "Concentration curl",
+   "muscleGroup": "arms",
+   "equipment": "dumbbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Triceps pushdown",
+   "muscleGroup": "arms",
+   "equipment": "cable",
+   "isBodyweight": false
+  },
+  {
+   "name": "Overhead triceps extension",
+   "muscleGroup": "arms",
+   "equipment": "dumbbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Skull crusher",
+   "muscleGroup": "arms",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Close-grip bench press",
+   "muscleGroup": "arms",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Bench dip",
+   "muscleGroup": "arms",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Diamond push-up",
+   "muscleGroup": "arms",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Plank",
+   "muscleGroup": "core",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Side plank",
+   "muscleGroup": "core",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Crunch",
+   "muscleGroup": "core",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Hanging leg raise",
+   "muscleGroup": "core",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Cable crunch",
+   "muscleGroup": "core",
+   "equipment": "cable",
+   "isBodyweight": false
+  },
+  {
+   "name": "Russian twist",
+   "muscleGroup": "core",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Ab wheel rollout",
+   "muscleGroup": "core",
+   "equipment": "other",
+   "isBodyweight": true
+  },
+  {
+   "name": "Dead bug",
+   "muscleGroup": "core",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Mountain climber",
+   "muscleGroup": "core",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Pallof press",
+   "muscleGroup": "core",
+   "equipment": "cable",
+   "isBodyweight": false
+  },
+  {
+   "name": "Kettlebell swing",
+   "muscleGroup": "full body",
+   "equipment": "kettlebell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Burpee",
+   "muscleGroup": "full body",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  },
+  {
+   "name": "Clean and press",
+   "muscleGroup": "full body",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Power clean",
+   "muscleGroup": "full body",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Thruster",
+   "muscleGroup": "full body",
+   "equipment": "barbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Farmer's carry",
+   "muscleGroup": "full body",
+   "equipment": "dumbbell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Turkish get-up",
+   "muscleGroup": "full body",
+   "equipment": "kettlebell",
+   "isBodyweight": false
+  },
+  {
+   "name": "Box jump",
+   "muscleGroup": "full body",
+   "equipment": "bodyweight",
+   "isBodyweight": true
+  }
+ ]
+}
