@@ -37,4 +37,16 @@ flutter test
 3. Change only the files your issue lists under **Files / areas owned**.
 4. Open a PR with `Closes #<issue#>` and get CI green.
 
-See [docs/MVP_PLAN.md](docs/MVP_PLAN.md#working-agreement-avoiding-merge-conflicts) for details.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow: board columns, branch naming, frozen files and code conventions.
+
+## Project layout
+
+```
+lib/
+  main.dart, app.dart        # entry point and root widget (frozen)
+  core/                      # database, network, errors, utils, theme, router
+  features/<feature>/        # onboarding, profile, dashboard, nutrition, workouts, progress, settings
+  shared/                    # widgets, models (shared enums), extensions
+assets/data/                 # bundled starter food and exercise catalogs
+DESIGN/                      # design guidelines and mockups
+```
