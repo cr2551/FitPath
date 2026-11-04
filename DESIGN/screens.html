@@ -15,10 +15,10 @@
     --ink: #121815;
     --muted: #5B6B62;
     --line: #DDE5DC;
-    --energy: #C5F23A;
-    --energy-soft: #EEF8D2;
+    --accent: #5B2A6E;
+    --accent-soft: #EFE6F2;
     --protein: #EF4C4C;
-    --carbs: #3D8BFD;
+    --carbs: #7DB547;
     --fat: #F7B500;
     --unknown: #A7B3AC;
     --success: #18804A;
@@ -79,13 +79,13 @@
   .datestrip .past b { color: var(--muted); }
   .datestrip .sel { background: var(--ink); color: #fff; }
   .datestrip .sel b { color: #fff; }
-  .datestrip .sel u { background: var(--energy); }
+  .datestrip .sel u { background: var(--accent-soft); }
 
   .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 16px; margin-bottom: 12px; }
   .card.flush { padding: 4px 16px; }
   .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
   .cal-head { display: flex; gap: 12px; align-items: center; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
-  .tile { width: 36px; height: 36px; border-radius: var(--r-md); background: var(--energy-soft); display: grid; place-items: center; flex: none; }
+  .tile { width: 36px; height: 36px; border-radius: var(--r-md); background: var(--accent-soft); display: grid; place-items: center; flex: none; }
   .cal-body { display: grid; grid-template-columns: 166px 1fr; gap: 14px; align-items: center; padding: 16px 0; }
 
   .legend .item { margin-bottom: 12px; }
@@ -104,7 +104,7 @@
   .footstrip div + div { border-left: 1px solid #D3D9CF; }
 
   .btn { height: 48px; border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--cond); font-weight: 700; font-size: 17px; letter-spacing: .05em; text-transform: uppercase; }
-  .btn.energy { background: var(--energy); color: var(--ink); }
+  .btn.energy { background: var(--accent); color: #fff; }
   .btn.primary { background: var(--ink); color: #fff; }
   .btn.outlined { border: 1.5px solid var(--ink); color: var(--ink); }
   .btn.danger { color: var(--error); }
@@ -145,7 +145,7 @@
 
   .resume { border-left: 4px solid var(--ink); }
   .live { display: inline-flex; align-items: center; gap: 6px; }
-  .live i { width: 8px; height: 8px; background: var(--energy); outline: 1px solid var(--ink); display: block; }
+  .live i { width: 8px; height: 8px; background: var(--accent); display: block; }
 
   .segmented { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--subtle); border-radius: var(--r-sm); padding: 3px; margin-bottom: 12px; }
   .segmented div { text-align: center; font-family: var(--cond); font-weight: 600; font-size: 15px; letter-spacing: .04em; text-transform: uppercase; padding: 6px 0; border-radius: 2px; color: var(--muted); }
@@ -164,7 +164,7 @@
   .nav div { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 12px; font-weight: 500; color: var(--muted); }
   .nav .ind { width: 48px; height: 28px; display: grid; place-items: center; border-radius: var(--r-sm); }
   .nav .on { color: var(--ink); font-weight: 600; }
-  .nav .on .ind { background: var(--energy); }
+  .nav .on .ind { background: var(--accent-soft); color: var(--accent); }
 </style>
 </head>
 <body>
@@ -193,7 +193,7 @@
 <div class="page">
   <header>
     <h1>FitPath · five main screens (v3)</h1>
-    <p>All five bottom-navigation destinations in the v3 style: light cards on a green-tinted background, near-black ink for selection and primary actions, lime for energy highlights, and red / blue / yellow macro colors. Each phone scrolls. Rules are in <code>DESIGN/README.md</code>; the Home ring states are in <code>DESIGN/home.html</code>.</p>
+    <p>All five bottom-navigation destinations in the v3 style: light cards on a green-tinted background, near-black ink for selection, açaí purple as the accent, and food-inspired macro colors: red protein, green carbs, yellow fat. Each phone scrolls. Rules are in <code>DESIGN/README.md</code>; the Home ring states are in <code>DESIGN/home.html</code>.</p>
   </header>
 
   <div class="screens">
@@ -225,7 +225,7 @@
             <svg width="166" height="166" viewBox="0 0 180 180" role="img" aria-label="1,640 of 2,100 calories eaten">
               <g transform="rotate(-90 90 90)" fill="none" stroke-width="18">
                 <circle cx="90" cy="90" r="72" stroke="#EF4C4C" stroke-dasharray="84.97 452.39" stroke-dashoffset="-5"/>
-                <circle cx="90" cy="90" r="72" stroke="#3D8BFD" stroke-dasharray="145.38 452.39" stroke-dashoffset="-99.97"/>
+                <circle cx="90" cy="90" r="72" stroke="#7DB547" stroke-dasharray="145.38 452.39" stroke-dashoffset="-99.97"/>
                 <circle cx="90" cy="90" r="72" stroke="#F7B500" stroke-dasharray="92.95 452.39" stroke-dashoffset="-255.35"/>
                 <circle cx="90" cy="90" r="72" stroke="#DDE5DC" stroke-dasharray="89.1 452.39" stroke-dashoffset="-358.3"/>
               </g>
@@ -235,7 +235,7 @@
             </svg>
             <div class="legend">
               <div class="item"><div class="name"><svg class="mi" stroke="#EF4C4C"><use href="#i-protein"/></svg>Protein<span class="pct">27%</span></div><div class="bar"><i style="width:79%;background:var(--protein)"></i></div><div class="g">110 g <span>/ 140 g</span></div></div>
-              <div class="item"><div class="name"><svg class="mi" stroke="#3D8BFD"><use href="#i-carbs"/></svg>Carbs<span class="pct">44%</span></div><div class="bar"><i style="width:78%;background:var(--carbs)"></i></div><div class="g">180 g <span>/ 230 g</span></div></div>
+              <div class="item"><div class="name"><svg class="mi" stroke="#7DB547"><use href="#i-carbs"/></svg>Carbs<span class="pct">44%</span></div><div class="bar"><i style="width:78%;background:var(--carbs)"></i></div><div class="g">180 g <span>/ 230 g</span></div></div>
               <div class="item"><div class="name"><svg class="mi" stroke="#E0A300"><use href="#i-fat"/></svg>Fat<span class="pct">29%</span></div><div class="bar"><i style="width:76%;background:var(--fat)"></i></div><div class="g">53 g <span>/ 70 g</span></div></div>
             </div>
           </div>
@@ -298,7 +298,7 @@
           <svg width="84" height="84" viewBox="0 0 84 84" role="img" aria-label="1,640 of 2,100 kcal">
             <g transform="rotate(-90 42 42)" fill="none" stroke-width="10">
               <circle cx="42" cy="42" r="34" stroke="#EF4C4C" stroke-dasharray="38.85 213.63" stroke-dashoffset="-3"/>
-              <circle cx="42" cy="42" r="34" stroke="#3D8BFD" stroke-dasharray="67.38 213.63" stroke-dashoffset="-47.85"/>
+              <circle cx="42" cy="42" r="34" stroke="#7DB547" stroke-dasharray="67.38 213.63" stroke-dashoffset="-47.85"/>
               <circle cx="42" cy="42" r="34" stroke="#F7B500" stroke-dasharray="42.62 213.63" stroke-dashoffset="-121.23"/>
               <circle cx="42" cy="42" r="34" stroke="#DDE5DC" stroke-dasharray="40.79 213.63" stroke-dashoffset="-169.84"/>
             </g>
@@ -422,8 +422,8 @@
     <figcaption>
       <b class="h">3 · Workouts</b>
       <ul>
-        <li>A session left open (e.g. the app was closed) comes first: an ink left edge, a lime "live" marker, set progress, then Resume or Discard.</li>
-        <li>With no open session, "Start new workout" becomes the lime energy button.</li>
+        <li>A session left open (e.g. the app was closed) comes first: an ink left edge, an açaí "live" marker, set progress, then Resume or Discard.</li>
+        <li>With no open session, "Start new workout" becomes the açaí accent button.</li>
         <li>This week reuses the Home week strip plus stat tiles; volume counts weighted sets only.</li>
       </ul>
       <div class="q">Workshop: the active session (sets table) is the next screen worth mocking.</div>
@@ -455,7 +455,7 @@
             <text x="4" y="124" font-family="Barlow" font-size="11" fill="#18804A">Target 72 kg</text>
             <polyline fill="none" stroke="#121815" stroke-width="2" points="8,25 39,31 70,28 101,40 132,43 164,40 195,52 226,55 257,58 288,64"/>
             <g fill="#121815"><rect x="5" y="22" width="6" height="6"/><rect x="36" y="28" width="6" height="6"/><rect x="67" y="25" width="6" height="6"/><rect x="98" y="37" width="6" height="6"/><rect x="129" y="40" width="6" height="6"/><rect x="161" y="37" width="6" height="6"/><rect x="192" y="49" width="6" height="6"/><rect x="223" y="52" width="6" height="6"/><rect x="254" y="55" width="6" height="6"/></g>
-            <rect x="283" y="59" width="10" height="10" fill="#C5F23A" stroke="#121815" stroke-width="2"/>
+            <rect x="283" y="59" width="10" height="10" fill="#5B2A6E"/>
             <g font-family="Barlow" font-size="11" fill="#5B6B62"><line x1="0" y1="163" x2="14" y2="163" stroke="#121815" stroke-width="2"/><text x="18" y="166">Measured</text><line x1="82" y1="163" x2="96" y2="163" stroke="#18804A" stroke-width="1.5" stroke-dasharray="4 3"/><text x="100" y="166">Target</text></g>
           </svg>
           <div class="stats" style="border-top:1px solid var(--line); padding-top:12px; margin-top:8px">
@@ -487,7 +487,7 @@
       <b class="h">4 · Progress</b>
       <ul>
         <li>An ink segmented control picks the dataset; the range buttons apply to all three.</li>
-        <li>Chart convention for the whole app: measured = solid ink, target/estimate = dashed; the latest point is a lime square.</li>
+        <li>Chart convention for the whole app: measured = solid ink, target/estimate = dashed; the latest point is an açaí square.</li>
         <li>Nutrition and Workouts reuse the same skeleton: headline value, then chart, then stats, then list. Nutrition charts use the macro colors.</li>
       </ul>
       <div class="q">Workshop: add a smoothed trend line next to the raw entries?</div>
