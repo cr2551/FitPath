@@ -39,10 +39,14 @@ part 'app_database.g.dart';
   daos: [ProfileDao, FoodDao, WorkoutDao, DashboardDao],
 )
 class AppDatabase extends _$AppDatabase {
-  AppDatabase(super.e);
+  AppDatabase(super.e, {this.seedCatalogs = true});
 
   /// The on-device database file.
   factory AppDatabase.open() => AppDatabase(driftDatabase(name: 'fitpath'));
+
+  /// Whether `onCreate` inserts the bundled food and exercise catalogs.
+  /// Tests turn this off so they start from an empty catalog.
+  final bool seedCatalogs;
 
   @override
   int get schemaVersion => 1;
@@ -55,8 +59,10 @@ class AppDatabase extends _$AppDatabase {
         AppSettingsCompanion.insert(unitSystem: const Value(UnitSystem.metric)),
       );
       await into(appMetadata).insert(AppMetadataCompanion.insert());
-      await seedFoods(this);
-      await seedExercises(this);
+      if (seedCatalogs) {
+        await seedFoods(this);
+        await seedExercises(this);
+      }
     },
     // onUpgrade: add steps here when schemaVersion increases.
     beforeOpen: (details) async {
