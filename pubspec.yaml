@@ -61,5 +61,21 @@ flutter:
     - assets/icons/  # macro and UI icons (#6)
     - assets/icon/   # launcher icon source (#44)
 
-  # Fonts are registered by #2 (Theme and design tokens): Barlow and Barlow Condensed.
-  # fonts:
+  # Bundled (never fetched at runtime). SIL Open Font License: assets/fonts/OFL.txt
+  fonts:
+    - family: Barlow
+      fonts:
+        - asset: assets/fonts/Barlow-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Barlow-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Barlow-SemiBold.ttf
+          weight: 600
+    - family: Barlow Condensed
+      fonts:
+        - asset: assets/fonts/BarlowCondensed-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/BarlowCondensed-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/BarlowCondensed-Bold.ttf
+          weight: 700
