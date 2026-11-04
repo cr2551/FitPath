@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FitPath Home v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ---------- Design tokens v2 (mirror of lib/core/theme) ---------- */
+  :root {
+    --background: #F2F5EF;
+    --surface: #FFFFFF;
+    --ink: #0E1F18;
+    --muted: #5B6B62;
+    --line: #DDE5DC;
+    --brand: #0F3B2C;
+    --on-brand: #FFFFFF;
+    --on-brand-muted: #A9BFB4;
+    --brand-line: #2A5444;
+    --energy: #C5F23A;
+    --protein: #EF4C4C;
+    --carbs: #3D8BFD;
+    --fat: #F7B500;
+    --unknown: #8FA79B;
+    --success: #18804A;
+    --warning: #9A5A00;
+    --error: #C6282B;
+    --r-sm: 4px;
+    --r-md: 8px;
+    --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
+    --sans: "Barlow", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #E3EAE0; color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.4; padding: 32px 16px 64px; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* ---------- Page chrome (not part of the app) ---------- */
+  .page { max-width: 1180px; margin: 0 auto; display: flex; gap: 48px; flex-wrap: wrap; justify-content: center; }
+  .side { flex: 1; min-width: 320px; max-width: 700px; }
+  .side h1 { font-family: var(--cond); font-weight: 700; font-size: 40px; line-height: 1; text-transform: uppercase; letter-spacing: .01em; }
+  .side .lede { color: var(--muted); margin: 8px 0 24px; }
+  .side h2 { font-family: var(--cond); font-weight: 700; font-size: 20px; text-transform: uppercase; letter-spacing: .04em; margin: 28px 0 10px; }
+  .side ul { margin-left: 18px; }
+  .side li { margin-bottom: 5px; }
+  .side code { font-size: 13px; background: var(--surface); border: 1px solid var(--line); padding: 0 4px; border-radius: 2px; }
+  .swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+  .sw { width: 76px; font-size: 11px; color: var(--muted); }
+  .sw i { display: block; height: 36px; border-radius: var(--r-sm); border: 1px solid var(--line); margin-bottom: 3px; }
+  .states { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+  .state { background: var(--brand); color: var(--on-brand); border-radius: var(--r-md); padding: 12px 10px 14px; text-align: center; }
+  .state .lbl { font-family: var(--cond); font-weight: 600; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--energy); margin-bottom: 8px; text-align: left; }
+  .state .cap { font-size: 12px; color: var(--on-brand-muted); margin-top: 6px; min-height: 34px; }
+  .calc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 14px 16px; font-size: 14px; }
+  .calc table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  .calc td, .calc th { padding: 5px 0; border-bottom: 1px solid var(--line); text-align: right; }
+  .calc th { font-family: var(--cond); font-weight: 600; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .calc td:first-child, .calc th:first-child { text-align: left; }
+  .calc tr:last-child td { border-bottom: 0; font-weight: 600; }
+  .q { color: var(--brand); font-weight: 600; }
+
+  /* Device frame (hardware, not UI) */
+  .phone { width: 376px; height: 812px; flex: none; border: 8px solid #0E1F18; border-radius: 34px; background: var(--background); overflow: hidden; display: flex; flex-direction: column; }
+  .status { height: 28px; flex: none; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; font-size: 12px; font-weight: 600; }
+  .content { flex: 1; overflow-y: auto; scrollbar-width: none; padding: 4px 16px 20px; }
+  .content::-webkit-scrollbar { display: none; }
+
+  /* ---------- App components ---------- */
+  .overline { font-family: var(--cond); font-weight: 600; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .headline { font-family: var(--cond); font-weight: 700; font-size: 30px; line-height: 1.05; }
+  .title { font-family: var(--cond); font-weight: 700; font-size: 18px; letter-spacing: .04em; text-transform: uppercase; }
+  .display { font-family: var(--cond); font-weight: 700; font-size: 36px; line-height: 1; font-variant-numeric: tabular-nums; }
+  .unit { font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--muted); }
+  .small { font-size: 13px; }
+  .muted { color: var(--muted); }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .icon { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: square; stroke-linejoin: miter; flex: none; }
+  .icon.sm { width: 16px; height: 16px; }
+  .textbtn { color: var(--brand); font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+
+  .hero { background: var(--brand); color: var(--on-brand); border-radius: var(--r-md); padding: 16px; margin-bottom: 12px; }
+  .hero .overline { color: var(--on-brand-muted); }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 16px; margin-bottom: 12px; }
+  .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+
+  .datestrip { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .datestrip div { border: 1px solid var(--brand-line); border-radius: var(--r-sm); text-align: center; padding: 4px 0 3px; font-family: var(--cond); font-weight: 600; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--on-brand-muted); position: relative; }
+  .datestrip b { display: block; font-size: 18px; font-weight: 700; color: var(--on-brand); letter-spacing: 0; font-variant-numeric: tabular-nums; }
+  .datestrip .sel { background: var(--energy); border-color: var(--energy); color: var(--brand); }
+  .datestrip .sel b { color: var(--brand); }
+  .datestrip .has::after { content: ""; position: absolute; width: 4px; height: 4px; background: var(--on-brand-muted); left: calc(50% - 2px); bottom: -7px; }
+
+  .ring-wrap { display: flex; justify-content: center; margin: 22px 0 14px; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; border-top: 1px solid var(--brand-line); border-bottom: 1px solid var(--brand-line); padding: 10px 0; margin-bottom: 14px; }
+  .stats > div + div { border-left: 1px solid var(--brand-line); }
+  .stats .v { font-family: var(--cond); font-weight: 700; font-size: 26px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .stats .v.energy { color: var(--energy); }
+
+  .macros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .macro .name { display: flex; align-items: center; gap: 6px; font-family: var(--cond); font-weight: 600; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+  .macro .name i { width: 10px; height: 10px; display: block; }
+  .macro .g { font-family: var(--cond); font-weight: 700; font-size: 20px; margin: 2px 0 5px; font-variant-numeric: tabular-nums; }
+  .macro .g span { font-size: 14px; font-weight: 500; color: var(--on-brand-muted); }
+  .macro .bar { height: 6px; background: var(--brand-line); }
+  .macro .bar i { display: block; height: 100%; }
+  .macro .cap { font-size: 12px; color: var(--on-brand-muted); margin-top: 5px; font-variant-numeric: tabular-nums; }
+
+  .hero-foot { display: flex; justify-content: space-between; font-size: 13px; color: var(--on-brand-muted); border-top: 1px solid var(--brand-line); margin-top: 14px; padding-top: 10px; }
+
+  .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+  .btn { height: 48px; border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--cond); font-weight: 700; font-size: 17px; letter-spacing: .05em; text-transform: uppercase; }
+  .btn.energy { background: var(--energy); color: var(--brand); }
+  .btn.primary { background: var(--brand); color: var(--on-brand); }
+
+  .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+  .week div { font-family: var(--cond); font-weight: 600; font-size: 12px; letter-spacing: .06em; color: var(--muted); }
+  .week i { display: block; height: 30px; border: 1px solid var(--line); border-radius: 2px; margin-bottom: 4px; }
+  .week .on i { background: var(--brand); border-color: var(--brand); }
+  .week .today { color: var(--ink); }
+  .week .today i { border: 2px solid var(--brand); }
+  .plan { height: 6px; background: var(--line); margin-top: 12px; }
+  .plan i { display: block; height: 100%; width: 75%; background: var(--brand); }
+
+  .nav { height: 70px; flex: none; display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line); background: var(--surface); }
+  .nav div { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 12px; font-weight: 500; color: var(--muted); }
+  .nav .ind { width: 48px; height: 28px; display: grid; place-items: center; border-radius: var(--r-sm); }
+  .nav .on { color: var(--brand); font-weight: 600; }
+  .nav .on .ind { background: var(--energy); }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20h-5.5v-5.5h-5V20H4z"/></symbol>
+  <symbol id="i-food" viewBox="0 0 24 24"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 21V3c-2.2 0-4 2.5-4 6v4h4"/></symbol>
+  <symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M3 10v4M6 7v10M18 7v10M21 10v4M6 12h12"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 4v16h16M7 15l4-4 3 3 5-6"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16zM14 6l4 4"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3 5 14h6l-1 7 8-11h-6z"/></symbol>
+</svg>
+
+<div class="page">
+
+  <!-- ======================= PHONE ======================= -->
+  <div class="phone">
+    <div class="status"><span>9:41</span><span>▮▮▮ 100%</span></div>
+    <div class="content">
+      <div class="row" style="align-items:flex-end; margin:6px 0 4px">
+        <div>
+          <div class="overline">Tuesday 3 November</div>
+          <div class="headline">Good morning</div>
+        </div>
+        <span class="textbtn"><svg class="icon sm"><use href="#i-edit"/></svg>Edit</span>
+      </div>
+      <div class="small muted" style="margin-bottom:14px">Goal: <b style="color:var(--ink)">Lose weight</b> · 72 kg by 1 Mar</div>
+
+      <!-- Hero: calories & macros -->
+      <section class="hero">
+        <div class="datestrip">
+          <div class="has">Su<b>1</b></div><div class="has">Mo<b>2</b></div><div class="sel has">Tu<b>3</b></div>
+          <div>We<b>4</b></div><div>Th<b>5</b></div><div>Fr<b>6</b></div><div>Sa<b>7</b></div>
+        </div>
+
+        <!-- Ring: r=100, C=628.32. Arc = 1640/2100 = 490.7. Segments by kcal share (P 27%, C 44%, F 29%), 3px gaps. -->
+        <div class="ring-wrap">
+          <svg width="224" height="224" viewBox="0 0 240 240" role="img" aria-label="1,640 of 2,100 calories eaten. Protein 27 percent, carbs 44 percent, fat 29 percent.">
+            <g transform="rotate(-90 120 120)" fill="none" stroke-width="20">
+              <circle cx="120" cy="120" r="100" stroke="#2A5444"/>
+              <circle cx="120" cy="120" r="100" stroke="#EF4C4C" stroke-dasharray="128.9 628.32" stroke-dashoffset="0"/>
+              <circle cx="120" cy="120" r="100" stroke="#3D8BFD" stroke-dasharray="212.8 628.32" stroke-dashoffset="-131.9"/>
+              <circle cx="120" cy="120" r="100" stroke="#F7B500" stroke-dasharray="140.0 628.32" stroke-dashoffset="-347.7"/>
+            </g>
+            <text x="120" y="96" text-anchor="middle" font-family="Barlow Condensed" font-weight="600" font-size="14" letter-spacing="1.2" fill="#A9BFB4">EATEN</text>
+            <text x="120" y="142" text-anchor="middle" font-family="Barlow Condensed" font-weight="700" font-size="56" fill="#FFFFFF">1,640</text>
+            <text x="120" y="164" text-anchor="middle" font-family="Barlow" font-size="14" fill="#A9BFB4">of 2,100 kcal</text>
+          </svg>
+        </div>
+
+        <div class="stats">
+          <div><div class="overline">Goal</div><div class="v">2,100</div></div>
+          <div><div class="overline">Eaten</div><div class="v">1,640</div></div>
+          <div><div class="overline">Left</div><div class="v energy">460</div></div>
+        </div>
+
+        <div class="macros">
+          <div class="macro">
+            <div class="name"><i style="background:var(--protein)"></i>Protein</div>
+            <div class="g">110<span> / 140 g</span></div>
+            <div class="bar"><i style="width:79%; background:var(--protein)"></i></div>
+            <div class="cap">440 kcal · 27%</div>
+          </div>
+          <div class="macro">
+            <div class="name"><i style="background:var(--carbs)"></i>Carbs</div>
+            <div class="g">180<span> / 230 g</span></div>
+            <div class="bar"><i style="width:78%; background:var(--carbs)"></i></div>
+            <div class="cap">720 kcal · 44%</div>
+          </div>
+          <div class="macro">
+            <div class="name"><i style="background:var(--fat)"></i>Fat</div>
+            <div class="g">53<span> / 70 g</span></div>
+            <div class="bar"><i style="width:76%; background:var(--fat)"></i></div>
+            <div class="cap">477 kcal · 29%</div>
+          </div>
+        </div>
+
+        <div class="hero-foot"><span>3 meals logged</span><span>Last: Lunch · 13:10</span></div>
+      </section>
+
+      <div class="actions">
+        <div class="btn energy"><svg class="icon sm" style="stroke-width:2.5"><use href="#i-plus"/></svg>Log food</div>
+        <div class="btn primary"><svg class="icon sm" style="stroke-width:2"><use href="#i-bolt"/></svg>Start workout</div>
+      </div>
+
+      <section class="card">
+        <div class="card-head"><span class="title">Weight</span><span class="textbtn"><svg class="icon sm"><use href="#i-plus"/></svg>Log</span></div>
+        <div class="row">
+          <div>
+            <div class="display">74.2 <span class="unit">kg</span></div>
+            <div class="small" style="color:var(--success); font-weight:600; margin-top:4px">▼ 1.3 kg · last 30 days</div>
+          </div>
+          <svg width="120" height="44" viewBox="0 0 120 44" aria-hidden="true">
+            <polyline fill="none" stroke="#0F3B2C" stroke-width="2" points="2,6 14,10 26,8 38,17 50,19 62,17 74,26 86,28 98,30 112,35"/>
+            <rect x="108" y="31" width="8" height="8" fill="#0F3B2C"/>
+          </svg>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="title">This week</span><span class="small muted"><b style="color:var(--ink)">3</b> of 4 sessions</span></div>
+        <div class="week">
+          <div class="on"><i></i>S</div><div class="on"><i></i>M</div><div class="today"><i></i>T</div><div><i></i>W</div><div><i></i>T</div><div><i></i>F</div><div class="on"><i></i>S</div>
+        </div>
+        <div class="plan"><i></i></div>
+      </section>
+    </div>
+    <nav class="nav">
+      <div class="on"><span class="ind"><svg class="icon"><use href="#i-home"/></svg></span>Home</div>
+      <div><span class="ind"><svg class="icon"><use href="#i-food"/></svg></span>Nutrition</div>
+      <div><span class="ind"><svg class="icon"><use href="#i-dumbbell"/></svg></span>Workouts</div>
+      <div><span class="ind"><svg class="icon"><use href="#i-chart"/></svg></span>Progress</div>
+      <div><span class="ind"><svg class="icon"><use href="#i-user"/></svg></span>Profile</div>
+    </nav>
+  </div>
+
+  <!-- ======================= NOTES ======================= -->
+  <div class="side">
+    <h1>Home · v2</h1>
+    <p class="lede">Athletic and fresh: forest green, lime energy, condensed scoreboard numbers, and macro colors protein red, carbs blue, fat yellow. Data is illustrative; the phone scrolls. Full rules are in <code>DESIGN/README.md</code>.</p>
+
+    <h2>Calorie ring</h2>
+    <ul>
+      <li><b>Arc length</b> = calories eaten ÷ goal (here 1,640 / 2,100 = 78%). The empty track is what's left.</li>
+      <li><b>Segments</b> = the share of eaten calories from each macro, in the fixed order protein → carbs → fat, clockwise from 12 o'clock.</li>
+      <li>Square ends and 3 px gaps between segments; there are no rounded caps.</li>
+    </ul>
+    <div class="calc" style="margin-top:10px">
+      <table>
+        <tr><th>Macro</th><th>Eaten</th><th>× kcal/g</th><th>kcal</th><th>Share</th></tr>
+        <tr><td><span style="display:inline-block;width:10px;height:10px;background:var(--protein);margin-right:6px"></span>Protein</td><td>110 g</td><td>4</td><td>440</td><td>27%</td></tr>
+        <tr><td><span style="display:inline-block;width:10px;height:10px;background:var(--carbs);margin-right:6px"></span>Carbs</td><td>180 g</td><td>4</td><td>720</td><td>44%</td></tr>
+        <tr><td><span style="display:inline-block;width:10px;height:10px;background:var(--fat);margin-right:6px"></span>Fat</td><td>53 g</td><td>9</td><td>477</td><td>29%</td></tr>
+        <tr><td>Total</td><td></td><td></td><td>1,637</td><td>100%</td></tr>
+      </table>
+      <div class="small muted" style="margin-top:8px">The arc uses label calories (1,640); segments split that arc proportionally, so small rounding differences never distort the ring.</div>
+    </div>
+
+    <h2>Ring states</h2>
+    <!-- Small rings: r=48, C=301.59, stroke 12 -->
+    <div class="states">
+      <div class="state">
+        <div class="lbl">On track</div>
+        <svg width="104" height="104" viewBox="0 0 120 120"><g transform="rotate(-90 60 60)" fill="none" stroke-width="12">
+          <circle cx="60" cy="60" r="48" stroke="#2A5444"/>
+          <circle cx="60" cy="60" r="48" stroke="#EF4C4C" stroke-dasharray="60.3 301.59"/>
+          <circle cx="60" cy="60" r="48" stroke="#3D8BFD" stroke-dasharray="100.6 301.59" stroke-dashoffset="-63.3"/>
+          <circle cx="60" cy="60" r="48" stroke="#F7B500" stroke-dasharray="65.6 301.59" stroke-dashoffset="-166.9"/></g>
+          <text x="60" y="68" text-anchor="middle" font-family="Barlow Condensed" font-weight="700" font-size="26" fill="#fff">1,640</text></svg>
+        <div class="cap"><b style="color:var(--energy)">460</b> kcal left</div>
+      </div>
+      <div class="state">
+        <div class="lbl">Over target</div>
+        <svg width="104" height="104" viewBox="0 0 120 120"><g transform="rotate(-90 60 60)" fill="none" stroke-width="12">
+          <circle cx="60" cy="60" r="48" stroke="#EF4C4C" stroke-dasharray="78.1 301.59"/>
+          <circle cx="60" cy="60" r="48" stroke="#3D8BFD" stroke-dasharray="129.6 301.59" stroke-dashoffset="-81.1"/>
+          <circle cx="60" cy="60" r="48" stroke="#F7B500" stroke-dasharray="84.9 301.59" stroke-dashoffset="-213.7"/></g>
+          <text x="60" y="68" text-anchor="middle" font-family="Barlow Condensed" font-weight="700" font-size="26" fill="#fff">2,220</text></svg>
+        <div class="cap"><span style="border:1px solid #fff;color:#fff;font-family:var(--cond);font-weight:600;font-size:11px;letter-spacing:.08em;padding:0 4px;margin-right:4px">OVER</span><b style="color:#fff">120</b> kcal over</div>
+      </div>
+      <div class="state">
+        <div class="lbl">Nothing logged</div>
+        <svg width="104" height="104" viewBox="0 0 120 120"><g transform="rotate(-90 60 60)" fill="none" stroke-width="12">
+          <circle cx="60" cy="60" r="48" stroke="#2A5444"/></g>
+          <text x="60" y="68" text-anchor="middle" font-family="Barlow Condensed" font-weight="700" font-size="26" fill="#fff">0</text></svg>
+        <div class="cap"><span style="color:var(--energy);font-weight:600">+ Log your first meal</span></div>
+      </div>
+      <div class="state">
+        <div class="lbl">Unknown macros</div>
+        <svg width="104" height="104" viewBox="0 0 120 120"><g transform="rotate(-90 60 60)" fill="none" stroke-width="12">
+          <circle cx="60" cy="60" r="48" stroke="#2A5444"/>
+          <circle cx="60" cy="60" r="48" stroke="#EF4C4C" stroke-dasharray="52.4 301.59"/>
+          <circle cx="60" cy="60" r="48" stroke="#3D8BFD" stroke-dasharray="87.3 301.59" stroke-dashoffset="-55.4"/>
+          <circle cx="60" cy="60" r="48" stroke="#F7B500" stroke-dasharray="56.6 301.59" stroke-dashoffset="-145.7"/>
+          <circle cx="60" cy="60" r="48" stroke="#8FA79B" stroke-dasharray="27.2 301.59" stroke-dashoffset="-205.3"/></g>
+          <text x="60" y="68" text-anchor="middle" font-family="Barlow Condensed" font-weight="700" font-size="26" fill="#fff">1,640</text></svg>
+        <div class="cap"><span style="display:inline-block;width:8px;height:8px;background:var(--unknown);margin-right:4px"></span>210 kcal with unknown macros</div>
+      </div>
+      <div class="state">
+        <div class="lbl">No calorie goal</div>
+        <svg width="104" height="104" viewBox="0 0 120 120"><g transform="rotate(-90 60 60)" fill="none" stroke-width="12">
+          <circle cx="60" cy="60" r="48" stroke="#EF4C4C" stroke-dasharray="78.1 301.59"/>
+          <circle cx="60" cy="60" r="48" stroke="#3D8BFD" stroke-dasharray="129.6 301.59" stroke-dashoffset="-81.1"/>
+          <circle cx="60" cy="60" r="48" stroke="#F7B500" stroke-dasharray="84.9 301.59" stroke-dashoffset="-213.7"/></g>
+          <text x="60" y="68" text-anchor="middle" font-family="Barlow Condensed" font-weight="700" font-size="26" fill="#fff">1,640</text></svg>
+        <div class="cap">Macro split only · <span style="color:var(--energy);font-weight:600">Set a goal</span></div>
+      </div>
+    </div>
+
+    <h2>Palette v2</h2>
+    <div class="swatches">
+      <div class="sw"><i style="background:#F2F5EF"></i>background</div>
+      <div class="sw"><i style="background:#FFFFFF"></i>surface</div>
+      <div class="sw"><i style="background:#0E1F18"></i>ink</div>
+      <div class="sw"><i style="background:#0F3B2C"></i>brand</div>
+      <div class="sw"><i style="background:#C5F23A"></i>energy</div>
+      <div class="sw"><i style="background:#EF4C4C"></i>protein</div>
+      <div class="sw"><i style="background:#3D8BFD"></i>carbs</div>
+      <div class="sw"><i style="background:#F7B500"></i>fat</div>
+      <div class="sw"><i style="background:#8FA79B"></i>unknown</div>
+      <div class="sw"><i style="background:#18804A"></i>success</div>
+    </div>
+
+    <h2>Layout decisions</h2>
+    <ul>
+      <li>One green <b>hero block</b> per screen; everything else is white cards on the light green background.</li>
+      <li><b>Log food</b> (lime) and <b>Start workout</b> (green) sit right under the ring, because they're the two most frequent tasks.</li>
+      <li>The date strip lets you inspect another day; the selected day is lime and always visible, so past days are never mistaken for today.</li>
+      <li>Macro bars keep the spec's grams-vs-target progress and add the macro's share of calories, which ties them to the ring segments.</li>
+      <li>Shapes stay disciplined: 8 px max radius, square bar and arc ends, no gradients, no shadows.</li>
+    </ul>
+
+    <h2>Questions for the workshop</h2>
+    <ul class="q">
+      <li>Carbs blue, or another hue (orange or green clash with other colors)?</li>
+      <li>Lime intensity: right amount of energy, or too loud?</li>
+      <li>Ring legend: % of calories (shown) or kcal per macro?</li>
+      <li>Keep both quick actions, or a single floating "Log" button?</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

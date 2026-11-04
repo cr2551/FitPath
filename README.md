@@ -12,6 +12,7 @@ A goal-aware, customizable fitness tracker that keeps your data on your device. 
 
 - [Project specification (PDF)](FitPath_Project_Specification.pdf)
 - [MVP implementation plan](docs/MVP_PLAN.md): waves, lanes, critical path, and the working agreement that avoids merge conflicts
+- [Design guidelines](DESIGN/README.md): tokens, components, layout rules and [screen mockups](DESIGN/screens.html)
 - [Project board: FitPath MVP](https://github.com/users/cr2551/projects/5), with one issue per task. Start with [#1](https://github.com/cr2551/FitPath/issues/1)
 
 ## Getting started

@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FitPath Screen Proposals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ---------- Design tokens (mirror of lib/core/theme) ---------- */
+  :root {
+    --surface: #F6F3EC;
+    --raised: #FBFAF6;
+    --ink: #1E1B16;
+    --muted: #6B655A;
+    --line: #E2DDD2;
+    --accent: #B04C1C;
+    --accent-soft: #F1E2D8;
+    --fat: #7C8CD6;
+    --protein: #D4A12A;
+    --carbs: #8AAE5C;
+    --success: #3F7D4E;
+    --warning: #B7791F;
+    --error: #B3261E;
+    --r-sm: 4px;
+    --r-md: 8px;
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Inter", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #E9E5DC; color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.4; padding: 32px 16px 64px; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* ---------- Page chrome (not part of the app) ---------- */
+  .page { max-width: 1960px; margin: 0 auto; }
+  .page > header { max-width: 860px; margin-bottom: 28px; }
+  .page h1 { font-family: var(--serif); font-weight: 500; font-size: 34px; }
+  .page header p { color: var(--muted); margin-top: 6px; }
+  .tokens { display: flex; flex-wrap: wrap; gap: 28px; background: var(--raised); border: 1px solid var(--line); border-radius: var(--r-md); padding: 20px; margin-bottom: 36px; }
+  .tokens h3 { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; font-weight: 600; }
+  .swatches { display: flex; gap: 8px; flex-wrap: wrap; max-width: 520px; }
+  .sw { width: 72px; font-size: 11px; color: var(--muted); }
+  .sw i { display: block; height: 40px; border-radius: var(--r-sm); border: 1px solid var(--line); margin-bottom: 4px; }
+  .type-specimen div { margin-bottom: 4px; }
+  .radii { display: flex; gap: 12px; align-items: end; }
+  .radii div { width: 56px; height: 40px; border: 1.5px solid var(--ink); font-size: 11px; display: grid; place-items: center; }
+  .rules { font-size: 13px; color: var(--muted); max-width: 260px; }
+  .rules li { margin-left: 16px; margin-bottom: 4px; }
+
+  .screens { display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; }
+  figure { width: 376px; }
+  figcaption { margin-top: 14px; font-size: 13px; color: var(--muted); }
+  figcaption b { display: block; font-family: var(--serif); font-weight: 500; font-size: 20px; color: var(--ink); margin-bottom: 6px; }
+  figcaption ul { margin-left: 16px; }
+  figcaption li { margin-bottom: 3px; }
+  figcaption .q { margin-top: 8px; color: var(--accent); font-weight: 500; }
+
+  /* Device frame (hardware, not UI) */
+  .phone { width: 376px; height: 796px; border: 8px solid #1E1B16; border-radius: 34px; background: var(--surface); overflow: hidden; display: flex; flex-direction: column; }
+  .status { height: 28px; flex: none; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; font-size: 12px; font-weight: 600; }
+  .content { flex: 1; overflow-y: auto; scrollbar-width: none; padding: 4px 16px 16px; }
+  .content::-webkit-scrollbar { display: none; }
+
+  /* ---------- App components ---------- */
+  .overline { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .headline { font-family: var(--serif); font-weight: 500; font-size: 26px; line-height: 1.15; }
+  .title { font-family: var(--serif); font-weight: 500; font-size: 19px; }
+  .display { font-family: var(--serif); font-weight: 500; font-size: 34px; line-height: 1; font-variant-numeric: tabular-nums; }
+  .muted { color: var(--muted); }
+  .small { font-size: 13px; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .topbar { display: flex; justify-content: space-between; align-items: flex-end; margin: 6px 0 14px; }
+  .card { background: var(--raised); border: 1px solid var(--line); border-radius: var(--r-md); padding: 16px; margin-bottom: 12px; }
+  .card-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+  .textbtn { color: var(--accent); font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+  .btn { display: flex; justify-content: center; align-items: center; gap: 6px; height: 44px; border-radius: var(--r-sm); font-size: 14px; font-weight: 600; }
+  .btn.filled { background: var(--accent); color: #fff; }
+  .btn.outlined { border: 1px solid var(--ink); color: var(--ink); }
+  .icon { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  .icon.sm { width: 16px; height: 16px; }
+
+  .datestrip { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 14px; }
+  .datestrip div { border: 1px solid var(--line); border-radius: var(--r-sm); text-align: center; padding: 5px 0 4px; font-size: 11px; color: var(--muted); position: relative; }
+  .datestrip b { display: block; font-size: 15px; font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .datestrip .sel { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .datestrip .sel b { color: #fff; }
+  .datestrip .has::after { content: ""; position: absolute; width: 4px; height: 4px; background: var(--muted); left: calc(50% - 2px); bottom: -7px; }
+  .datestrip.mb { margin-bottom: 18px; }
+
+  .macro { margin-bottom: 9px; }
+  .macro .row { font-size: 13px; margin-bottom: 4px; }
+  .bar { height: 6px; background: var(--line); }
+  .bar i { display: block; height: 100%; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .stats > div { padding: 0 10px; border-left: 1px solid var(--line); }
+  .stats > div:first-child { border-left: 0; padding-left: 0; }
+  .stats .v { font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; margin-top: 2px; }
+
+  .list .item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); gap: 10px; }
+  .list .item:first-child { border-top: 0; }
+  .item .t { font-weight: 600; font-size: 14px; }
+  .item .s { font-size: 12px; color: var(--muted); }
+  .item .v { font-variant-numeric: tabular-nums; font-size: 14px; text-align: right; white-space: nowrap; }
+
+  .meal { margin-bottom: 14px; }
+  .meal-head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--ink); padding-bottom: 4px; }
+  .meal-head .title { font-size: 17px; }
+
+  .search { display: flex; align-items: center; gap: 8px; height: 42px; border: 1px solid var(--line); background: var(--raised); border-radius: var(--r-sm); padding: 0 12px; color: var(--muted); margin-bottom: 12px; }
+
+  .segmented { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--ink); border-radius: var(--r-sm); overflow: hidden; margin-bottom: 12px; }
+  .segmented div { text-align: center; font-size: 13px; font-weight: 500; padding: 7px 0; border-left: 1px solid var(--ink); }
+  .segmented div:first-child { border-left: 0; }
+  .segmented .on { background: var(--ink); color: var(--surface); }
+  .segmented.two { grid-template-columns: repeat(2, 1fr); width: 150px; margin: 0; }
+  .segmented.two div { padding: 4px 0; font-size: 12px; }
+
+  .ranges { display: flex; gap: 18px; font-size: 13px; color: var(--muted); border-bottom: 1px solid var(--line); margin-bottom: 14px; }
+  .ranges span { padding-bottom: 6px; }
+  .ranges .on { color: var(--ink); font-weight: 600; box-shadow: inset 0 -2px 0 var(--accent); }
+
+  .badge { font-size: 10px; font-weight: 600; letter-spacing: .06em; border: 1px solid var(--muted); color: var(--muted); padding: 1px 5px; border-radius: 2px; }
+
+  .banner { background: var(--accent-soft); border-left: 3px solid var(--accent); border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: 14px; margin-bottom: 12px; }
+
+  .group { margin-bottom: 14px; }
+  .group .overline { margin-bottom: 2px; }
+  .group .list { background: var(--raised); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 0 -16px; padding: 0 16px; }
+
+  .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font-size: 11px; color: var(--muted); }
+  .week i { display: block; height: 22px; border: 1px solid var(--line); margin-bottom: 3px; }
+  .week .on i { background: var(--ink); border-color: var(--ink); }
+  .week .today i { border: 1.5px solid var(--accent); }
+
+  .nav { height: 66px; flex: none; display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line); background: var(--raised); }
+  .nav div { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 11px; font-weight: 500; color: var(--muted); }
+  .nav .on { color: var(--accent); box-shadow: inset 0 2px 0 var(--accent); }
+</style>
+</head>
+<body>
+<!-- Icon set: outlined, 1.5px stroke -->
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20h-5.5v-5.5h-5V20H4z"/></symbol>
+  <symbol id="i-food" viewBox="0 0 24 24"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 21V3c-2.2 0-4 2.5-4 6v4h4"/></symbol>
+  <symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M3 10v4M6 7v10M18 7v10M21 10v4M6 12h12"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 4v16h16M7 15l4-4 3 3 5-6"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16zM14 6l4 4"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></symbol>
+</svg>
+
+<div class="page">
+  <header>
+    <h1>FitPath: screen proposals</h1>
+    <p>Workshop draft of the five main destinations. Data is illustrative. Design decisions and open questions are in <code>DESIGN/README.md</code>.</p>
+  </header>
+
+  <section class="tokens">
+    <div>
+      <h3>Palette</h3>
+      <div class="swatches">
+        <div class="sw"><i style="background:#F6F3EC"></i>surface</div>
+        <div class="sw"><i style="background:#FBFAF6"></i>raised</div>
+        <div class="sw"><i style="background:#1E1B16"></i>ink</div>
+        <div class="sw"><i style="background:#6B655A"></i>muted</div>
+        <div class="sw"><i style="background:#E2DDD2"></i>line</div>
+        <div class="sw"><i style="background:#B04C1C"></i>accent</div>
+        <div class="sw"><i style="background:#F1E2D8"></i>accent soft</div>
+        <div class="sw"><i style="background:#7C8CD6"></i>fat</div>
+        <div class="sw"><i style="background:#D4A12A"></i>protein</div>
+        <div class="sw"><i style="background:#8AAE5C"></i>carbs</div>
+        <div class="sw"><i style="background:#3F7D4E"></i>success</div>
+        <div class="sw"><i style="background:#B3261E"></i>error</div>
+      </div>
+    </div>
+    <div class="type-specimen">
+      <h3>Type</h3>
+      <div class="display">2,100</div>
+      <div class="headline">Headline · Fraunces 26</div>
+      <div class="title">Title · Fraunces 19</div>
+      <div>Body · Inter 15</div>
+      <div class="small muted">Label · Inter 13</div>
+      <div class="overline">Overline · Inter 11</div>
+    </div>
+    <div>
+      <h3>Radius</h3>
+      <div class="radii">
+        <div style="border-radius:0">0</div>
+        <div style="border-radius:4px">4</div>
+        <div style="border-radius:8px">8 max</div>
+      </div>
+    </div>
+    <div>
+      <h3>Rules</h3>
+      <ul class="rules">
+        <li>No gradients, no shadows</li>
+        <li>No pill shapes; 8 px max radius</li>
+        <li>One accent use per purpose: selection or main action</li>
+        <li>1 px hairlines separate surfaces</li>
+        <li>Numbers use tabular figures</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="screens">
+
+  <!-- =============== 1. HOME =============== -->
+  <figure>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>▮▮▮ 100%</span></div>
+      <div class="content">
+        <div class="topbar">
+          <div>
+            <div class="overline">Tuesday, 3 November</div>
+            <div class="headline">Good morning</div>
+          </div>
+          <span class="textbtn"><svg class="icon sm"><use href="#i-edit"/></svg>Edit</span>
+        </div>
+        <div class="small muted" style="margin:-6px 0 14px">Goal: <b style="color:var(--ink)">Lose weight</b> · 72 kg by 1 Mar</div>
+
+        <div class="card">
+          <div class="card-head">
+            <span class="title">Calories</span>
+            <span class="small muted num">Goal 2,100 kcal</span>
+          </div>
+          <div class="datestrip">
+            <div class="has">Su<b>1</b></div><div class="has">Mo<b>2</b></div><div class="sel has">Tu<b>3</b></div>
+            <div>We<b>4</b></div><div>Th<b>5</b></div><div>Fr<b>6</b></div><div>Sa<b>7</b></div>
+          </div>
+          <div class="row" style="align-items:center; margin:6px 0 14px">
+            <svg width="128" height="128" viewBox="0 0 128 128" aria-label="1,640 of 2,100 kcal consumed">
+              <circle cx="64" cy="64" r="52" fill="none" stroke="#E2DDD2" stroke-width="10"/>
+              <circle cx="64" cy="64" r="52" fill="none" stroke="#B04C1C" stroke-width="10" stroke-dasharray="255.2 326.7" transform="rotate(-90 64 64)"/>
+              <text x="64" y="66" text-anchor="middle" font-family="Fraunces" font-size="24" font-weight="500" fill="#1E1B16">1,640</text>
+              <text x="64" y="84" text-anchor="middle" font-family="Inter" font-size="11" fill="#6B655A">kcal eaten</text>
+            </svg>
+            <div style="flex:1; padding-left:14px">
+              <div class="display">460</div>
+              <div class="small muted" style="margin-top:4px">kcal remaining today</div>
+            </div>
+          </div>
+          <div class="macro"><div class="row"><span>Protein</span><span class="num muted">96 / 140 g</span></div><div class="bar"><i style="width:69%;background:var(--protein)"></i></div></div>
+          <div class="macro"><div class="row"><span>Carbs</span><span class="num muted">170 / 230 g</span></div><div class="bar"><i style="width:74%;background:var(--carbs)"></i></div></div>
+          <div class="macro"><div class="row"><span>Fat</span><span class="num muted">52 / 70 g</span></div><div class="bar"><i style="width:74%;background:var(--fat)"></i></div></div>
+          <div class="row small muted" style="border-top:1px solid var(--line); padding-top:10px; margin-top:12px">
+            <span>3 meals logged</span><span>Last: Lunch · 13:10</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><span class="title">Weight</span><span class="textbtn"><svg class="icon sm"><use href="#i-plus"/></svg>Log</span></div>
+          <div class="row">
+            <div>
+              <div class="display" style="font-size:28px">74.2 <span class="small muted" style="font-family:var(--sans)">kg</span></div>
+              <div class="small" style="color:var(--success); margin-top:4px">−1.3 kg in 30 days</div>
+            </div>
+            <svg width="110" height="36" viewBox="0 0 110 36"><polyline fill="none" stroke="#1E1B16" stroke-width="1.5" points="0,5.9 12,9.6 24,7.7 36,15.2 48,17.1 60,15.2 72,22.7 84,24.5 96,26.4 108,30.1"/><rect x="105" y="27" width="6" height="6" fill="#1E1B16"/></svg>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><span class="title">This week</span><span class="small muted">3 of 4 sessions</span></div>
+          <div class="week">
+            <div class="on"><i></i>S</div><div class="on"><i></i>M</div><div class="today"><i></i>T</div><div><i></i>W</div><div class="on"><i></i>T</div><div><i></i>F</div><div><i></i>S</div>
+          </div>
+        </div>
+      </div>
+      <nav class="nav">
+        <div class="on"><svg class="icon"><use href="#i-home"/></svg>Home</div>
+        <div><svg class="icon"><use href="#i-food"/></svg>Nutrition</div>
+        <div><svg class="icon"><use href="#i-dumbbell"/></svg>Workouts</div>
+        <div><svg class="icon"><use href="#i-chart"/></svg>Progress</div>
+        <div><svg class="icon"><use href="#i-user"/></svg>Profile</div>
+      </nav>
+    </div>
+    <figcaption>
+      <b>1 · Home</b>
+      <ul>
+        <li>The calories card follows the spec's hierarchy: date, ring, remaining, macros, meals logged.</li>
+        <li>"Remaining" is the biggest number; when over target it becomes "120 kcal over" in the warning color.</li>
+        <li>The ring is a single accent arc; macro colors appear only on the macro bars.</li>
+        <li>Edit turns cards into a reorder/hide list (drag handles, eye toggle).</li>
+      </ul>
+      <div class="q">Workshop: segmented macro ring like the reference instead? Three cards above the fold OK?</div>
+    </figcaption>
+  </figure>
+
+  <!-- =============== 2. NUTRITION =============== -->
+  <figure>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>▮▮▮ 100%</span></div>
+      <div class="content">
+        <div class="topbar"><div class="headline">Nutrition</div></div>
+        <div class="search"><svg class="icon sm"><use href="#i-search"/></svg>Search foods</div>
+        <div class="datestrip mb">
+          <div class="has">Su<b>1</b></div><div class="has">Mo<b>2</b></div><div class="sel has">Tu<b>3</b></div>
+          <div>We<b>4</b></div><div>Th<b>5</b></div><div>Fr<b>6</b></div><div>Sa<b>7</b></div>
+        </div>
+        <div class="card" style="padding:12px 14px">
+          <div class="stats" style="margin-bottom:12px">
+            <div><div class="overline">Eaten</div><div class="v">1,640</div></div>
+            <div><div class="overline">Target</div><div class="v">2,100</div></div>
+            <div><div class="overline">Left</div><div class="v" style="color:var(--accent)">460</div></div>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; font-size:12px">
+            <div><div class="row"><span>P</span><span class="num muted">96/140</span></div><div class="bar"><i style="width:69%;background:var(--protein)"></i></div></div>
+            <div><div class="row"><span>C</span><span class="num muted">170/230</span></div><div class="bar"><i style="width:74%;background:var(--carbs)"></i></div></div>
+            <div><div class="row"><span>F</span><span class="num muted">52/70</span></div><div class="bar"><i style="width:74%;background:var(--fat)"></i></div></div>
+          </div>
+        </div>
+
+        <div class="meal">
+          <div class="meal-head"><span class="title">Breakfast</span><span class="small muted num">441 kcal</span></div>
+          <div class="list">
+            <div class="item"><div><div class="t">Greek yogurt, plain</div><div class="s">200 g · Bundled</div></div><div class="v">146</div></div>
+            <div class="item"><div><div class="t">Rolled oats</div><div class="s">50 g · Bundled</div></div><div class="v">190</div></div>
+            <div class="item"><div><div class="t">Banana</div><div class="s">1 medium (118 g) · Bundled</div></div><div class="v">105</div></div>
+          </div>
+          <span class="textbtn"><svg class="icon sm"><use href="#i-plus"/></svg>Add food</span>
+        </div>
+        <div class="meal">
+          <div class="meal-head"><span class="title">Lunch</span><span class="small muted num">894 kcal</span></div>
+          <div class="list">
+            <div class="item"><div><div class="t">Chicken breast, grilled</div><div class="s">150 g · Bundled</div></div><div class="v">248</div></div>
+            <div class="item"><div><div class="t">Whole wheat wrap</div><div class="s">1 wrap (64 g) · Open Food Facts</div></div><div class="v">264</div></div>
+            <div class="item"><div><div class="t">Brown rice, cooked</div><div class="s">180 g · Bundled</div></div><div class="v">202</div></div>
+          </div>
+        </div>
+        <div class="meal">
+          <div class="meal-head"><span class="title">Dinner</span><span class="small muted">—</span></div>
+          <div class="small muted" style="padding:10px 0 4px">Nothing logged yet.</div>
+          <span class="textbtn"><svg class="icon sm"><use href="#i-plus"/></svg>Add food</span>
+        </div>
+      </div>
+      <nav class="nav">
+        <div><svg class="icon"><use href="#i-home"/></svg>Home</div>
+        <div class="on"><svg class="icon"><use href="#i-food"/></svg>Nutrition</div>
+        <div><svg class="icon"><use href="#i-dumbbell"/></svg>Workouts</div>
+        <div><svg class="icon"><use href="#i-chart"/></svg>Progress</div>
+        <div><svg class="icon"><use href="#i-user"/></svg>Profile</div>
+      </nav>
+    </div>
+    <figcaption>
+      <b>2 · Nutrition</b>
+      <ul>
+        <li>Search sits on top because adding food is the most frequent action.</li>
+        <li>Meals are plain sections with hairline rows; there's no card per food.</li>
+        <li>Each row shows its source (Bundled / Open Food Facts / Custom) for transparency.</li>
+        <li>Tapping a row edits the entry; swiping deletes it with undo.</li>
+      </ul>
+      <div class="q">Workshop: keep the summary block here even though Home shows it too?</div>
+    </figcaption>
+  </figure>
+
+  <!-- =============== 3. WORKOUTS =============== -->
+  <figure>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>▮▮▮ 100%</span></div>
+      <div class="content">
+        <div class="topbar"><div class="headline">Workouts</div></div>
+
+        <div class="banner">
+          <div class="overline" style="color:var(--accent)">In progress</div>
+          <div class="title" style="margin:2px 0">Leg day</div>
+          <div class="small muted">Started 18:05 · 2 exercises · 5 sets done</div>
+          <div style="display:grid; grid-template-columns:1fr auto; gap:10px; margin-top:12px">
+            <div class="btn filled"><svg class="icon sm" style="fill:#fff;stroke:none"><use href="#i-play"/></svg>Resume</div>
+            <div class="btn" style="color:var(--error); padding:0 10px">Discard</div>
+          </div>
+        </div>
+
+        <div class="btn outlined" style="margin-bottom:18px"><svg class="icon sm"><use href="#i-plus"/></svg>Start new workout</div>
+
+        <div class="card">
+          <div class="card-head"><span class="title">This week</span><span class="small muted">2 – 8 Nov</span></div>
+          <div class="stats">
+            <div><div class="overline">Sessions</div><div class="v">3</div></div>
+            <div><div class="overline">Sets</div><div class="v">46</div></div>
+            <div><div class="overline">Volume</div><div class="v">9,840 <span class="small muted">kg</span></div></div>
+          </div>
+        </div>
+
+        <div class="row" style="margin:18px 0 4px"><span class="title">Recent</span><span class="textbtn">All history</span></div>
+        <div class="list">
+          <div class="item"><div><div class="t">Upper body</div><div class="s">Mon 2 Nov · 42 min</div></div><div class="v small muted">5 exercises · 18 sets <svg class="icon sm" style="vertical-align:-3px"><use href="#i-chev"/></svg></div></div>
+          <div class="item"><div><div class="t">Lower body</div><div class="s">Sat 31 Oct · 51 min</div></div><div class="v small muted">4 exercises · 16 sets <svg class="icon sm" style="vertical-align:-3px"><use href="#i-chev"/></svg></div></div>
+          <div class="item"><div><div class="t">Full body</div><div class="s">Thu 29 Oct · 38 min</div></div><div class="v small muted">6 exercises · 12 sets <svg class="icon sm" style="vertical-align:-3px"><use href="#i-chev"/></svg></div></div>
+          <div class="item"><div><div class="t">Push</div><div class="s">Tue 27 Oct · 45 min</div></div><div class="v small muted">5 exercises · 17 sets <svg class="icon sm" style="vertical-align:-3px"><use href="#i-chev"/></svg></div></div>
+          <div class="item"><div><div class="t">Pull</div><div class="s">Sun 25 Oct · 40 min</div></div><div class="v small muted">4 exercises · 14 sets <svg class="icon sm" style="vertical-align:-3px"><use href="#i-chev"/></svg></div></div>
+        </div>
+      </div>
+      <nav class="nav">
+        <div><svg class="icon"><use href="#i-home"/></svg>Home</div>
+        <div><svg class="icon"><use href="#i-food"/></svg>Nutrition</div>
+        <div class="on"><svg class="icon"><use href="#i-dumbbell"/></svg>Workouts</div>
+        <div><svg class="icon"><use href="#i-chart"/></svg>Progress</div>
+        <div><svg class="icon"><use href="#i-user"/></svg>Profile</div>
+      </nav>
+    </div>
+    <figcaption>
+      <b>3 · Workouts</b>
+      <ul>
+        <li>An unfinished session (app closed mid-workout) becomes the main action: Resume or Discard.</li>
+        <li>Without one, "Start new workout" becomes the filled button.</li>
+        <li>Volume counts only weighted sets; bodyweight sets count reps.</li>
+        <li>Recent sessions are a plain list leading to session detail.</li>
+      </ul>
+      <div class="q">Workshop: the active-session (sets table) screen is the next one worth mocking.</div>
+    </figcaption>
+  </figure>
+
+  <!-- =============== 4. PROGRESS =============== -->
+  <figure>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>▮▮▮ 100%</span></div>
+      <div class="content">
+        <div class="topbar"><div class="headline">Progress</div><span class="textbtn"><svg class="icon sm"><use href="#i-plus"/></svg>Log weight</span></div>
+        <div class="segmented"><div class="on">Weight</div><div>Nutrition</div><div>Workouts</div></div>
+        <div class="ranges"><span>7D</span><span class="on">30D</span><span>90D</span><span>1Y</span><span>All</span></div>
+
+        <div class="display">74.2 <span class="small muted" style="font-family:var(--sans)">kg</span></div>
+        <div class="small" style="color:var(--success); margin:4px 0 12px">−1.3 kg over 30 days</div>
+
+        <svg width="328" height="168" viewBox="0 0 328 168" aria-label="Weight over 30 days">
+          <g stroke="#E2DDD2" stroke-width="1">
+            <line x1="0" y1="10" x2="296" y2="10"/><line x1="0" y1="50" x2="296" y2="50"/><line x1="0" y1="90" x2="296" y2="90"/><line x1="0" y1="130" x2="296" y2="130"/>
+          </g>
+          <g font-family="Inter" font-size="10" fill="#6B655A">
+            <text x="300" y="13">76</text><text x="300" y="53">74.7</text><text x="300" y="93">73.3</text><text x="300" y="133">72</text>
+            <text x="0" y="150">4 Oct</text><text x="125" y="150">19 Oct</text><text x="262" y="150">3 Nov</text>
+          </g>
+          <line x1="0" y1="130" x2="296" y2="130" stroke="#3F7D4E" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="4" y="125" font-family="Inter" font-size="10" fill="#3F7D4E">Target 72 kg</text>
+          <polyline fill="none" stroke="#1E1B16" stroke-width="2" points="8,25 39,31 70,28 101,40 132,43 164,40 195,52 226,55 257,58 288,64"/>
+          <g fill="#1E1B16">
+            <rect x="5" y="22" width="6" height="6"/><rect x="36" y="28" width="6" height="6"/><rect x="67" y="25" width="6" height="6"/><rect x="98" y="37" width="6" height="6"/><rect x="129" y="40" width="6" height="6"/><rect x="161" y="37" width="6" height="6"/><rect x="192" y="49" width="6" height="6"/><rect x="223" y="52" width="6" height="6"/><rect x="254" y="55" width="6" height="6"/>
+          </g>
+          <rect x="284" y="60" width="8" height="8" fill="#B04C1C"/>
+          <g font-family="Inter" font-size="10" fill="#6B655A"><line x1="0" y1="162" x2="14" y2="162" stroke="#1E1B16" stroke-width="2"/><text x="18" y="165">Measured</text><line x1="80" y1="162" x2="94" y2="162" stroke="#3F7D4E" stroke-width="1.5" stroke-dasharray="4 3"/><text x="98" y="165">Target</text></g>
+        </svg>
+
+        <div class="card" style="margin-top:10px; padding:12px 14px">
+          <div class="stats">
+            <div><div class="overline">Start</div><div class="v">75.5</div></div>
+            <div><div class="overline">Lowest</div><div class="v">74.2</div></div>
+            <div><div class="overline">Average</div><div class="v">74.8</div></div>
+          </div>
+        </div>
+
+        <div class="overline" style="margin:14px 0 2px">Entries</div>
+        <div class="list">
+          <div class="item"><div><div class="t">Tue 3 Nov</div><div class="s">07:12</div></div><div class="v">74.2 kg</div></div>
+          <div class="item"><div><div class="t">Sat 31 Oct</div><div class="s">07:40 · after run</div></div><div class="v">74.4 kg</div></div>
+          <div class="item"><div><div class="t">Wed 28 Oct</div><div class="s">07:05</div></div><div class="v">74.5 kg</div></div>
+        </div>
+      </div>
+      <nav class="nav">
+        <div><svg class="icon"><use href="#i-home"/></svg>Home</div>
+        <div><svg class="icon"><use href="#i-food"/></svg>Nutrition</div>
+        <div><svg class="icon"><use href="#i-dumbbell"/></svg>Workouts</div>
+        <div class="on"><svg class="icon"><use href="#i-chart"/></svg>Progress</div>
+        <div><svg class="icon"><use href="#i-user"/></svg>Profile</div>
+      </nav>
+    </div>
+    <figcaption>
+      <b>4 · Progress</b>
+      <ul>
+        <li>The segmented control switches between datasets; the range tabs apply to all three.</li>
+        <li>Chart convention for the whole app: measured = solid, target/estimate = dashed.</li>
+        <li>Square data points and a square marker for the latest value keep the shape language consistent.</li>
+        <li>Nutrition and Workouts views reuse the same header → chart → stats → list skeleton.</li>
+      </ul>
+      <div class="q">Workshop: show the trend line (moving average) in addition to raw entries?</div>
+    </figcaption>
+  </figure>
+
+  <!-- =============== 5. PROFILE & SETTINGS =============== -->
+  <figure>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>▮▮▮ 100%</span></div>
+      <div class="content">
+        <div class="topbar"><div class="headline">Profile</div></div>
+
+        <div class="card">
+          <div class="card-head"><span class="title">Your details</span><span class="textbtn"><svg class="icon sm"><use href="#i-edit"/></svg>Edit</span></div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; row-gap:10px">
+            <div><div class="overline">Age</div><div class="num">27</div></div>
+            <div><div class="overline">Height</div><div class="num">178 cm</div></div>
+            <div><div class="overline">Weight</div><div class="num">74.2 kg</div></div>
+            <div><div class="overline">Activity</div><div>Moderate</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><span class="title">Estimates</span><span class="badge">ESTIMATE</span></div>
+          <div class="stats">
+            <div><div class="overline">BMI</div><div class="v">23.4</div></div>
+            <div><div class="overline">BMR</div><div class="v">1,720</div></div>
+            <div><div class="overline">TDEE</div><div class="v">2,670</div></div>
+          </div>
+          <div class="small muted" style="margin-top:10px">Mifflin-St Jeor with your activity level. <span class="textbtn">How is this calculated?</span></div>
+        </div>
+
+        <div class="group">
+          <div class="overline">Goals &amp; targets</div>
+          <div class="list">
+            <div class="item"><div><div class="t">Goals</div><div class="s">Lose weight · Build muscle</div></div><svg class="icon sm muted"><use href="#i-chev"/></svg></div>
+            <div class="item"><div><div class="t">Nutrition targets</div><div class="s">2,100 kcal · adjusted by you</div></div><svg class="icon sm muted"><use href="#i-chev"/></svg></div>
+          </div>
+        </div>
+        <div class="group">
+          <div class="overline">Preferences</div>
+          <div class="list">
+            <div class="item"><div class="t">Units</div><div class="segmented two"><div class="on">Metric</div><div>Imperial</div></div></div>
+            <div class="item"><div class="t">Theme</div><div class="v small muted">System <svg class="icon sm" style="vertical-align:-3px"><use href="#i-chev"/></svg></div></div>
+            <div class="item"><div class="t">Dashboard cards</div><svg class="icon sm muted"><use href="#i-chev"/></svg></div>
+          </div>
+        </div>
+        <div class="group">
+          <div class="overline">Your data</div>
+          <div class="list">
+            <div class="item"><div><div class="t">Export backup</div><div class="s">Last export: never</div></div><svg class="icon sm muted"><use href="#i-chev"/></svg></div>
+            <div class="item"><div class="t">Import backup</div><svg class="icon sm muted"><use href="#i-chev"/></svg></div>
+            <div class="item"><div class="t" style="color:var(--error)">Reset all data</div></div>
+          </div>
+        </div>
+      </div>
+      <nav class="nav">
+        <div><svg class="icon"><use href="#i-home"/></svg>Home</div>
+        <div><svg class="icon"><use href="#i-food"/></svg>Nutrition</div>
+        <div><svg class="icon"><use href="#i-dumbbell"/></svg>Workouts</div>
+        <div><svg class="icon"><use href="#i-chart"/></svg>Progress</div>
+        <div class="on"><svg class="icon"><use href="#i-user"/></svg>Profile</div>
+      </nav>
+    </div>
+    <figcaption>
+      <b>5 · Profile &amp; Settings</b>
+      <ul>
+        <li>No avatar or photo; the profile is the data itself.</li>
+        <li>Estimates are always badged and explain their inputs (spec: transparent estimates).</li>
+        <li>Switching units changes display only; stored values stay metric.</li>
+        <li>"Last export: never" nudges users to back up, since uninstalling deletes local data.</li>
+        <li>About &amp; disclaimer sits below the fold.</li>
+      </ul>
+      <div class="q">Workshop: nav label "Profile" or "Settings"?</div>
+    </figcaption>
+  </figure>
+
+  </div>
+</div>
+</body>
+</html>

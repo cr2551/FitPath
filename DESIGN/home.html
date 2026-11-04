@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FitPath Home v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ---------- Design tokens v3 (mirror of lib/core/theme) ---------- */
+  :root {
+    --background: #F2F5EF;
+    --surface: #FFFFFF;
+    --subtle: #E8ECE4;
+    --ink: #121815;
+    --muted: #5B6B62;
+    --line: #DDE5DC;
+    --energy: #C5F23A;
+    --energy-soft: #EEF8D2;
+    --protein: #EF4C4C;
+    --carbs: #3D8BFD;
+    --fat: #F7B500;
+    --unknown: #A7B3AC;
+    --success: #18804A;
+    --warning: #9A5A00;
+    --r-sm: 4px;
+    --r-md: 8px;
+    --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
+    --sans: "Barlow", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #E3E8E0; color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.4; padding: 32px 16px 64px; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* ---------- Page chrome (not part of the app) ---------- */
+  .page { max-width: 1180px; margin: 0 auto; display: flex; gap: 48px; flex-wrap: wrap; justify-content: center; align-items: flex-start; }
+  .side { flex: 1; min-width: 320px; max-width: 700px; }
+  .side h1 { font-family: var(--cond); font-weight: 700; font-size: 40px; line-height: 1; text-transform: uppercase; }
+  .side .lede { color: var(--muted); margin: 8px 0 24px; }
+  .side h2 { font-family: var(--cond); font-weight: 700; font-size: 20px; text-transform: uppercase; letter-spacing: .04em; margin: 28px 0 10px; }
+  .side ul { margin-left: 18px; }
+  .side li { margin-bottom: 5px; }
+  .side code { font-size: 13px; background: var(--surface); border: 1px solid var(--line); padding: 0 4px; border-radius: 2px; }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 14px 16px; font-size: 14px; }
+  .panel table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  .panel td, .panel th { padding: 5px 0; border-bottom: 1px solid var(--line); text-align: right; }
+  .panel th { font-family: var(--cond); font-weight: 600; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .panel td:first-child, .panel th:first-child { text-align: left; }
+  .panel tr:last-child td { border-bottom: 0; font-weight: 600; }
+  .sq { display: inline-block; width: 10px; height: 10px; margin-right: 6px; }
+  .states { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+  .state { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 12px 10px 14px; text-align: center; }
+  .state .lbl { font-family: var(--cond); font-weight: 600; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; text-align: left; }
+  .state .cap { font-size: 12px; color: var(--muted); margin-top: 6px; min-height: 34px; }
+  .variants { display: grid; gap: 12px; }
+  .variants .lbl { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+  .swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+  .sw { width: 76px; font-size: 11px; color: var(--muted); }
+  .sw i { display: block; height: 36px; border-radius: var(--r-sm); border: 1px solid var(--line); margin-bottom: 3px; }
+  .q { color: var(--ink); font-weight: 600; }
+
+  /* Device frame (hardware, not UI) */
+  .phone { width: 376px; height: 812px; flex: none; border: 8px solid #121815; border-radius: 34px; background: var(--background); overflow: hidden; display: flex; flex-direction: column; }
+  .status { height: 28px; flex: none; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; font-size: 12px; font-weight: 600; }
+  .content { flex: 1; overflow-y: auto; scrollbar-width: none; padding: 6px 16px 20px; }
+  .content::-webkit-scrollbar { display: none; }
+
+  /* ---------- App components ---------- */
+  .overline { font-family: var(--cond); font-weight: 600; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .headline { font-family: var(--cond); font-weight: 700; font-size: 26px; line-height: 1; }
+  .card-title { font-family: var(--cond); font-weight: 600; font-size: 22px; line-height: 1.1; }
+  .display { font-family: var(--cond); font-weight: 700; font-size: 32px; line-height: 1; font-variant-numeric: tabular-nums; }
+  .unit { font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--muted); }
+  .small { font-size: 13px; }
+  .muted { color: var(--muted); }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .icon { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: square; stroke-linejoin: miter; flex: none; }
+  .icon.sm { width: 16px; height: 16px; }
+  .textbtn { color: var(--ink); font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+
+  .header { display: grid; grid-template-columns: 40px 1fr 40px; align-items: center; margin-bottom: 4px; }
+  .header .title { text-align: center; }
+  .iconbtn { width: 40px; height: 40px; border-radius: var(--r-md); background: var(--subtle); display: grid; place-items: center; }
+  .goal-line { text-align: center; font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+
+  .datestrip { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-bottom: 14px; }
+  .datestrip div { background: var(--subtle); border-radius: var(--r-md); text-align: center; padding: 8px 0 7px; font-family: var(--cond); font-weight: 600; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .datestrip u { display: block; width: 4px; height: 4px; margin: 4px auto 3px; text-decoration: none; }
+  .datestrip .has u { background: var(--muted); }
+  .datestrip b { display: block; font-size: 19px; font-weight: 700; color: var(--ink); letter-spacing: 0; font-variant-numeric: tabular-nums; }
+  .datestrip .past b { color: var(--muted); }
+  .datestrip .sel { background: var(--ink); color: #fff; }
+  .datestrip .sel b { color: #fff; }
+  .datestrip .sel u { background: var(--energy); }
+  .datestrip.v-lime .sel { background: var(--energy); color: var(--ink); }
+  .datestrip.v-lime .sel b { color: var(--ink); }
+  .datestrip.v-lime .sel u { background: var(--ink); }
+  .datestrip.v-blue .sel { background: #1F5FD1; }
+  .datestrip.v-blue .sel u { background: #fff; }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 16px; margin-bottom: 12px; }
+  .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .cal-head { display: flex; gap: 12px; align-items: center; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+  .tile { width: 36px; height: 36px; border-radius: var(--r-md); background: var(--energy-soft); display: grid; place-items: center; flex: none; }
+  .cal-body { display: grid; grid-template-columns: 166px 1fr; gap: 14px; align-items: center; padding: 16px 0; }
+
+  .legend .item { margin-bottom: 12px; }
+  .legend .item:last-child { margin-bottom: 0; }
+  .legend .name { display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 15px; }
+  .legend .name .pct { margin-left: auto; font-weight: 500; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .legend .bar { height: 6px; background: var(--line); margin: 5px 0 4px; }
+  .legend .bar i { display: block; height: 100%; }
+  .legend .g { font-size: 14px; font-variant-numeric: tabular-nums; }
+  .legend .g span { color: var(--muted); }
+  .mi { width: 18px; height: 18px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .footstrip { display: grid; grid-template-columns: auto 1fr; background: var(--subtle); border-radius: var(--r-sm); font-size: 13px; white-space: nowrap; }
+  .footstrip div { display: flex; align-items: center; gap: 6px; padding: 9px 10px; }
+  .footstrip div + div { border-left: 1px solid #D3D9CF; }
+
+  .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+  .btn { height: 48px; border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--cond); font-weight: 700; font-size: 17px; letter-spacing: .05em; text-transform: uppercase; }
+  .btn.energy { background: var(--energy); color: var(--ink); }
+  .btn.primary { background: var(--ink); color: #fff; }
+
+  .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+  .week div { font-family: var(--cond); font-weight: 600; font-size: 12px; letter-spacing: .06em; color: var(--muted); }
+  .week i { display: block; height: 30px; background: var(--subtle); border-radius: 2px; margin-bottom: 4px; }
+  .week .on i { background: var(--ink); }
+  .week .today { color: var(--ink); }
+  .week .today i { background: transparent; border: 2px solid var(--ink); }
+
+  .nav { height: 70px; flex: none; display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line); background: var(--surface); }
+  .nav div { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 12px; font-weight: 500; color: var(--muted); }
+  .nav .ind { width: 48px; height: 28px; display: grid; place-items: center; border-radius: var(--r-sm); }
+  .nav .on { color: var(--ink); font-weight: 600; }
+  .nav .on .ind { background: var(--energy); }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20h-5.5v-5.5h-5V20H4z"/></symbol>
+  <symbol id="i-food" viewBox="0 0 24 24"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 21V3c-2.2 0-4 2.5-4 6v4h4"/></symbol>
+  <symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M3 10v4M6 7v10M18 7v10M21 10v4M6 12h12"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 4v16h16M7 15l4-4 3 3 5-6"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-layout" viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3 5 14h6l-1 7 8-11h-6z"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3c.6 3 4.5 5 4.5 10a4.5 4.5 0 0 1-9 0c0-2.2 1.1-3.6 2.2-4.6.1 1.8.9 2.9 2 3.3-.6-2.9-.4-5.6.3-8.7z"/></symbol>
+  <symbol id="i-protein" viewBox="0 0 24 24"><path d="M15.5 3.5a5 5 0 0 0-4.8 6.4L5.6 15a2.2 2.2 0 1 0 3.1 3.1l5.1-5.1a5 5 0 1 0 1.7-9.5z"/></symbol>
+  <symbol id="i-carbs" viewBox="0 0 24 24"><path d="M12 21V7M12 11c-2.6 0-4-1.6-4-4 2.6 0 4 1.6 4 4zM12 11c2.6 0 4-1.6 4-4-2.6 0-4 1.6-4 4zM12 16c-2.6 0-4-1.6-4-4 2.6 0 4 1.6 4 4zM12 16c2.6 0 4-1.6 4-4-2.6 0-4 1.6-4 4zM12 7V3"/></symbol>
+  <symbol id="i-fat" viewBox="0 0 24 24"><path d="M12 3c3.4 4.4 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 2.6-6.6 6-11z"/></symbol>
+</svg>
+
+<div class="page">
+
+  <!-- ======================= PHONE ======================= -->
+  <div class="phone">
+    <div class="status"><span>9:41</span><span>▮▮▮ 100%</span></div>
+    <div class="content">
+      <div class="header">
+        <span class="iconbtn" title="Profile"><svg class="icon"><use href="#i-user"/></svg></span>
+        <div class="title headline">Today</div>
+        <span class="iconbtn" title="Edit dashboard"><svg class="icon"><use href="#i-layout"/></svg></span>
+      </div>
+      <div class="goal-line"><b style="color:var(--ink)">Lose weight</b> · 72 kg by 1 Mar</div>
+
+      <div class="datestrip">
+        <div class="past has">Sun<u></u><b>01</b></div>
+        <div class="past has">Mon<u></u><b>02</b></div>
+        <div class="sel has">Tue<u></u><b>03</b></div>
+        <div>Wed<u></u><b>04</b></div>
+        <div>Thu<u></u><b>05</b></div>
+        <div>Fri<u></u><b>06</b></div>
+        <div>Sat<u></u><b>07</b></div>
+      </div>
+
+      <!-- Calories & macros card (reference layout) -->
+      <section class="card">
+        <div class="cal-head">
+          <span class="tile"><svg class="icon"><use href="#i-flame"/></svg></span>
+          <div>
+            <div class="card-title num">Calorie goal: 2,100 kcal</div>
+            <div class="small muted"><b style="color:var(--ink)">460</b> kcal remaining today</div>
+          </div>
+        </div>
+
+        <div class="cal-body">
+          <!-- r=72, C=452.39, arc = 1640/2100 = 353.3; shares P 27% C 44% F 29%; 10px gap at every boundary -->
+          <svg width="166" height="166" viewBox="0 0 180 180" role="img" aria-label="1,640 of 2,100 calories eaten, 460 left. Protein 27 percent, carbs 44 percent, fat 29 percent.">
+            <g transform="rotate(-90 90 90)" fill="none" stroke-width="18">
+              <circle cx="90" cy="90" r="72" stroke="#EF4C4C" stroke-dasharray="84.97 452.39" stroke-dashoffset="-5"/>
+              <circle cx="90" cy="90" r="72" stroke="#3D8BFD" stroke-dasharray="145.38 452.39" stroke-dashoffset="-99.97"/>
+              <circle cx="90" cy="90" r="72" stroke="#F7B500" stroke-dasharray="92.95 452.39" stroke-dashoffset="-255.35"/>
+              <circle cx="90" cy="90" r="72" stroke="#DDE5DC" stroke-dasharray="89.1 452.39" stroke-dashoffset="-358.3"/>
+            </g>
+            <text x="90" y="72" text-anchor="middle" font-family="Barlow Condensed" font-weight="600" font-size="12" letter-spacing="1" fill="#5B6B62">EATEN</text>
+            <text x="90" y="105" text-anchor="middle" font-family="Barlow Condensed" font-weight="700" font-size="40" fill="#121815">1,640</text>
+            <text x="90" y="122" text-anchor="middle" font-family="Barlow" font-size="13" fill="#5B6B62">kcal</text>
+          </svg>
+
+          <div class="legend">
+            <div class="item">
+              <div class="name"><svg class="mi" stroke="#EF4C4C"><use href="#i-protein"/></svg>Protein<span class="pct">27%</span></div>
+              <div class="bar"><i style="width:79%; background:var(--protein)"></i></div>
+              <div class="g">110 g <span>/ 140 g</span></div>
+            </div>
+            <div class="item">
+              <div class="name"><svg class="mi" stroke="#3D8BFD"><use href="#i-carbs"/></svg>Carbs<span class="pct">44%</span></div>
+              <div class="bar"><i style="width:78%; background:var(--carbs)"></i></div>
+              <div class="g">180 g <span>/ 230 g</span></div>
+            </div>
+            <div class="item">
+              <div class="name"><svg class="mi" stroke="#E0A300"><use href="#i-fat"/></svg>Fat<span class="pct">29%</span></div>
+              <div class="bar"><i style="width:76%; background:var(--fat)"></i></div>
+              <div class="g">53 g <span>/ 70 g</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footstrip">
+          <div><svg class="icon sm"><use href="#i-food"/></svg>3 meals logged</div>
+          <div><svg class="icon sm"><use href="#i-dumbbell"/></svg>2 workouts this week</div>
+        </div>
+      </section>
+
+      <div class="actions">
+        <div class="btn energy"><svg class="icon sm" style="stroke-width:2.5"><use href="#i-plus"/></svg>Log food</div>
+        <div class="btn primary"><svg class="icon sm" style="stroke-width:2"><use href="#i-bolt"/></svg>Start workout</div>
+      </div>
+
+      <section class="card">
+        <div class="card-head"><span class="card-title">Weight</span><span class="textbtn"><svg class="icon sm"><use href="#i-plus"/></svg>Log</span></div>
+        <div class="row">
+          <div>
+            <div class="display">74.2 <span class="unit">kg</span></div>
+            <div class="small" style="color:var(--success); font-weight:600; margin-top:4px">▼ 1.3 kg · last 30 days</div>
+          </div>
+          <svg width="120" height="44" viewBox="0 0 120 44" aria-hidden="true">
+            <polyline fill="none" stroke="#121815" stroke-width="2" points="2,6 14,10 26,8 38,17 50,19 62,17 74,26 86,28 98,30 112,35"/>
+            <rect x="108" y="31" width="8" height="8" fill="#121815"/>
+          </svg>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="card-title">This week</span><span class="small muted"><b style="color:var(--ink)">3</b> of 4 sessions</span></div>
+        <div class="week">
+          <div class="on"><i></i>S</div><div class="on"><i></i>M</div><div class="today"><i></i>T</div><div><i></i>W</div><div><i></i>T</div><div><i></i>F</div><div class="on"><i></i>S</div>
+        </div>
+      </section>
+    </div>
+    <nav class="nav">
+      <div class="on"><span class="ind"><svg class="icon"><use href="#i-home"/></svg></span>Home</div>
+      <div><span class="ind"><svg class="icon"><use href="#i-food"/></svg></span>Nutrition</div>
+      <div><span class="ind"><svg class="icon"><use href="#i-dumbbell"/></svg></span>Workouts</div>
+      <div><span class="ind"><svg class="icon"><use href="#i-chart"/></svg></span>Progress</div>
+      <div><span class="ind"><svg class="icon"><use href="#i-user"/></svg></span>Profile</div>
+    </nav>
+  </div>
+
+  <!-- ======================= NOTES ======================= -->
+  <div class="side">
+    <h1>Home · v3</h1>
+    <p class="lede">The calories card follows the reference layout: goal header, ring with macro legend, footer strip. Cards are light with no green block, the selected day is ink rather than orange, and the ring has wide gaps between segments. Data is illustrative; the phone scrolls. Full rules are in <code>DESIGN/README.md</code>.</p>
+
+    <h2>Calorie ring</h2>
+    <ul>
+      <li><b>Arc length</b> = eaten ÷ goal (1,640 / 2,100 = 78%). The grey track is what's left.</li>
+      <li><b>Segments</b> = each macro's share of eaten calories, ordered protein → carbs → fat, clockwise from 12 o'clock, matching the legend order.</li>
+      <li><b>10 px gaps</b> (about 8°) at every boundary, including both ends of the track; each segment gives up half a gap per side so proportions stay exact.</li>
+    </ul>
+    <div class="panel" style="margin-top:10px">
+      <table>
+        <tr><th>Macro</th><th>Eaten</th><th>× kcal/g</th><th>kcal</th><th>Share</th></tr>
+        <tr><td><span class="sq" style="background:var(--protein)"></span>Protein</td><td>110 g</td><td>4</td><td>440</td><td>27%</td></tr>
+        <tr><td><span class="sq" style="background:var(--carbs)"></span>Carbs</td><td>180 g</td><td>4</td><td>720</td><td>44%</td></tr>
+        <tr><td><span class="sq" style="background:var(--fat)"></span>Fat</td><td>53 g</td><td>9</td><td>477</td><td>29%</td></tr>
+        <tr><td>Total</td><td></td><td></td><td>1,637</td><td>100%</td></tr>
+      </table>
+      <div class="small muted" style="margin-top:8px">The arc uses label calories (1,640); segments split that arc proportionally.</div>
+    </div>
+
+    <h2>Ring states</h2>
+    <!-- Small rings: r=40, C=251.33, stroke 12, 7px gaps -->
+    <div class="states">
+      <div class="state">
+        <div class="lbl">On track</div>
+        <svg width="100" height="100" viewBox="0 0 100 100"><g transform="rotate(-90 50 50)" fill="none" stroke-width="12">
+          <circle cx="50" cy="50" r="40" stroke="#EF4C4C" stroke-dasharray="45.76 251.33" stroke-dashoffset="-3.5"/>
+          <circle cx="50" cy="50" r="40" stroke="#3D8BFD" stroke-dasharray="79.32 251.33" stroke-dashoffset="-56.26"/>
+          <circle cx="50" cy="50" r="40" stroke="#F7B500" stroke-dasharray="50.2 251.33" stroke-dashoffset="-142.58"/>
+          <circle cx="50" cy="50" r="40" stroke="#DDE5DC" stroke-dasharray="48.05 251.33" stroke-dashoffset="-199.78"/></g>
+          <text x="50" y="57" text-anchor="middle" font-family="Barlow Condensed" font-weight="700" font-size="22" fill="#121815">1,640</text></svg>
+        <div class="cap"><b style="color:var(--ink)">460</b> kcal remaining</div>
+      </div>
+      <div class="state">
+        <div class="lbl">Over target</div>
+        <svg width="100" height="100" viewBox="0 0 100 100"><g transform="rotate(-90 50 50)" fill="none" stroke-width="12">
+          <circle cx="50" cy="50" r="40" stroke="#EF4C4C" stroke-dasharray="60.56 251.33" stroke-dashoffset="-3.5"/>
+          <circle cx="50" cy="50" r="40" stroke="#3D8BFD" stroke-dasharray="103.54 251.33" stroke-dashoffset="-71.06"/>
+          <circle cx="50" cy="50" r="40" stroke="#F7B500" stroke-dasharray="66.24 251.33" stroke-dashoffset="-181.6"/></g>
+          <text x="50" y="57" text-anchor="middle" font-family="Barlow Condensed" font-weight="700" font-size="22" fill="#121815">2,220</text></svg>
+        <div class="cap" style="color:var(--warning)"><b>120</b> kcal over today</div>
+      </div>
+      <div class="state">
+        <div class="lbl">Nothing logged</div>
+        <svg width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="#DDE5DC" stroke-width="12"/>
+          <text x="50" y="57" text-anchor="middle" font-family="Barlow Condensed" font-weight="700" font-size="22" fill="#121815">0</text></svg>
+        <div class="cap"><b style="color:var(--ink)">+ Log your first meal</b></div>
+      </div>
+      <div class="state">
+        <div class="lbl">Unknown macros</div>
+        <svg width="100" height="100" viewBox="0 0 100 100"><g transform="rotate(-90 50 50)" fill="none" stroke-width="12">
+          <circle cx="50" cy="50" r="40" stroke="#EF4C4C" stroke-dasharray="39 251.33" stroke-dashoffset="-3.5"/>
+          <circle cx="50" cy="50" r="40" stroke="#3D8BFD" stroke-dasharray="68.27 251.33" stroke-dashoffset="-49.5"/>
+          <circle cx="50" cy="50" r="40" stroke="#F7B500" stroke-dasharray="42.87 251.33" stroke-dashoffset="-124.77"/>
+          <circle cx="50" cy="50" r="40" stroke="#A7B3AC" stroke-dasharray="18.13 251.33" stroke-dashoffset="-174.64"/>
+          <circle cx="50" cy="50" r="40" stroke="#DDE5DC" stroke-dasharray="48.05 251.33" stroke-dashoffset="-199.78"/></g>
+          <text x="50" y="57" text-anchor="middle" font-family="Barlow Condensed" font-weight="700" font-size="22" fill="#121815">1,640</text></svg>
+        <div class="cap"><span class="sq" style="background:var(--unknown); width:8px; height:8px"></span>210 kcal with unknown macros</div>
+      </div>
+      <div class="state">
+        <div class="lbl">No calorie goal</div>
+        <svg width="100" height="100" viewBox="0 0 100 100"><g transform="rotate(-90 50 50)" fill="none" stroke-width="12">
+          <circle cx="50" cy="50" r="40" stroke="#EF4C4C" stroke-dasharray="60.56 251.33" stroke-dashoffset="-3.5"/>
+          <circle cx="50" cy="50" r="40" stroke="#3D8BFD" stroke-dasharray="103.54 251.33" stroke-dashoffset="-71.06"/>
+          <circle cx="50" cy="50" r="40" stroke="#F7B500" stroke-dasharray="66.24 251.33" stroke-dashoffset="-181.6"/></g>
+          <text x="50" y="57" text-anchor="middle" font-family="Barlow Condensed" font-weight="700" font-size="22" fill="#121815">1,640</text></svg>
+        <div class="cap">Macro split only · <b style="color:var(--ink)">Set a goal</b></div>
+      </div>
+    </div>
+
+    <h2>Selected-day options</h2>
+    <div class="variants">
+      <div><div class="lbl">A · Ink with lime marker (proposed): neutral, strongest contrast</div>
+        <div class="datestrip" style="max-width:340px; margin:0"><div class="past has">Sun<u></u><b>01</b></div><div class="past has">Mon<u></u><b>02</b></div><div class="sel has">Tue<u></u><b>03</b></div><div>Wed<u></u><b>04</b></div><div>Thu<u></u><b>05</b></div><div>Fri<u></u><b>06</b></div><div>Sat<u></u><b>07</b></div></div></div>
+      <div><div class="lbl">B · Lime with ink text: most energetic, matches the nav indicator</div>
+        <div class="datestrip v-lime" style="max-width:340px; margin:0"><div class="past has">Sun<u></u><b>01</b></div><div class="past has">Mon<u></u><b>02</b></div><div class="sel has">Tue<u></u><b>03</b></div><div>Wed<u></u><b>04</b></div><div>Thu<u></u><b>05</b></div><div>Fri<u></u><b>06</b></div><div>Sat<u></u><b>07</b></div></div></div>
+      <div><div class="lbl">C · Blue (<code>#1F5FD1</code>, darker than carbs for text contrast): cool and calm, but close to the carbs color</div>
+        <div class="datestrip v-blue" style="max-width:340px; margin:0"><div class="past has">Sun<u></u><b>01</b></div><div class="past has">Mon<u></u><b>02</b></div><div class="sel has">Tue<u></u><b>03</b></div><div>Wed<u></u><b>04</b></div><div>Thu<u></u><b>05</b></div><div>Fri<u></u><b>06</b></div><div>Sat<u></u><b>07</b></div></div></div>
+    </div>
+
+    <h2>Palette v3</h2>
+    <div class="swatches">
+      <div class="sw"><i style="background:#F2F5EF"></i>background</div>
+      <div class="sw"><i style="background:#FFFFFF"></i>surface</div>
+      <div class="sw"><i style="background:#E8ECE4"></i>subtle</div>
+      <div class="sw"><i style="background:#121815"></i>ink</div>
+      <div class="sw"><i style="background:#C5F23A"></i>energy</div>
+      <div class="sw"><i style="background:#EF4C4C"></i>protein</div>
+      <div class="sw"><i style="background:#3D8BFD"></i>carbs</div>
+      <div class="sw"><i style="background:#F7B500"></i>fat</div>
+      <div class="sw"><i style="background:#A7B3AC"></i>unknown</div>
+      <div class="sw"><i style="background:#18804A"></i>success</div>
+    </div>
+
+    <h2>Differences from the reference</h2>
+    <ul>
+      <li>Date tiles and buttons use an 8 px maximum radius instead of pills (project style rule).</li>
+      <li>Ring segments have square ends and wider, even gaps, plus an explicit "left" track.</li>
+      <li>The macro legend follows the ring order (protein, carbs, fat) and adds each macro's share of calories.</li>
+      <li>No profile photo or notification bell in the MVP: the header has profile and edit-layout buttons.</li>
+    </ul>
+
+    <h2>Questions for the workshop</h2>
+    <ul class="q">
+      <li>Selected day: A, B or C?</li>
+      <li>Ring at about 170 px beside the legend (reference), or larger with the legend underneath?</li>
+      <li>Footer strip: meals + workouts this week, or something else?</li>
+      <li>Keep the two quick-action buttons under the card?</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>
