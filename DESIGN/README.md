@@ -9,6 +9,14 @@
 
 ## Changelog
 
+**v5 (no pastels; implemented in `lib/core/theme/`)**
+- Project rule: **no pastel colors**. The light açaí tint `accentSoft` is removed.
+  - The active tab is now a **solid açaí indicator with a white icon**.
+  - The selected-day marker is white.
+  - The flame tile uses `subtle`.
+- The faintly green-tinted greys (background, subtle, line, muted text) became **neutral greys**, so no surface reads as mint.
+- Dark-theme values were finalized and contrast-checked by tests.
+
 **v4 (food palette)**
 - **Carbs is green** (`#7DB547`, pea/leaf green: vegetables, grains), not blue. Blue doesn't read as food.
 - **The accent is açaí purple** (`#5B2A6E`, berries, beets, açaí bowls) instead of lime, which didn't read as food either. It is used for the main action, the active tab, the selected-day marker and the latest chart point.
@@ -28,7 +36,7 @@
 
 ## 1. Direction in one paragraph
 
-Light, fresh and athletic. A soft, slightly green-tinted background carries **white cards**. Text, the selected state and primary buttons use a **near-black ink**. **Açaí purple** is the accent, used for the main action ("Log food"), the active tab, the day marker and the latest chart point. The **macro colors are the stars**, taken from real food: red protein, green carbs, yellow fat, shown in the ring and the macro bars. Headlines and numbers use a **condensed athletic sans** that reads like a scoreboard. The structure stays disciplined: corners at most 8 px, flat color, no gradients and no shadows.
+Light, fresh and athletic. A neutral light-grey background carries **white cards**. Text, the selected state and primary buttons use a **near-black ink**. **Açaí purple** is the accent, used for the main action ("Log food"), the active tab and the latest chart point. The **macro colors are the stars**, taken from real food: red protein, green carbs, yellow fat, shown in the ring and the macro bars. Headlines and numbers use a **condensed athletic sans** that reads like a scoreboard. The structure stays disciplined: corners at most 8 px, flat color, no gradients and no shadows.
 
 ## 2. Design tokens
 
@@ -38,18 +46,17 @@ All values live in `lib/core/theme/` and nowhere else.
 
 | Token | Light | Use |
 |---|---|---|
-| `background` | `#F2F5EF` | App background (light, green-tinted) |
+| `background` | `#F5F5F4` | App background (neutral light grey) |
 | `surface` | `#FFFFFF` | Cards, sheets, bottom navigation |
-| `subtle` | `#E8ECE4` | Unselected date tiles, icon buttons, card footer strip, icon tiles |
+| `subtle` | `#E9EAE7` | Unselected date tiles, icon buttons, card footer strip, icon tiles |
 | `ink` | `#121815` | Primary text, icons, **selected day**, primary buttons, week markers |
-| `inkMuted` | `#5B6B62` | Secondary text, captions (5.6:1 on white) |
-| `line` | `#DDE5DC` | 1 px borders, dividers, empty ring track, empty bar tracks |
+| `inkMuted` | `#5E625F` | Secondary text, captions (6.2:1 on white) |
+| `line` | `#DEDFDB` | 1 px borders, dividers, empty ring track, empty bar tracks |
 | `accent` | `#5B2A6E` | Açaí purple: "Log food" button fill (white text, 10.5:1), active-tab icon, "live" marker, latest chart point. Safe as text on white. |
-| `accentSoft` | `#EFE6F2` | Açaí tint: nav indicator background, selected-day marker, icon tiles (e.g. the flame next to "Calorie goal") |
 | `protein` | `#EF4C4C` | Protein (red) |
 | `carbs` | `#7DB547` | Carbs (pea/leaf green) |
 | `fat` | `#F7B500` | Fat (yellow) |
-| `unknown` | `#A7B3AC` | Calories whose macro split is unknown |
+| `unknown` | `#A2A7A3` | Calories whose macro split is unknown |
 | `success` | `#18804A` | Positive change (4.9:1 on white) |
 | `warning` | `#9A5A00` | Over target, missing data (5.5:1 on white) |
 | `error` | `#C6282B` | Destructive actions, validation errors |
@@ -58,7 +65,7 @@ All values live in `lib/core/theme/` and nowhere else.
 - Protein (3.6:1) passes the 3:1 contrast WCAG asks for graphics. Green carbs (2.4:1) and yellow fat (1.8:1) do not. So **color is never the only cue**: the ring always sits next to its legend, every bar carries its name and grams in text, and each macro has its own icon.
 - **Color-blind safety:** red protein and green carbs can look alike to people with red-green color blindness. The fixed segment order (protein, then carbs, then fat), the icons and the text labels keep them distinguishable, and the green is deliberately much lighter than the red.
 
-The dark theme uses `#0F1412` background, `#181E1B` surface and `#ECF0EA` ink, with the same accent and macro colors (accent lightened to `#B98AC9` for contrast on dark). It is wired up but only lightly polished for the MVP.
+The dark theme uses `#0F1110` background, `#181B19` surface and `#EDEFEC` ink, with the same macro colors. The accent is lightened to `#A866C5` with dark text on it (4.85:1). It is wired up but only lightly polished for the MVP.
 
 ### Typography
 
@@ -80,9 +87,9 @@ Both fonts are OFL-licensed and **bundled** with the app, never downloaded at ru
 
 - **Spacing:** 4-pt scale (`4, 8, 12, 16, 24, 32`). The screen gutter is 16, and gaps between cards are 12.
 - **Radius:** `none = 0` (dividers, bars, ring segment ends), `sm = 4` (buttons, inputs, chips, nav indicator), `md = 8` (cards, sheets, dialogs, date tiles, icon buttons). **8 px is the maximum**, so there are no pill shapes. The date tiles are the reference's pills translated to 8 px rectangles.
-- **Depth:** elevation 0. White cards on the tinted background with a 1 px `line` border. There are **no shadows and no gradients**.
+- **Depth:** elevation 0. White cards on the grey background with a 1 px `line` border. There are **no shadows and no gradients**.
 - **Bars and arcs:** square ends, never rounded caps.
-- **Icons:** outlined, 22 px, 1.5 px stroke. Small icon tiles (36 px square, 8 px radius, `subtle` or `accentSoft` fill) are allowed in card headers. Icons never sit inside circles.
+- **Icons:** outlined, 22 px, 1.5 px stroke. Small icon tiles (36 px square, 8 px radius, `subtle` fill) are allowed in card headers. Icons never sit inside circles.
 
 ## 3. Components
 
@@ -95,13 +102,13 @@ All of these are built once in `lib/shared/widgets/` (#6). Feature screens compo
 | `CardFooterStrip` | `subtle` background, 4 px radius, items separated by a 1 px vertical line, each with a small icon + text |
 | `MacroCalorieRing` | See section 4 |
 | `MacroLegendRow` | Icon + macro name, share of calories on the right, 6 px square-ended bar, then `consumed g / target g`. If the target is unset, it shows "Set target" instead of the bar. |
-| `DateStrip` | Seven tiles (8 px radius) showing the weekday overline and date number. Unselected: `subtle` fill, `ink` date. Past days are muted. Selected: **`ink` fill, white text, `accentSoft` marker**. A 4 px square marker under the date means "has entries". |
+| `DateStrip` | Seven tiles (8 px radius) showing the weekday overline and date number. Unselected: `subtle` fill, `ink` date. Past days are muted. Selected: **`ink` fill, white text, white marker**. A 4 px square marker under the date means "has entries". |
 | Buttons | **Accent** (açaí fill, white text) for the single most important action (Log food). **Primary** (ink fill, white text). **Outlined** (ink border). **Text** (ink, semibold). All 4 px radius, 48 px tall. |
 | `ListRow` | Full-bleed row with a 1 px divider; title + subtitle on the left, value + chevron on the right |
 | `SegmentedControl` | Joined 4 px segments; selected = ink fill, white text |
 | `EstimateBadge` | Square, outlined overline label "ESTIMATE"; tap opens an explanation sheet |
 | `EmptyState` | One line of muted text + one action |
-| Bottom navigation | White bar, five labeled items; the active item has a 48x28 `accentSoft` rectangle (4 px radius) behind an `accent` icon, with an `ink` label |
+| Bottom navigation | White bar, five labeled items; the active item has a 48x28 solid `accent` rectangle (4 px radius) behind a white icon, with an `ink` label |
 
 ## 4. Home calorie ring (`MacroCalorieRing`)
 
@@ -116,7 +123,7 @@ All of these are built once in `lib/shared/widgets/` (#6). Feature screens compo
 
 ### Layout (as in the reference)
 - Inside the calories `SectionCard`:
-  1. **Header:** an `accentSoft` flame icon tile, then "Calorie goal: 2,100 kcal" with the subtitle "**460** kcal remaining today" (or "**120** kcal over today" in `warning`).
+  1. **Header:** a `subtle` flame icon tile, then "Calorie goal: 2,100 kcal" with the subtitle "**460** kcal remaining today" (or "**120** kcal over today" in `warning`).
   2. **Body:** the ring (**about 170 px** in diameter on a 360 dp phone, taking about half the card width) on the left. On the right, three `MacroLegendRow`s in the same order and colors as the segments.
   3. **Footer strip:** "3 meals logged today" | "2 workouts this week".
 - The `DateStrip` sits **above** the card, under the screen header, as in the reference. The selected day drives the card.
@@ -167,7 +174,7 @@ We are not adding a separate design-system package, code-generated tokens or cus
 
 ### Home (v3, see `home.html`)
 - **Header:** profile button, centered "Today", layout-edit button. A goal line below it: "Lose weight · 72 kg by 1 Mar".
-- **Date strip** for the current week; the selected day is ink with a light açaí marker.
+- **Date strip** for the current week; the selected day is ink with a white marker.
 - **Calories card** (reference layout, section 4).
 - **Quick actions:** **Log food** (açaí) and **Start workout** (ink).
 - **Weight** and **This week** cards below. Order and visibility are user-configurable (FR-12).
