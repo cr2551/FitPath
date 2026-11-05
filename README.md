@@ -30,6 +30,12 @@ flutter analyze
 flutter test
 ```
 
+Build a signed release bundle for Google Play (needs `android/key.properties`; see [docs/release.md](docs/release.md)):
+
+```bash
+flutter build appbundle --release
+```
+
 ## Contributing
 
 1. Pick an issue on the board whose **Blocked by** issues are all merged.

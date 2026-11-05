@@ -1,0 +1,11 @@
+# Launcher icons: `dart run flutter_launcher_icons`
+# Sources in assets/icon/ (1024 px). The adaptive icon puts the white glyph
+# on the açaí accent; the legacy icon is the same, flattened.
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/icon/icon.png"
+  min_sdk_android: 24
+  adaptive_icon_background: "#5B2A6E"
+  adaptive_icon_foreground: "assets/icon/icon_foreground.png"
+  adaptive_icon_monochrome: "assets/icon/icon_foreground.png"
