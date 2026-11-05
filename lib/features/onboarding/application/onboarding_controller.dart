@@ -20,6 +20,7 @@ class OnboardingDraft {
     this.targetDate,
     this.experience,
     this.trainingDaysPerWeek,
+    this.targets,
   });
 
   final UnitSystem units;
@@ -43,6 +44,9 @@ class OnboardingDraft {
   /// For muscle and strength goals.
   final TrainingExperience? experience;
   final int? trainingDaysPerWeek;
+
+  /// Daily nutrition targets; null until the estimates screen fills them.
+  final DraftTargets? targets;
 
   /// Age, height, weight and activity are required; sex is optional.
   bool get detailsComplete =>
@@ -72,6 +76,7 @@ class OnboardingDraft {
     DateTime? Function()? targetDate,
     TrainingExperience? Function()? experience,
     int? Function()? trainingDaysPerWeek,
+    DraftTargets? Function()? targets,
   }) => OnboardingDraft(
     units: units ?? this.units,
     ageYears: ageYears != null ? ageYears() : this.ageYears,
@@ -89,7 +94,28 @@ class OnboardingDraft {
     trainingDaysPerWeek: trainingDaysPerWeek != null
         ? trainingDaysPerWeek()
         : this.trainingDaysPerWeek,
+    targets: targets != null ? targets() : this.targets,
   );
+}
+
+/// Calorie and macro targets chosen during onboarding. Null grams mean the
+/// field was left empty.
+class DraftTargets {
+  const DraftTargets({
+    required this.calories,
+    this.proteinG,
+    this.carbsG,
+    this.fatG,
+    required this.editedByUser,
+  });
+
+  final int calories;
+  final double? proteinG;
+  final double? carbsG;
+  final double? fatG;
+
+  /// False while they are the calculated suggestion.
+  final bool editedByUser;
 }
 
 /// Faster than this share of body weight per week is not offered as a plan.
@@ -171,4 +197,7 @@ class OnboardingController extends Notifier<OnboardingDraft> {
 
   void setTrainingDays(int? days) =>
       state = state.copyWith(trainingDaysPerWeek: () => days);
+
+  void setTargets(DraftTargets? targets) =>
+      state = state.copyWith(targets: () => targets);
 }
