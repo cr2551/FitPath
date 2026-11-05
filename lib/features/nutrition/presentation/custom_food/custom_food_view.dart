@@ -248,7 +248,18 @@ class _TextInputState extends State<_TextInput> {
       decoration: InputDecoration(
         labelText: widget.label,
         hintText: widget.hint,
-        suffixText: widget.suffix,
+        // A suffix icon stays visible while the field is empty, so the
+        // unit is clear before typing (suffixText only shows on focus).
+        suffixIcon: widget.suffix == null
+            ? null
+            : Padding(
+                padding: const EdgeInsets.only(right: AppSpacing.md),
+                child: Align(
+                  widthFactor: 1,
+                  heightFactor: 1,
+                  child: Text(widget.suffix!, style: context.textStyles.label),
+                ),
+              ),
         errorText: widget.error,
       ),
     );

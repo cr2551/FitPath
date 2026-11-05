@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../shared/models/enums.dart';
+import '../../profile/domain/goal_rules.dart';
 
 /// Everything entered during onboarding, in canonical metric units.
 /// Nothing is written to the database until onboarding completes (#21).
@@ -173,14 +174,17 @@ class OnboardingController extends Notifier<OnboardingDraft> {
 
   void setSex(Sex sex) => state = state.copyWith(sex: sex);
 
-  /// Sets the main goal; it is removed from the secondary goals.
+  /// Sets the main goal; it and any goal that conflicts with it are removed
+  /// from the secondary goals.
   void setPrimaryGoal(GoalType goal) => state = state.copyWith(
     primaryGoal: () => goal,
-    secondaryGoals: {...state.secondaryGoals}..remove(goal),
+    secondaryGoals: {...state.secondaryGoals}
+      ..remove(goal)
+      ..removeAll(GoalRules.conflictsWith(goal)),
   );
 
   void toggleSecondaryGoal(GoalType goal) {
-    if (goal == state.primaryGoal) return;
+    if (!GoalRules.secondaryOptions(state.primaryGoal).contains(goal)) return;
     final next = {...state.secondaryGoals};
     if (!next.remove(goal)) next.add(goal);
     state = state.copyWith(secondaryGoals: next);

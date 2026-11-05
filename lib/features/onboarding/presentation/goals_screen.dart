@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/router/routes.dart';
+import '../../profile/domain/goal_rules.dart';
 import '../../settings/presentation/goals_view.dart' show goalLabels;
 import '../application/onboarding_controller.dart';
 import 'onboarding_goals_view.dart';
@@ -19,6 +20,7 @@ class OnboardingGoalsScreen extends ConsumerWidget {
       labels: goalLabels,
       primary: d.primaryGoal,
       secondary: d.secondaryGoals,
+      secondaryOptions: GoalRules.secondaryOptions(d.primaryGoal),
       onPrimary: c.setPrimaryGoal,
       onToggleSecondary: c.toggleSecondaryGoal,
       onNext: () => context.push(Routes.goalDetails),

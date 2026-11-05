@@ -154,6 +154,26 @@ void main() {
     expect(find.text('route ${Routes.estimates}'), findsOneWidget);
   });
 
+  test('conflicting goals cannot be combined', () {
+    final container = ProviderContainer();
+    addTearDown(container.dispose);
+    final c = container.read(onboardingControllerProvider.notifier)
+      ..setPrimaryGoal(GoalType.buildMuscle)
+      ..toggleSecondaryGoal(GoalType.maintainWeight)
+      // Lose weight drops the now-conflicting secondary goal...
+      ..setPrimaryGoal(GoalType.loseWeight);
+    expect(
+      container.read(onboardingControllerProvider).secondaryGoals,
+      isEmpty,
+    );
+    // ...and refuses to add it back.
+    c.toggleSecondaryGoal(GoalType.maintainWeight);
+    expect(
+      container.read(onboardingControllerProvider).secondaryGoals,
+      isEmpty,
+    );
+  });
+
   testWidgets('muscle and strength goals ask for experience and days', (
     tester,
   ) async {

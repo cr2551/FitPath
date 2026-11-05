@@ -107,7 +107,7 @@ class MealGroupViewData {
   final MealType meal;
   final String title;
 
-  /// E.g. "441 kcal"; "—" when empty.
+  /// E.g. "441 kcal"; empty when nothing is logged.
   final String totalLabel;
   final List<EntryRowData> entries;
 }
