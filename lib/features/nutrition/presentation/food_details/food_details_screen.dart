@@ -50,10 +50,34 @@ class _FoodDetailsScreenState extends ConsumerState<FoodDetailsScreen> {
   String? _quantityText;
   QuantityUnit? _unit;
 
+  /// The unrounded amount after a unit switch, so switching back and forth
+  /// never drifts. Null once the user types (the text is then the amount).
+  double? _convertedQuantity;
+
   double? get _validQuantity {
-    final q = Units.parseDecimal(_quantityText ?? '');
+    final typed = Units.parseDecimal(_quantityText ?? '');
+    final q = typed == null ? null : _convertedQuantity ?? typed;
     return q != null && q > 0 && _unit != null ? q : null;
   }
+
+  /// Switches the unit and converts the amount, e.g. 2.3 servings of a 46 g
+  /// egg becomes 105.8 g.
+  void _onUnitSelected(FoodItem food, QuantityUnit unit) => setState(() {
+    final q = _validQuantity;
+    final converted = q == null
+        ? null
+        : NutritionMath.convert(
+            FoodRepository.foodNutrition(food),
+            q,
+            _unit!,
+            unit,
+          );
+    _unit = unit;
+    if (converted != null) {
+      _quantityText = _amount(converted, unit);
+      _convertedQuantity = converted;
+    }
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +89,7 @@ class _FoodDetailsScreenState extends ConsumerState<FoodDetailsScreen> {
       final nutrition = FoodRepository.foodNutrition(f);
       units = NutritionMath.allowedUnits(nutrition);
       _unit ??= units.first;
-      _quantityText ??= _number(_defaultAmount(nutrition, _unit!));
+      _quantityText ??= _amount(_defaultAmount(nutrition, _unit!), _unit!);
       body = _data(f, nutrition, units);
     } else if (food.hasError) {
       body = const FoodDetailsError("This food doesn't exist any more.");
@@ -75,8 +99,11 @@ class _FoodDetailsScreenState extends ConsumerState<FoodDetailsScreen> {
 
     return FoodDetailsView(
       body: body,
-      onQuantityChanged: (text) => setState(() => _quantityText = text),
-      onUnitSelected: (i) => setState(() => _unit = units[i]),
+      onQuantityChanged: (text) => setState(() {
+        _quantityText = text;
+        _convertedQuantity = null;
+      }),
+      onUnitSelected: (i) => _onUnitSelected(food.requireValue, units[i]),
       onAddToDiary: () => context.push(
         Routes.newEntry(
           foodId: widget.foodId,
@@ -98,7 +125,8 @@ class _FoodDetailsScreenState extends ConsumerState<FoodDetailsScreen> {
     List<QuantityUnit> units,
   ) {
     final unit = _unit!;
-    final q = Units.parseDecimal(_quantityText ?? '');
+    final typed = Units.parseDecimal(_quantityText ?? '');
+    final q = typed == null ? null : _convertedQuantity ?? typed;
     final String? error = q == null
         ? 'Enter an amount'
         : q <= 0
@@ -122,13 +150,13 @@ class _FoodDetailsScreenState extends ConsumerState<FoodDetailsScreen> {
         if (f.servingSize != null && f.servingUnit != null)
           'one serving is ${_number(f.servingSize!)} ${f.servingUnit}',
       ].join(' · '),
-      initialQuantity: _quantityText!,
+      quantity: _quantityText!,
       quantityError: error,
       unitLabels: [for (final u in units) _unitLabel(u)],
       selectedUnit: units.indexOf(unit).clamp(0, units.length - 1),
       amountLabel: amount == null
           ? 'Per $basis'
-          : 'For ${_number(q!)} ${_unitLabel(unit, plural: q != 1)}',
+          : 'For ${_amount(q!, unit)} ${_unitLabel(unit, plural: q != 1)}',
       nutrients: [
         NutrientLine(label: 'Calories', value: Formatters.energy(n.kcal)),
         NutrientLine(label: 'Protein', value: Formatters.grams(n.proteinG)),
@@ -154,6 +182,12 @@ class _FoodDetailsScreenState extends ConsumerState<FoodDetailsScreen> {
 
   static String _number(double v) =>
       v == v.roundToDouble() ? v.round().toString() : v.toStringAsFixed(1);
+
+  /// Servings get two decimals (1.25), grams and millilitres one.
+  static String _amount(double v, QuantityUnit unit) {
+    final text = v.toStringAsFixed(unit == QuantityUnit.serving ? 2 : 1);
+    return text.replaceFirst(RegExp(r'\.?0+$'), '');
+  }
 
   static String _unitLabel(QuantityUnit u, {bool plural = false}) =>
       switch (u) {

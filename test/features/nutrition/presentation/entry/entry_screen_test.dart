@@ -132,6 +132,60 @@ void main() {
     await _dispose(tester, h2);
   });
 
+  testWidgets('switching units converts the amount without drifting', (
+    tester,
+  ) async {
+    final h = await _setUp(tester);
+    final egg = (await tester.runAsync(
+      () => h.foods.createCustomFood(
+        const FoodDetails(
+          name: 'Egg',
+          basis: ReferenceBasis.per100g,
+          nutrients: Nutrients(kcal: 150),
+          servingSize: 46,
+          servingUnit: QuantityUnit.gram,
+          servingDescription: '1 large',
+        ),
+      ),
+    ))!;
+    await _pump(tester, h, EntryScreen(foodId: egg, date: day));
+    Future<void> unit(String label) async {
+      await tester.tap(find.text(label));
+      await tester.pump();
+    }
+
+    expect(find.widgetWithText(TextField, '46'), findsOneWidget);
+    await unit('serving');
+    expect(find.widgetWithText(TextField, '1'), findsOneWidget);
+
+    await tester.enterText(find.byType(TextField), '2.3');
+    await tester.pump();
+    await unit('g');
+    expect(find.widgetWithText(TextField, '105.8'), findsOneWidget);
+    await unit('serving');
+    expect(find.widgetWithText(TextField, '2.3'), findsOneWidget);
+
+    // 100 g is 2.17 servings when shown, but exactly 100 g again on return.
+    await unit('g');
+    await tester.enterText(find.byType(TextField), '100');
+    await tester.pump();
+    for (var i = 0; i < 3; i++) {
+      await unit('serving');
+      expect(find.widgetWithText(TextField, '2.17'), findsOneWidget);
+      await unit('g');
+      expect(find.widgetWithText(TextField, '100'), findsOneWidget);
+    }
+    expect(find.text('150 kcal', findRichText: true), findsOneWidget);
+
+    await unit('serving');
+    await tester.tap(find.text('LOG FOOD'));
+    await _settle(tester);
+    final entry = (await _entries(tester, h)).single;
+    expect(entry.quantityUnit, 'serving');
+    expect(entry.kcal, closeTo(150, 0.001));
+    await _dispose(tester, h);
+  });
+
   testWidgets('rejects zero and absurd amounts', (tester) async {
     final h = await _setUp(tester);
     final oats = (await tester.runAsync(() => _oats(h)))!;

@@ -98,6 +98,37 @@ void main() {
     });
   });
 
+  group('unit conversion', () {
+    test('servings and grams convert both ways', () {
+      const g = QuantityUnit.gram, s = QuantityUnit.serving;
+      expect(NutritionMath.convert(banana, 2.5, s, g), closeTo(295, 1e-9));
+      expect(NutritionMath.convert(banana, 59, g, s), closeTo(0.5, 1e-9));
+      expect(NutritionMath.convert(proteinBar, 90, g, s), closeTo(1.5, 1e-9));
+      expect(NutritionMath.convert(proteinBar, 2, s, g), closeTo(120, 1e-9));
+    });
+
+    test('incompatible units give null', () {
+      expect(
+        NutritionMath.convert(
+          oats,
+          50,
+          QuantityUnit.gram,
+          QuantityUnit.serving,
+        ),
+        isNull,
+      );
+      expect(
+        NutritionMath.convert(
+          milk,
+          50,
+          QuantityUnit.milliliter,
+          QuantityUnit.gram,
+        ),
+        isNull,
+      );
+    });
+  });
+
   group('totals', () {
     test('sum known values and count unknowns', () {
       final t = NutrientTotals.of(const [

@@ -41,8 +41,18 @@ part 'app_database.g.dart';
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e, {this.seedCatalogs = true});
 
-  /// The on-device database file.
-  factory AppDatabase.open() => AppDatabase(driftDatabase(name: 'fitpath'));
+  /// The on-device database file. In a browser, drift runs SQLite as
+  /// WebAssembly (`web/sqlite3.wasm`, `web/drift_worker.js`) and stores the
+  /// database in the browser's storage.
+  factory AppDatabase.open() => AppDatabase(
+    driftDatabase(
+      name: 'fitpath',
+      web: DriftWebOptions(
+        sqlite3Wasm: Uri.parse('sqlite3.wasm'),
+        driftWorker: Uri.parse('drift_worker.js'),
+      ),
+    ),
+  );
 
   /// Whether `onCreate` inserts the bundled food and exercise catalogs.
   /// Tests turn this off so they start from an empty catalog.

@@ -25,7 +25,7 @@ class FoodDetailsData extends FoodDetailsBody {
     required this.name,
     required this.subtitle,
     required this.basisLabel,
-    required this.initialQuantity,
+    required this.quantity,
     required this.quantityError,
     required this.unitLabels,
     required this.selectedUnit,
@@ -43,7 +43,9 @@ class FoodDetailsData extends FoodDetailsBody {
   /// E.g. "Label values per 100 g".
   final String basisLabel;
 
-  final String initialQuantity;
+  /// Text of the quantity field. It changes when the unit switch converts
+  /// the amount.
+  final String quantity;
   final String? quantityError;
   final List<String> unitLabels;
   final int selectedUnit;

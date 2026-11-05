@@ -86,6 +86,21 @@ abstract final class NutritionMath {
     return factor == null ? null : food.nutrients * factor;
   }
 
+  /// [quantity] [from] of [food] expressed in [to], e.g. 2.3 servings of a
+  /// 46 g serving is 105.8 g. Null when either unit is incompatible.
+  static double? convert(
+    FoodNutrition food,
+    double quantity,
+    QuantityUnit from,
+    QuantityUnit to,
+  ) {
+    if (from == to) return quantity;
+    final amount = referenceFactor(food, quantity, from);
+    final perUnit = referenceFactor(food, 1, to);
+    if (amount == null || perUnit == null || perUnit == 0) return null;
+    return amount / perUnit;
+  }
+
   /// Units a quantity of [food] can be entered in, best first.
   static List<QuantityUnit> allowedUnits(FoodNutrition food) => [
     for (final u in QuantityUnit.values)

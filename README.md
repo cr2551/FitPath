@@ -23,6 +23,8 @@ dart run build_runner build -d   # generates Drift / json_serializable code (not
 flutter run
 ```
 
+To try it in a browser, run `flutter run -d chrome` (or `flutter run -d web-server` and open the printed URL). In the browser the database lives in the browser's storage (IndexedDB or OPFS) through `web/sqlite3.wasm` and `web/drift_worker.js`. If you upgrade the `sqlite3` or `drift` packages, replace those two files with the matching versions from the [sqlite3.dart](https://github.com/simolus3/sqlite3.dart/releases) and [drift](https://github.com/simolus3/drift/releases) releases.
+
 Run the checks:
 
 ```bash

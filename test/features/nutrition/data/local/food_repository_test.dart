@@ -72,6 +72,27 @@ void main() {
       expect(await repo.searchLocal('_'), isEmpty);
     });
 
+    test('plural words find singular names', () async {
+      await repo.createCustomFood(
+        const FoodDetails(name: 'Egg, fried', basis: ReferenceBasis.per100g),
+      );
+      await repo.createCustomFood(
+        const FoodDetails(name: 'Strawberries', basis: ReferenceBasis.per100g),
+      );
+      expect((await repo.searchLocal('eggs')).single.name, 'Egg, fried');
+      expect((await repo.searchLocal('egg')).single.name, 'Egg, fried');
+      expect(
+        (await repo.searchLocal('strawberry')).single.name,
+        'Strawberries',
+      );
+      expect((await repo.searchLocal('bananas')).single.name, 'Banana');
+    });
+
+    test('every word must match, in any order', () async {
+      expect((await repo.searchLocal('milk oat')).single.name, 'Oat milk');
+      expect(await repo.searchLocal('oat banana'), isEmpty);
+    });
+
     test('empty query returns nothing', () async {
       expect(await repo.searchLocal('  '), isEmpty);
     });

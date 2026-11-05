@@ -12,26 +12,57 @@ class FoodDao extends DatabaseAccessor<AppDatabase> with _$FoodDaoMixin {
 
   // ---------------------------------------------------------------- catalog
 
-  /// Active foods whose name or brand contains [query] (case-insensitive),
-  /// names starting with the query first.
+  /// Active foods matching every word of [query] (case-insensitive) in their
+  /// name or brand, names starting with the query first. Words are matched by
+  /// their singular stem, so "eggs" finds "Egg, fried" and "tomatoes" finds
+  /// "Tomato, raw".
   Future<List<FoodItem>> searchActive(String query, {int limit = 30}) {
-    final pattern = '%${_escapeLike(query.trim().toLowerCase())}%';
-    final prefix = '${_escapeLike(query.trim().toLowerCase())}%';
+    final words = searchStems(query);
+    if (words.isEmpty) return Future.value(const []);
     final nameLower = foodItems.name.lower();
     final brandLower = foodItems.brand.lower();
+    final prefix = '${_escapeLike(words.first)}%';
     return (select(foodItems)
-          ..where(
-            (f) =>
-                f.isActive.equals(true) &
-                (nameLower.like(pattern, escapeChar: r'\') |
-                    brandLower.like(pattern, escapeChar: r'\')),
-          )
+          ..where((f) {
+            var condition = f.isActive.equals(true);
+            for (final w in words) {
+              final pattern = '%${_escapeLike(w)}%';
+              condition =
+                  condition &
+                  (nameLower.like(pattern, escapeChar: r'\') |
+                      brandLower.like(pattern, escapeChar: r'\'));
+            }
+            return condition;
+          })
           ..orderBy([
             (f) => OrderingTerm.desc(nameLower.like(prefix, escapeChar: r'\')),
             (f) => OrderingTerm.asc(nameLower),
           ])
           ..limit(limit))
         .get();
+  }
+
+  /// Lower-case words of [query] reduced to a stem shared by the singular and
+  /// plural ("eggs" -> "egg", "tomatoes" -> "tomato", "berries" and "berry"
+  /// -> "berr"). Stems stay at least
+  /// three letters long so short words are not over-trimmed.
+  static List<String> searchStems(String query) => [
+    for (final word in query.toLowerCase().split(RegExp(r'[\s,]+')))
+      if (word.isNotEmpty) _stem(word),
+  ];
+
+  static String _stem(String w) {
+    String cut(int n) => w.length - n >= 3 ? w.substring(0, w.length - n) : w;
+    if (w.endsWith('ies')) return cut(3);
+    // "berry" and "berries" share "berr" ("turkey" keeps its y).
+    if (RegExp(r'[^aeiou]y$').hasMatch(w)) return cut(1);
+    if (w.endsWith('oes') || w.endsWith('ches') || w.endsWith('shes')) {
+      return cut(2);
+    }
+    if (w.endsWith('s') && !w.endsWith('ss') && !w.endsWith('us')) {
+      return cut(1);
+    }
+    return w;
   }
 
   Future<FoodItem?> foodById(int id) =>

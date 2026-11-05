@@ -30,6 +30,24 @@ class BackupDelivery {
 
   /// Opens the share sheet with the file.
   Future<void> share(String fileName, String json) async {
+    if (kIsWeb) {
+      // No file system in a browser: share the bytes (or download them where
+      // the browser cannot share files).
+      await SharePlus.instance.share(
+        ShareParams(
+          files: [
+            XFile.fromData(
+              Uint8List.fromList(utf8.encode(json)),
+              name: fileName,
+              mimeType: 'application/json',
+            ),
+          ],
+          fileNameOverrides: [fileName],
+          subject: 'FitPath backup',
+        ),
+      );
+      return;
+    }
     final dir = await getTemporaryDirectory();
     final file = File('${dir.path}/$fileName');
     await file.writeAsString(json);

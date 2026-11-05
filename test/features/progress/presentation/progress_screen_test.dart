@@ -29,7 +29,7 @@ void main() {
     expect(find.byType(WeightProgressView), findsOneWidget);
     expect(container.read(progressRangeProvider), RangePreset.days30);
 
-    await tester.tap(find.text('90D'));
+    await tester.tap(find.text('90 D'));
     await tester.pump();
     expect(container.read(progressRangeProvider), RangePreset.days90);
 

@@ -32,12 +32,12 @@ abstract final class ChartAxes {
     RangePreset.all => 'over all time',
   };
 
-  /// Button label: 7D, 30D, 90D, 1Y, All.
+  /// Button label: 7 D, 30 D, 90 D, 1 Y, All.
   static String rangeLabel(RangePreset range) => switch (range) {
-    RangePreset.days7 => '7D',
-    RangePreset.days30 => '30D',
-    RangePreset.days90 => '90D',
-    RangePreset.year => '1Y',
+    RangePreset.days7 => '7 D',
+    RangePreset.days30 => '30 D',
+    RangePreset.days90 => '90 D',
+    RangePreset.year => '1 Y',
     RangePreset.all => 'All',
   };
 }

@@ -76,6 +76,10 @@ class EntryScreen extends ConsumerStatefulWidget {
 class _EntryScreenState extends ConsumerState<EntryScreen> {
   bool _initialized = false;
   late String _quantityText;
+
+  /// The unrounded amount after a unit switch, so switching back and forth
+  /// never drifts. Null once the user types (the text is then the amount).
+  double? _convertedQuantity;
   late QuantityUnit _unit;
   late MealType _meal;
   late DateTime _day;
@@ -88,8 +92,9 @@ class _EntryScreenState extends ConsumerState<EntryScreen> {
     _initialized = true;
     final entry = source.entry;
     if (entry != null) {
-      _quantityText = _number(entry.quantity);
       _unit = FoodRepository.unitFromCode(entry.quantityUnit);
+      _quantityText = _amount(entry.quantity, _unit);
+      _convertedQuantity = entry.quantity;
       _meal = entry.mealType;
       final at = entry.consumedAt.toLocal();
       _day = Dates.startOfDay(at);
@@ -106,25 +111,53 @@ class _EntryScreenState extends ConsumerState<EntryScreen> {
         q != null &&
         q > 0) {
       _unit = requested;
-      _quantityText = _number(q);
+      _quantityText = _amount(q, _unit);
+      _convertedQuantity = q;
     } else {
       _unit = allowed.first;
-      _quantityText = _number(_defaultAmount(food, _unit));
+      _quantityText = _amount(_defaultAmount(food, _unit), _unit);
     }
     _meal = widget.meal ?? _mealFor(now);
     _day = Dates.startOfDay(widget.date ?? now);
     _time = TimeOfDay.fromDateTime(now);
   }
 
-  double? get _quantity => Units.parseDecimal(_quantityText);
+  double? get _quantity =>
+      _convertedQuantity ?? Units.parseDecimal(_quantityText);
+
+  void _onQuantityChanged(String text) => setState(() {
+    _quantityText = text;
+    _convertedQuantity = null;
+  });
+
+  /// Switches the unit and converts the amount, e.g. 2.3 servings of a 46 g
+  /// egg becomes 105.8 g.
+  void _onUnitSelected(FoodItem food, QuantityUnit unit) => setState(() {
+    final q = _quantityError == null ? _quantity : null;
+    final converted = q == null
+        ? null
+        : NutritionMath.convert(
+            FoodRepository.foodNutrition(food),
+            q,
+            _unit,
+            unit,
+          );
+    _unit = unit;
+    if (converted != null) {
+      _quantityText = _amount(converted, unit);
+      _convertedQuantity = converted;
+    }
+  });
 
   String? get _quantityError {
     final q = _quantity;
     if (_quantityText.trim().isEmpty) return 'Enter an amount';
-    if (q == null) return 'Enter a number';
+    if (q == null || Units.parseDecimal(_quantityText) == null) {
+      return 'Enter a number';
+    }
     if (q <= 0) return 'Must be more than 0';
     final max = _maxAmount[_unit]!;
-    if (q > max) return 'At most ${_number(max)} ${_unitLabel(_unit)}';
+    if (q > max) return 'At most ${_amount(max, _unit)} ${_unitLabel(_unit)}';
     return null;
   }
 
@@ -220,8 +253,9 @@ class _EntryScreenState extends ConsumerState<EntryScreen> {
     return EntryView(
       title: _isEdit ? 'Edit entry' : 'Log food',
       body: body,
-      onQuantityChanged: (text) => setState(() => _quantityText = text),
-      onUnitSelected: (i) => setState(() => _unit = units[i]),
+      onQuantityChanged: _onQuantityChanged,
+      onUnitSelected: (i) =>
+          _onUnitSelected(source.requireValue.food, units[i]),
       onMealSelected: (meal) => setState(() => _meal = meal),
       onPickDate: _pickDate,
       onPickTime: _pickTime,
@@ -254,7 +288,7 @@ class _EntryScreenState extends ConsumerState<EntryScreen> {
         ?(entry?.brandSnapshot ?? food.brand),
         '${Formatters.energy(food.kcal)} per ${_basisLabel(food)}',
       ].join(' · '),
-      initialQuantity: _quantityText,
+      quantity: _quantityText,
       quantityError: _quantityError,
       unitLabels: [for (final u in units) _unitLabel(u)],
       selectedUnit: units.indexOf(_unit).clamp(0, units.length - 1),
@@ -277,6 +311,12 @@ class _EntryScreenState extends ConsumerState<EntryScreen> {
 
   static String _number(double v) =>
       v == v.roundToDouble() ? v.round().toString() : v.toStringAsFixed(1);
+
+  /// Servings get two decimals (1.25), grams and millilitres one.
+  static String _amount(double v, QuantityUnit unit) {
+    final text = v.toStringAsFixed(unit == QuantityUnit.serving ? 2 : 1);
+    return text.replaceFirst(RegExp(r'\.?0+$'), '');
+  }
 
   static QuantityUnit? _unitFromCode(String? code) => switch (code) {
     'g' => QuantityUnit.gram,

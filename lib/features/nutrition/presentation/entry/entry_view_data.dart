@@ -20,7 +20,7 @@ class EntryFormData extends EntryBody {
     required this.isEdit,
     required this.foodName,
     required this.foodDetail,
-    required this.initialQuantity,
+    required this.quantity,
     required this.quantityError,
     required this.unitLabels,
     required this.selectedUnit,
@@ -41,8 +41,9 @@ class EntryFormData extends EntryBody {
   /// E.g. "Fage · 97 kcal per 100 g".
   final String foodDetail;
 
-  /// Text the quantity field starts with.
-  final String initialQuantity;
+  /// Text of the quantity field. It changes when the unit switch converts
+  /// the amount.
+  final String quantity;
   final String? quantityError;
 
   /// E.g. ["g", "serving"].

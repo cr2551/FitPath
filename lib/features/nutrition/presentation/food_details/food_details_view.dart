@@ -94,7 +94,7 @@ class _Details extends StatelessWidget {
           children: [
             Expanded(
               child: _AmountField(
-                initialText: data.initialQuantity,
+                text: data.quantity,
                 error: data.quantityError,
                 onChanged: onQuantityChanged,
               ),
@@ -154,12 +154,13 @@ class _Details extends StatelessWidget {
 
 class _AmountField extends StatefulWidget {
   const _AmountField({
-    required this.initialText,
+    required this.text,
     required this.error,
     required this.onChanged,
   });
 
-  final String initialText;
+  /// Kept in sync: a converted amount replaces what is in the field.
+  final String text;
   final String? error;
   final ValueChanged<String> onChanged;
 
@@ -168,7 +169,18 @@ class _AmountField extends StatefulWidget {
 }
 
 class _AmountFieldState extends State<_AmountField> {
-  late final _controller = TextEditingController(text: widget.initialText);
+  late final _controller = TextEditingController(text: widget.text);
+
+  @override
+  void didUpdateWidget(covariant _AmountField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.text != _controller.text) {
+      _controller.value = TextEditingValue(
+        text: widget.text,
+        selection: TextSelection.collapsed(offset: widget.text.length),
+      );
+    }
+  }
 
   @override
   void dispose() {
