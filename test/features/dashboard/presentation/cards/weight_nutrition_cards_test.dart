@@ -168,10 +168,9 @@ void main() {
     expect(saved!.single.weightKg, 74.2);
 
     await tester.runAsync(
-      () => ProfileRepository(db.profileDao).logWeight(
-        75.5,
-        at: DateTime.now().subtract(const Duration(days: 10)),
-      ),
+      () => ProfileRepository(
+        db.profileDao,
+      ).logWeight(75.5, at: DateTime.now().subtract(const Duration(days: 10))),
     );
     await _settle(tester);
     expect(find.text('▼ 1.3 kg · last 30 days'), findsOneWidget);
