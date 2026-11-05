@@ -11,6 +11,7 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../../core/database/database_provider.dart';
 import '../backup/export_service.dart';
+import 'backup_restore_section.dart';
 import 'backup_view.dart';
 
 final exportServiceProvider = Provider<ExportService>(
@@ -98,6 +99,9 @@ class _BackupScreenState extends ConsumerState<BackupScreen> {
       busy: _busy,
       onShare: () => _export(save: false),
       onSave: () => _export(save: true),
+      restoreSection: BackupRestoreSection(
+        onExportFirst: () => _export(save: false),
+      ),
     );
   }
 }

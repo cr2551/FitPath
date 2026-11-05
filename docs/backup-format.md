@@ -66,3 +66,21 @@ Each row is the Drift `toJson` of the table's data class:
 The database holds no passwords, tokens or API keys, so a backup contains
 none. It does contain personal health data (weight, age, diary), so keep the
 file somewhere private.
+
+## Restoring
+
+`BackupValidator` (`lib/features/settings/backup/backup_validator.dart`)
+checks the whole file before anything changes:
+
+- `format` is `fitpath-backup`, and `format_version` is one this app knows
+  (a newer version asks the user to update the app);
+- every table is present and every row parses into its data class (types and
+  required fields);
+- ids are unique per table and every reference (`foodItemId`, `sessionId`,
+  `exerciseId`, `workoutExerciseId`) points at a row in the file.
+
+`ImportService` then replaces all user data in one transaction: user rows
+are deleted, the backup's rows are inserted with their ids, and bundled
+foods and exercises the backup references are written back under their ids.
+Any failure rolls the whole restore back. A restored install is marked as
+onboarded.
