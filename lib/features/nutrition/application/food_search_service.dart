@@ -21,6 +21,7 @@ class FoodSearchResults {
     this.remote = const [],
     this.remoteError,
     this.searchedRemote = false,
+    this.remotePending = false,
   });
 
   final String query;
@@ -38,6 +39,9 @@ class FoodSearchResults {
   /// very short query).
   final bool searchedRemote;
 
+  /// Local results are ready and the online lookup is still running.
+  final bool remotePending;
+
   bool get isEmpty => local.isEmpty && remote.isEmpty;
 }
 
@@ -52,6 +56,7 @@ class FoodSearchService {
     Future<bool> Function()? isOnline,
     this.enoughLocalResults = 8,
     this.minRemoteQueryLength = 3,
+    this.connectivityTimeout = const Duration(seconds: 2),
   }) : _isOnline = isOnline ?? _connectivityOnline;
 
   final FoodRepository _local;
@@ -65,22 +70,36 @@ class FoodSearchService {
   /// API's rate limit).
   final int minRemoteQueryLength;
 
-  Future<FoodSearchResults> search(
+  /// How long the connectivity check may take before it is ignored.
+  final Duration connectivityTimeout;
+
+  /// The final results of [searchStream].
+  Future<FoodSearchResults> search(String query, {CancelToken? cancelToken}) =>
+      searchStream(query, cancelToken: cancelToken).last;
+
+  /// Emits the local results as soon as they are ready, then (only when an
+  /// online lookup is needed) the combined results. A failing or hanging
+  /// connectivity check or online request never hides local results.
+  Stream<FoodSearchResults> searchStream(
     String query, {
     CancelToken? cancelToken,
-  }) async {
+  }) async* {
     final q = query.trim();
     final local = await _local.searchLocal(q);
     if (q.length < minRemoteQueryLength || local.length >= enoughLocalResults) {
-      return FoodSearchResults(query: q, local: local);
+      yield FoodSearchResults(query: q, local: local);
+      return;
     }
-    if (!await _isOnline()) {
-      return FoodSearchResults(
+    yield FoodSearchResults(query: q, local: local, remotePending: true);
+
+    if (!await _probablyOnline()) {
+      yield FoodSearchResults(
         query: q,
         local: local,
         remoteError: const NoConnection(),
         searchedRemote: true,
       );
+      return;
     }
 
     try {
@@ -89,7 +108,7 @@ class FoodSearchService {
         for (final f in local)
           if (f.externalId != null) f.externalId!,
       };
-      return FoodSearchResults(
+      yield FoodSearchResults(
         query: q,
         local: local,
         remote: [
@@ -98,13 +117,24 @@ class FoodSearchService {
         ],
         searchedRemote: true,
       );
-    } on NetworkFailure catch (e) {
-      return FoodSearchResults(
+    } on Object catch (e) {
+      yield FoodSearchResults(
         query: q,
         local: local,
-        remoteError: e,
+        remoteError: e is NetworkFailure ? e : const ServerError(null),
         searchedRemote: true,
       );
+    }
+  }
+
+  /// The connectivity check is only a shortcut to skip a doomed request. If
+  /// it fails or takes too long, assume online and let the request (which
+  /// has its own timeouts) decide.
+  Future<bool> _probablyOnline() async {
+    try {
+      return await _isOnline().timeout(connectivityTimeout);
+    } on Object {
+      return true;
     }
   }
 
@@ -152,8 +182,8 @@ const foodSearchDebounce = Duration(milliseconds: 400);
 
 /// Debounced, cancellable search for the search screen. Typing a new query
 /// disposes the previous one, which cancels its pending request.
-final foodSearchProvider = FutureProvider.autoDispose
-    .family<FoodSearchResults, String>((ref, query) async {
+final foodSearchProvider = StreamProvider.autoDispose
+    .family<FoodSearchResults, String>((ref, query) async* {
       final cancelToken = CancelToken();
       var disposed = false;
       ref.onDispose(() {
@@ -162,9 +192,9 @@ final foodSearchProvider = FutureProvider.autoDispose
       });
 
       await Future<void>.delayed(foodSearchDebounce);
-      if (disposed) throw const RequestCancelled();
+      if (disposed) return;
 
-      return ref
+      yield* ref
           .read(foodSearchServiceProvider)
-          .search(query, cancelToken: cancelToken);
+          .searchStream(query, cancelToken: cancelToken);
     });

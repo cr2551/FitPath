@@ -80,7 +80,10 @@ class _FoodSearchScreenState extends ConsumerState<FoodSearchScreen> {
           loading: true,
         );
       } else {
-        body = _results(last, loading: last.query != q || value.isLoading);
+        body = _results(
+          last,
+          loading: last.query != q || value.isLoading || last.remotePending,
+        );
       }
     }
 
