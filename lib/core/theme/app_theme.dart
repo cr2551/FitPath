@@ -194,11 +194,12 @@ abstract final class AppTheme {
         backgroundColor: c.surface,
         selectedColor: c.ink,
         checkmarkColor: c.surface,
-        // Material 3 ignores secondaryLabelStyle, so the label color must
-        // follow the selected state here or ink text sits on the ink fill.
-        labelStyle: WidgetStateTextStyle.resolveWith(
-          (s) => text.label.copyWith(
-            color: s.contains(WidgetState.selected) ? c.surface : c.ink,
+        // Material 3 ignores secondaryLabelStyle and resolves only the
+        // label COLOR by state, so it must be a WidgetStateColor or ink text
+        // sits on the ink fill of a selected chip.
+        labelStyle: text.label.copyWith(
+          color: WidgetStateColor.resolveWith(
+            (s) => s.contains(WidgetState.selected) ? c.surface : c.ink,
           ),
         ),
         secondaryLabelStyle: text.label.copyWith(color: c.surface),
