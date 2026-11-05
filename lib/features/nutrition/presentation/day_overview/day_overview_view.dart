@@ -349,7 +349,8 @@ class _MealCard extends StatelessWidget {
       header: Row(
         children: [
           Expanded(child: Text(group.title, style: t.cardTitle)),
-          Text(group.totalLabel, style: t.label),
+          if (group.totalLabel.isNotEmpty)
+            Text(group.totalLabel, style: t.label),
           IconButton(
             tooltip: 'Add to ${group.title}',
             onPressed: onAdd,

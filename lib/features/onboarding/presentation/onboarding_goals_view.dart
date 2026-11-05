@@ -21,6 +21,7 @@ class OnboardingGoalsView extends StatelessWidget {
     required this.labels,
     required this.primary,
     required this.secondary,
+    required this.secondaryOptions,
     required this.onPrimary,
     required this.onToggleSecondary,
     required this.onNext,
@@ -29,6 +30,9 @@ class OnboardingGoalsView extends StatelessWidget {
   final Map<GoalType, String> labels;
   final GoalType? primary;
   final Set<GoalType> secondary;
+
+  /// Goals that can be combined with [primary].
+  final List<GoalType> secondaryOptions;
   final ValueChanged<GoalType> onPrimary;
   final ValueChanged<GoalType> onToggleSecondary;
   final VoidCallback onNext;
@@ -85,13 +89,12 @@ class OnboardingGoalsView extends StatelessWidget {
               spacing: AppSpacing.sm,
               runSpacing: AppSpacing.sm,
               children: [
-                for (final goal in GoalType.values)
-                  if (goal != primary)
-                    FilterChip(
-                      label: Text(labels[goal]!),
-                      selected: secondary.contains(goal),
-                      onSelected: (_) => onToggleSecondary(goal),
-                    ),
+                for (final goal in secondaryOptions)
+                  FilterChip(
+                    label: Text(labels[goal]!),
+                    selected: secondary.contains(goal),
+                    onSelected: (_) => onToggleSecondary(goal),
+                  ),
               ],
             ),
             const SizedBox(height: AppSpacing.xl),

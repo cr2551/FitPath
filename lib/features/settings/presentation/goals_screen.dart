@@ -11,6 +11,7 @@ import '../../../shared/models/enums.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../../dashboard/application/dashboard_providers.dart';
 import '../../profile/application/profile_providers.dart';
+import '../../profile/domain/goal_rules.dart';
 import 'goals_view.dart';
 
 const _weightGoals = {GoalType.loseWeight, GoalType.buildMuscle};
@@ -70,7 +71,9 @@ class _GoalsSettingsScreenState extends ConsumerState<GoalsSettingsScreen> {
             targetDate: date,
           );
         }
-        await profile.setSecondaryGoals(_secondary.difference({primary}));
+        await profile.setSecondaryGoals(
+          GoalRules.secondaryOptions(primary).toSet().intersection(_secondary),
+        );
       });
       if (!mounted) return;
 
@@ -129,6 +132,7 @@ class _GoalsSettingsScreenState extends ConsumerState<GoalsSettingsScreen> {
       data = GoalsViewData(
         primary: _primary,
         secondary: _secondary,
+        secondaryOptions: GoalRules.secondaryOptions(_primary),
         showTargetWeight: _hasWeightTarget,
         targetWeight: _targetWeightKg == null
             ? null
@@ -154,7 +158,9 @@ class _GoalsSettingsScreenState extends ConsumerState<GoalsSettingsScreen> {
       callbacks: GoalsCallbacks(
         onPrimary: (g) => setState(() {
           _primary = g;
-          _secondary.remove(g);
+          _secondary
+            ..remove(g)
+            ..removeAll(GoalRules.conflictsWith(g));
         }),
         onToggleSecondary: (g) => setState(
           () =>

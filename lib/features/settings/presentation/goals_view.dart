@@ -18,6 +18,7 @@ class GoalsViewData {
   const GoalsViewData({
     required this.primary,
     required this.secondary,
+    required this.secondaryOptions,
     required this.showTargetWeight,
     required this.targetWeight,
     required this.weightUnit,
@@ -29,6 +30,9 @@ class GoalsViewData {
 
   final GoalType? primary;
   final Set<GoalType> secondary;
+
+  /// Goals that can be combined with [primary].
+  final List<GoalType> secondaryOptions;
 
   /// Weight goals ask for an optional target weight and date.
   final bool showTargetWeight;
@@ -165,13 +169,12 @@ class GoalsView extends StatelessWidget {
           spacing: AppSpacing.sm,
           runSpacing: AppSpacing.sm,
           children: [
-            for (final goal in GoalType.values)
-              if (goal != d.primary)
-                FilterChip(
-                  label: Text(goalLabels[goal]!),
-                  selected: d.secondary.contains(goal),
-                  onSelected: (_) => cb.onToggleSecondary(goal),
-                ),
+            for (final goal in d.secondaryOptions)
+              FilterChip(
+                label: Text(goalLabels[goal]!),
+                selected: d.secondary.contains(goal),
+                onSelected: (_) => cb.onToggleSecondary(goal),
+              ),
           ],
         ),
         const SizedBox(height: AppSpacing.sm),

@@ -189,8 +189,10 @@ class _DayOverviewScreenState extends ConsumerState<DayOverviewScreen> {
           MealGroupViewData(
             meal: meal,
             title: mealTitle(meal),
+            // Empty meals show no total: a lone "—" next to "+" read as a
+            // minus button.
             totalLabel: summary.byMeal[meal]!.isEmpty
-                ? Formatters.unknownValue
+                ? ''
                 : Formatters.energy(summary.byMeal[meal]!.kcal),
             entries: [
               for (final e in entries.where((e) => e.mealType == meal))

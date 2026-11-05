@@ -102,7 +102,7 @@ void main() {
           MealGroupViewData(
             meal: MealType.dinner,
             title: 'Dinner',
-            totalLabel: '—',
+            totalLabel: '',
             entries: [],
           ),
         ],
@@ -112,6 +112,7 @@ void main() {
     expect(find.text('200 over', findRichText: true), findsOneWidget);
     expect(find.text('110%'), findsOneWidget);
     expect(find.text('1 entry has incomplete macro data'), findsOneWidget);
+    expect(find.text('—'), findsNothing); // empty dinner shows no total
     expect(find.text('250 g'), findsOneWidget); // carbs without a target
     expect(find.text('Set targets'), findsNothing);
 

@@ -96,6 +96,14 @@ void main() {
     await _dispose(tester, db);
   });
 
+  testWidgets('units are visible before typing', (tester) async {
+    final db = await _db(tester);
+    await _pump(tester, db, const CustomFoodScreen());
+    expect(find.text('kcal'), findsOneWidget);
+    expect(find.text('mg'), findsOneWidget);
+    await _dispose(tester, db);
+  });
+
   testWidgets('rejects negative and non-numeric values', (tester) async {
     final db = await _db(tester);
     await _pump(tester, db, const CustomFoodScreen());
