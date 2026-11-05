@@ -7,6 +7,7 @@ import '../../../core/utils/formatters.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../../profile/domain/metabolic_calculator.dart';
 import '../../profile/domain/metabolic_profile.dart';
+import '../application/complete_onboarding.dart';
 import '../application/onboarding_controller.dart';
 import 'estimates_view.dart';
 
@@ -64,8 +65,21 @@ class _EstimatesScreenState extends ConsumerState<EstimatesScreen> {
 
   Future<void> _finish() async {
     setState(() => _finishing = true);
-    // Persisting the draft is #21 (complete onboarding).
-    if (mounted) context.go(Routes.home);
+    try {
+      await ref
+          .read(completeOnboardingProvider)
+          .call(ref.read(onboardingControllerProvider));
+      // The router also sends a completed install to Home.
+      if (mounted) context.go(Routes.home);
+    } on Object {
+      if (!mounted) return;
+      setState(() => _finishing = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Couldn't save your setup. Please try again."),
+        ),
+      );
+    }
   }
 
   @override
