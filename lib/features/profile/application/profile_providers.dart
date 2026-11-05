@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' show ThemeMode;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/database/app_database.dart';
@@ -24,6 +25,20 @@ final currentWeightProvider = StreamProvider<double?>(
 /// Active goals, primary first.
 final activeGoalsProvider = StreamProvider<List<FitnessGoal>>(
   (ref) => ref.watch(profileRepositoryProvider).watchActiveGoals(),
+);
+
+/// The stored theme preference ('system' | 'light' | 'dark').
+final themeModeProvider = StreamProvider<ThemeMode>(
+  (ref) => ref
+      .watch(profileRepositoryProvider)
+      .watchThemeMode()
+      .map(
+        (mode) => switch (mode) {
+          'light' => ThemeMode.light,
+          'dark' => ThemeMode.dark,
+          _ => ThemeMode.system,
+        },
+      ),
 );
 
 final unitSystemProvider = StreamProvider<UnitSystem>(

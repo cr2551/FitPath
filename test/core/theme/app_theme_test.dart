@@ -164,4 +164,27 @@ void main() {
       expect(find.text('LOG FOOD'), findsOneWidget);
     }
   });
+
+  test('a selected chip label contrasts with its ink fill', () {
+    for (final (theme, c) in [
+      (AppTheme.light, FitColors.light),
+      (AppTheme.dark, FitColors.dark),
+    ]) {
+      final style = theme.chipTheme.labelStyle!;
+      TextStyle resolve(Set<WidgetState> states) =>
+          WidgetStateProperty.resolveAs<TextStyle>(style, states);
+      expect(theme.chipTheme.selectedColor, c.ink);
+      expect(resolve({WidgetState.selected}).color, c.surface);
+      expect(resolve({}).color, c.ink);
+    }
+  });
+
+  test('popup menus are flat with a line border', () {
+    final menu = AppTheme.light.popupMenuTheme;
+    expect(menu.elevation, 0);
+    expect(
+      (menu.shape! as RoundedRectangleBorder).side.color,
+      FitColors.light.line,
+    );
+  });
 }

@@ -145,6 +145,8 @@ class SetupView extends StatelessWidget {
             ),
             gap,
             DropdownButtonFormField<ActivityLevel>(
+              elevation: 0,
+              dropdownColor: Theme.of(context).colorScheme.surface,
               initialValue: d.activity,
               isExpanded: true,
               decoration: const InputDecoration(
