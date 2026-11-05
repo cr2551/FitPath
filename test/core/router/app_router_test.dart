@@ -159,12 +159,12 @@ void main() {
 
   testWidgets('first launch redirects to onboarding', (tester) async {
     final h = await _pump(tester, onboardingDone: false);
-    expect(_title('Welcome'), findsOneWidget);
+    expect(find.text('GET STARTED'), findsOneWidget); // the welcome screen
     expect(find.byType(NavigationBar), findsNothing);
 
     h.router.go(Routes.nutrition);
     await tester.pumpAndSettle();
-    expect(_title('Welcome'), findsOneWidget);
+    expect(find.text('GET STARTED'), findsOneWidget); // the welcome screen
 
     h.router.go(Routes.setup);
     await tester.pumpAndSettle();
