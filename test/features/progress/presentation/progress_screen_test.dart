@@ -1,16 +1,24 @@
+import 'package:fitpath/core/database/database_provider.dart';
 import 'package:fitpath/core/theme/app_theme.dart';
 import 'package:fitpath/core/utils/dates.dart';
 import 'package:fitpath/features/progress/application/progress_range_provider.dart';
 import 'package:fitpath/features/progress/presentation/charts/chart_helpers.dart';
+import 'package:fitpath/features/progress/presentation/nutrition/nutrition_progress_view.dart';
 import 'package:fitpath/features/progress/presentation/progress_screen.dart';
+import 'package:fitpath/features/progress/presentation/weight/weight_progress_view.dart';
+import 'package:fitpath/features/progress/presentation/workouts/workout_progress_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../helpers/test_database.dart';
+
 void main() {
   testWidgets('tabs switch the body and share one range', (tester) async {
-    final container = ProviderContainer();
-    addTearDown(container.dispose);
+    final db = createTestDatabase();
+    final container = ProviderContainer(
+      overrides: [appDatabaseProvider.overrideWithValue(db)],
+    );
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
@@ -18,7 +26,7 @@ void main() {
       ),
     );
 
-    expect(find.text('Coming in #37'), findsOneWidget);
+    expect(find.byType(WeightProgressView), findsOneWidget);
     expect(container.read(progressRangeProvider), RangePreset.days30);
 
     await tester.tap(find.text('90D'));
@@ -27,13 +35,18 @@ void main() {
 
     await tester.tap(find.text('NUTRITION'));
     await tester.pump();
-    expect(find.text('Coming in #38'), findsOneWidget);
+    expect(find.byType(NutritionProgressView), findsOneWidget);
     expect(container.read(progressRangeProvider), RangePreset.days90);
 
     await tester.tap(find.text('WORKOUTS'));
     await tester.pump();
-    expect(find.text('Coming in #39'), findsOneWidget);
+    expect(find.byType(WorkoutProgressView), findsOneWidget);
     expect(container.read(progressRangeProvider), RangePreset.days90);
+
+    await tester.pumpWidget(const SizedBox());
+    container.dispose();
+    await tester.pump(const Duration(seconds: 1));
+    await tester.runAsync(db.close);
   });
 
   group('chart helpers', () {
