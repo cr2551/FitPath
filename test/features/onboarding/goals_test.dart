@@ -89,7 +89,7 @@ void main() {
     });
 
     test('other goals are not checked', () {
-      final d = OnboardingDraft(
+      const d = OnboardingDraft(
         units: UnitSystem.metric,
         weightKg: 90,
         primaryGoal: GoalType.buildMuscle,
