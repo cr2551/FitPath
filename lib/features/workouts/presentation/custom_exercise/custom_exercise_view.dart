@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/fit_colors.dart';
+import '../../../../shared/widgets/widgets.dart';
 
 /// Form values for a custom exercise.
 class CustomExerciseForm {
@@ -63,9 +64,13 @@ class CustomExerciseView extends StatelessWidget {
     required this.equipment,
     required this.saving,
     required this.callbacks,
+    this.notFound = false,
   });
 
   final String title;
+
+  /// The exercise to edit does not exist.
+  final bool notFound;
 
   /// Null while loading an existing exercise.
   final CustomExerciseForm? form;
@@ -86,7 +91,12 @@ class CustomExerciseView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
       body: SafeArea(
-        child: f == null
+        child: notFound
+            ? const Padding(
+                padding: AppSpacing.screenPadding,
+                child: EmptyState(message: 'This exercise no longer exists.'),
+              )
+            : f == null
             ? const Center(child: CircularProgressIndicator())
             : ListView(
                 padding: const EdgeInsets.fromLTRB(

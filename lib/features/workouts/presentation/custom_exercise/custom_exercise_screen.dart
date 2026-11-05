@@ -35,6 +35,7 @@ class CustomExerciseScreen extends ConsumerStatefulWidget {
 class _CustomExerciseScreenState extends ConsumerState<CustomExerciseScreen> {
   CustomExerciseForm? _form;
   var _saving = false;
+  var _notFound = false;
 
   @override
   void initState() {
@@ -45,7 +46,11 @@ class _CustomExerciseScreenState extends ConsumerState<CustomExerciseScreen> {
       return;
     }
     ref.read(workoutRepositoryProvider).exerciseById(id).then((e) {
-      if (!mounted || e == null) return;
+      if (!mounted) return;
+      if (e == null || !e.isCustom || e.deletedAt != null) {
+        setState(() => _notFound = true);
+        return;
+      }
       setState(
         () => _form = CustomExerciseForm(
           name: e.name,
@@ -114,6 +119,7 @@ class _CustomExerciseScreenState extends ConsumerState<CustomExerciseScreen> {
       muscleGroups: muscleGroups,
       equipment: equipmentTypes,
       saving: _saving,
+      notFound: _notFound,
       callbacks: CustomExerciseCallbacks(
         onChanged: (f) => setState(() => _form = f),
         onSave: _save,
