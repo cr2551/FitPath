@@ -1,13 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/router/placeholder_screen.dart';
+import '../application/progress_range_provider.dart';
+import 'nutrition/nutrition_progress_view.dart';
+import 'progress_view.dart';
+import 'weight/weight_progress_view.dart';
+import 'workouts/workout_progress_view.dart';
 
-/// PLACEHOLDER created by #3 (App shell and navigation).
-/// Replaced by #36, which owns this file.
-class ProgressScreen extends StatelessWidget {
+/// The Progress tab. The range is shared by all three datasets
+/// (`progressRangeProvider`); each tab body reads its own data.
+class ProgressScreen extends ConsumerStatefulWidget {
   const ProgressScreen({super.key});
 
   @override
-  Widget build(BuildContext context) =>
-      const PlaceholderScreen(title: 'Progress', issue: 36);
+  ConsumerState<ProgressScreen> createState() => _ProgressScreenState();
+}
+
+class _ProgressScreenState extends ConsumerState<ProgressScreen> {
+  var _tab = ProgressTab.weight;
+
+  @override
+  Widget build(BuildContext context) {
+    return ProgressView(
+      tab: _tab,
+      range: ref.watch(progressRangeProvider),
+      body: switch (_tab) {
+        ProgressTab.weight => const WeightProgressView(),
+        ProgressTab.nutrition => const NutritionProgressView(),
+        ProgressTab.workouts => const WorkoutProgressView(),
+      },
+      onTabChanged: (t) => setState(() => _tab = t),
+      onRangeChanged: ref.read(progressRangeProvider.notifier).select,
+    );
+  }
 }
