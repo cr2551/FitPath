@@ -43,20 +43,33 @@ class WeightChart extends StatelessWidget {
     double x(DateTime at) => at.difference(start).inMinutes / (60 * 24);
 
     final values = [for (final p in points) p.value, ?target];
-    final minV = values.reduce((a, b) => a < b ? a : b);
-    final maxV = values.reduce((a, b) => a > b ? a : b);
+    var minV = values.reduce((a, b) => a < b ? a : b);
+    var maxV = values.reduce((a, b) => a > b ? a : b);
+    // A flat series (e.g. a single entry) still gets a readable axis: at
+    // least 2 units tall, centred on the values.
+    if (maxV - minV < 2) {
+      final mid = (minV + maxV) / 2;
+      minV = mid - 1;
+      maxV = mid + 1;
+    }
     // Round bounds to a step so the axis labels land on gridlines.
     final step = niceStep((maxV - minV) / 3);
     final lo = (minV / step).floor() * step - (minV % step == 0 ? step : 0);
     final hi = (maxV / step).ceil() * step + (maxV % step == 0 ? step : 0);
-    final maxX = x(points.last.at).clamp(1.0, double.infinity);
+    // Entries within one day: show them on a three-day axis (the day
+    // before to the day after) instead of stretching a few hours across
+    // the chart. Whole-day bounds put every tick on a midnight.
+    final span = x(points.last.at);
+    final oneDay = span < 1;
+    final minX = oneDay ? -1.0 : 0.0;
+    final maxX = oneDay ? 2.0 : span;
     final last = points.length - 1;
 
     return SizedBox(
       height: height,
       child: LineChart(
         LineChartData(
-          minX: 0,
+          minX: minX,
           maxX: maxX,
           minY: lo,
           maxY: hi,
@@ -74,11 +87,14 @@ class WeightChart extends StatelessWidget {
             rightTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
-                reservedSize: 40,
+                reservedSize: 44,
                 interval: step,
                 getTitlesWidget: (v, meta) => SideTitleWidget(
                   meta: meta,
-                  child: Text(ChartAxes.valueLabel(v), style: t.label),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(ChartAxes.valueLabel(v), style: t.label),
+                  ),
                 ),
               ),
             ),
@@ -86,17 +102,23 @@ class WeightChart extends StatelessWidget {
               sideTitles: SideTitles(
                 showTitles: true,
                 reservedSize: 24,
-                interval: maxX / 2,
-                getTitlesWidget: (v, meta) => SideTitleWidget(
-                  meta: meta,
-                  child: Text(
-                    ChartAxes.dateLabel(
-                      start.add(Duration(minutes: (v * 24 * 60).round())),
-                      range,
-                    ),
-                    style: t.label,
-                  ),
-                ),
+                interval: oneDay ? 1 : (maxX - minX) / 2,
+                getTitlesWidget: (v, meta) {
+                  String label(double at) => ChartAxes.dateLabel(
+                    start.add(Duration(minutes: (at * 24 * 60).round())),
+                    range,
+                  );
+                  // Skip a tick that would repeat the previous date.
+                  if (v > meta.min &&
+                      label(v) == label(v - meta.appliedInterval)) {
+                    return const SizedBox.shrink();
+                  }
+                  return SideTitleWidget(
+                    meta: meta,
+                    fitInside: SideTitleFitInsideData.fromTitleMeta(meta),
+                    child: Text(label(v), style: t.label),
+                  );
+                },
               ),
             ),
           ),
