@@ -147,6 +147,8 @@ class ProfileEditView extends StatelessWidget {
         ),
         gap,
         DropdownButtonFormField<ActivityLevel?>(
+          elevation: 0,
+          dropdownColor: Theme.of(context).colorScheme.surface,
           initialValue: d.activity,
           isExpanded: true,
           decoration: const InputDecoration(labelText: 'Activity level'),
@@ -159,6 +161,8 @@ class ProfileEditView extends StatelessWidget {
         ),
         gap,
         DropdownButtonFormField<TrainingExperience?>(
+          elevation: 0,
+          dropdownColor: Theme.of(context).colorScheme.surface,
           initialValue: d.experience,
           decoration: const InputDecoration(labelText: 'Training experience'),
           items: [
@@ -170,6 +174,8 @@ class ProfileEditView extends StatelessWidget {
         ),
         gap,
         DropdownButtonFormField<int?>(
+          elevation: 0,
+          dropdownColor: Theme.of(context).colorScheme.surface,
           initialValue: d.frequency,
           decoration: const InputDecoration(
             labelText: 'Training days per week',

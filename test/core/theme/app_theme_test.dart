@@ -164,4 +164,57 @@ void main() {
       expect(find.text('LOG FOOD'), findsOneWidget);
     }
   });
+
+  test('a selected chip label contrasts with its ink fill', () {
+    for (final (theme, c) in [
+      (AppTheme.light, FitColors.light),
+      (AppTheme.dark, FitColors.dark),
+    ]) {
+      // Mirrors how RawChip resolves its label: only the color, by state.
+      final color = theme.chipTheme.labelStyle!.color;
+      Color? resolve(Set<WidgetState> states) =>
+          WidgetStateProperty.resolveAs<Color?>(color, states);
+      expect(theme.chipTheme.selectedColor, c.ink);
+      expect(resolve({WidgetState.selected}), c.surface);
+      expect(resolve({}), c.ink);
+    }
+  });
+
+  testWidgets('rendered chips: ink label, surface label when selected', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.light,
+        home: Scaffold(
+          body: Row(
+            children: [
+              FilterChip(label: const Text('Off'), onSelected: (_) {}),
+              FilterChip(
+                label: const Text('On'),
+                selected: true,
+                onSelected: (_) {},
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    expect(_chipLabelColor(tester, 'Off'), FitColors.light.ink);
+    expect(_chipLabelColor(tester, 'On'), FitColors.light.surface);
+  });
+
+  test('popup menus are flat with a line border', () {
+    final menu = AppTheme.light.popupMenuTheme;
+    expect(menu.elevation, 0);
+    expect(
+      (menu.shape! as RoundedRectangleBorder).side.color,
+      FitColors.light.line,
+    );
+  });
 }
+
+/// The label color a rendered [FilterChip] actually paints.
+Color? _chipLabelColor(WidgetTester tester, String label) =>
+    tester.widget<Text>(find.text(label)).style?.color ??
+    DefaultTextStyle.of(tester.element(find.text(label))).style.color;

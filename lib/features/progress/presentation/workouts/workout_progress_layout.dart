@@ -113,6 +113,8 @@ class WorkoutProgressLayout extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               DropdownButtonFormField<int>(
+                elevation: 0,
+                dropdownColor: Theme.of(context).colorScheme.surface,
                 initialValue: d.selected,
                 isExpanded: true,
                 decoration: const InputDecoration(labelText: 'Exercise'),

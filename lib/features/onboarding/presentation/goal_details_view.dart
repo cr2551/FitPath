@@ -135,6 +135,8 @@ class GoalDetailsView extends StatelessWidget {
             ],
             if (d.showTraining) ...[
               DropdownButtonFormField<TrainingExperience>(
+                elevation: 0,
+                dropdownColor: Theme.of(context).colorScheme.surface,
                 initialValue: d.experience,
                 isExpanded: true,
                 decoration: const InputDecoration(
@@ -149,6 +151,8 @@ class GoalDetailsView extends StatelessWidget {
               gap,
             ],
             DropdownButtonFormField<int>(
+              elevation: 0,
+              dropdownColor: Theme.of(context).colorScheme.surface,
               initialValue: d.trainingDays,
               isExpanded: true,
               decoration: InputDecoration(
@@ -164,6 +168,8 @@ class GoalDetailsView extends StatelessWidget {
             ),
             gap,
             DropdownButtonFormField<ActivityLevel>(
+              elevation: 0,
+              dropdownColor: Theme.of(context).colorScheme.surface,
               initialValue: d.activity,
               isExpanded: true,
               decoration: const InputDecoration(

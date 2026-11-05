@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
+import 'features/profile/application/profile_providers.dart';
 
 /// Root widget. Theme (#2) and routing (#3) plug in through their own files,
 /// so this file should not need to change during the MVP.
@@ -16,6 +17,7 @@ class FitPathApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
+      themeMode: ref.watch(themeModeProvider).value ?? ThemeMode.system,
       routerConfig: ref.watch(appRouterProvider),
     );
   }

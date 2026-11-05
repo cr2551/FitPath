@@ -115,6 +115,8 @@ class CustomExerciseView extends StatelessWidget {
                   ),
                   gap,
                   DropdownButtonFormField<String>(
+                    elevation: 0,
+                    dropdownColor: Theme.of(context).colorScheme.surface,
                     initialValue: f.muscleGroup,
                     decoration: const InputDecoration(
                       labelText: 'Muscle group',
@@ -128,6 +130,8 @@ class CustomExerciseView extends StatelessWidget {
                   ),
                   gap,
                   DropdownButtonFormField<String?>(
+                    elevation: 0,
+                    dropdownColor: Theme.of(context).colorScheme.surface,
                     initialValue: f.equipment,
                     decoration: const InputDecoration(labelText: 'Equipment'),
                     items: [

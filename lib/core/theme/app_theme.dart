@@ -194,10 +194,26 @@ abstract final class AppTheme {
         backgroundColor: c.surface,
         selectedColor: c.ink,
         checkmarkColor: c.surface,
-        labelStyle: text.label.copyWith(color: c.ink),
+        // Material 3 ignores secondaryLabelStyle and resolves only the
+        // label COLOR by state, so it must be a WidgetStateColor or ink text
+        // sits on the ink fill of a selected chip.
+        labelStyle: text.label.copyWith(
+          color: WidgetStateColor.resolveWith(
+            (s) => s.contains(WidgetState.selected) ? c.surface : c.ink,
+          ),
+        ),
         secondaryLabelStyle: text.label.copyWith(color: c.surface),
         elevation: 0,
         pressElevation: 0,
+      ),
+      popupMenuTheme: PopupMenuThemeData(
+        color: c.surface,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.smAll,
+          side: lineSide,
+        ),
       ),
       dialogTheme: DialogThemeData(
         backgroundColor: c.surface,
