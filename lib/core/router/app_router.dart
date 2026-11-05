@@ -97,6 +97,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                       foodId: _int(s.uri.queryParameters['foodId']),
                       meal: _meal(s),
                       date: _date(s),
+                      quantity: double.tryParse(
+                        s.uri.queryParameters['quantity'] ?? '',
+                      ),
+                      unit: s.uri.queryParameters['unit'],
                     ),
                   ),
                   _route(

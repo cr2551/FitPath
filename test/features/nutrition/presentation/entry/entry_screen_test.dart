@@ -106,6 +106,32 @@ void main() {
     await _dispose(tester, h);
   });
 
+  testWidgets('a prefilled amount from food details is used when valid', (
+    tester,
+  ) async {
+    final h = await _setUp(tester);
+    final oats = (await tester.runAsync(() => _oats(h)))!;
+    await _pump(
+      tester,
+      h,
+      EntryScreen(foodId: oats, date: day, quantity: 60, unit: 'g'),
+    );
+    expect(find.widgetWithText(TextField, '60'), findsOneWidget);
+    expect(find.text('228 kcal', findRichText: true), findsOneWidget);
+    await _dispose(tester, h);
+
+    // Millilitres of a per-100 g food are not valid: fall back to defaults.
+    final h2 = await _setUp(tester);
+    final oats2 = (await tester.runAsync(() => _oats(h2)))!;
+    await _pump(
+      tester,
+      h2,
+      EntryScreen(foodId: oats2, date: day, quantity: 60, unit: 'ml'),
+    );
+    expect(find.widgetWithText(TextField, '40'), findsOneWidget);
+    await _dispose(tester, h2);
+  });
+
   testWidgets('rejects zero and absurd amounts', (tester) async {
     final h = await _setUp(tester);
     final oats = (await tester.runAsync(() => _oats(h)))!;

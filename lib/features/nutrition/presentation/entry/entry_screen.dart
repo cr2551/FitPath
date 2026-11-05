@@ -55,12 +55,19 @@ class EntryScreen extends ConsumerStatefulWidget {
     this.foodId,
     this.meal,
     this.date,
+    this.quantity,
+    this.unit,
   });
 
   final int? entryId;
   final int? foodId;
   final MealType? meal;
   final DateTime? date;
+
+  /// Prefilled amount for a new entry, used when [unit] ('g', 'ml' or
+  /// 'serving') is valid for the food; otherwise the default amount applies.
+  final double? quantity;
+  final String? unit;
 
   @override
   ConsumerState<EntryScreen> createState() => _EntryScreenState();
@@ -91,8 +98,19 @@ class _EntryScreenState extends ConsumerState<EntryScreen> {
     }
     final now = DateTime.now();
     final food = FoodRepository.foodNutrition(source.food);
-    _unit = NutritionMath.allowedUnits(food).first;
-    _quantityText = _number(_defaultAmount(food, _unit));
+    final allowed = NutritionMath.allowedUnits(food);
+    final requested = _unitFromCode(widget.unit);
+    final q = widget.quantity;
+    if (requested != null &&
+        allowed.contains(requested) &&
+        q != null &&
+        q > 0) {
+      _unit = requested;
+      _quantityText = _number(q);
+    } else {
+      _unit = allowed.first;
+      _quantityText = _number(_defaultAmount(food, _unit));
+    }
     _meal = widget.meal ?? _mealFor(now);
     _day = Dates.startOfDay(widget.date ?? now);
     _time = TimeOfDay.fromDateTime(now);
@@ -259,6 +277,13 @@ class _EntryScreenState extends ConsumerState<EntryScreen> {
 
   static String _number(double v) =>
       v == v.roundToDouble() ? v.round().toString() : v.toStringAsFixed(1);
+
+  static QuantityUnit? _unitFromCode(String? code) => switch (code) {
+    'g' => QuantityUnit.gram,
+    'ml' => QuantityUnit.milliliter,
+    'serving' => QuantityUnit.serving,
+    _ => null,
+  };
 
   static String _unitLabel(QuantityUnit u) => switch (u) {
     QuantityUnit.gram => 'g',
