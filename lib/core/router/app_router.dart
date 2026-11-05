@@ -49,6 +49,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     refreshListenable: refresh,
     redirect: (context, state) {
       final done = ref.read(onboardingCompletedProvider);
+      // Still loading the stored flag: stay put; the refresh re-runs this.
+      if (done == null) return null;
       final inOnboarding = state.matchedLocation.startsWith('/onboarding');
       if (!done && !inOnboarding) return Routes.welcome;
       if (done && inOnboarding) return Routes.home;

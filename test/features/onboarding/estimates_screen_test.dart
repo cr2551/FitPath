@@ -1,3 +1,4 @@
+import 'package:fitpath/core/database/database_provider.dart';
 import 'package:fitpath/core/router/routes.dart';
 import 'package:fitpath/core/theme/app_theme.dart';
 import 'package:fitpath/features/onboarding/application/onboarding_controller.dart';
@@ -8,6 +9,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../helpers/test_database.dart';
+
 Future<ProviderContainer> _pump(
   WidgetTester tester, {
   Sex sex = Sex.male,
@@ -16,8 +19,14 @@ Future<ProviderContainer> _pump(
   tester.view.physicalSize = const Size(400, 2000);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
-  final container = ProviderContainer();
-  addTearDown(container.dispose);
+  final db = createTestDatabase();
+  final container = ProviderContainer(
+    overrides: [appDatabaseProvider.overrideWithValue(db)],
+  );
+  addTearDown(() async {
+    container.dispose();
+    await tester.runAsync(db.close);
+  });
   container.read(onboardingControllerProvider.notifier)
     ..setUnits(UnitSystem.metric)
     ..setAge(30)
@@ -99,8 +108,19 @@ void main() {
     expect(_finish(tester).onPressed, isNotNull);
 
     await tester.tap(find.text('FINISH SETUP'));
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 100)),
+    );
     await tester.pumpAndSettle();
     expect(find.text('route ${Routes.home}'), findsOneWidget);
+    // Completing onboarding saved the edited targets.
+    final db = ProviderScope.containerOf(
+      tester.element(find.byType(Scaffold).first),
+    ).read(appDatabaseProvider);
+    final saved = await tester.runAsync(
+      () => db.select(db.nutritionTargets).get(),
+    );
+    expect(saved!.single.source, TargetSource.calculated);
   });
 
   testWidgets('explains skipped sex and missing inputs', (tester) async {
