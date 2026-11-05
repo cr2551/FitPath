@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:fitpath/core/database/app_database.dart';
 import 'package:fitpath/core/errors/network_failure.dart';
@@ -170,4 +172,72 @@ void main() {
     expect(liquid.servingUnit, isNull);
     expect(liquid.nutrients.fatG, isNull);
   });
+
+  group('connectivity check problems never hide local results', () {
+    test('a throwing check is ignored and the request is tried', () async {
+      await addLocal('Protein shake');
+      final off = _FakeOff(products: [bar]);
+      final results = await FoodSearchService(
+        local: repo,
+        remote: off,
+        isOnline: () => Future.error(StateError('no D-Bus')),
+      ).search('protein');
+      expect(results.local.single.name, 'Protein shake');
+      expect(results.remote.single.barcode, bar.barcode);
+      expect(results.remoteError, isNull);
+    });
+
+    test('a hanging check times out', () async {
+      await addLocal('Protein shake');
+      final results = await FoodSearchService(
+        local: repo,
+        remote: _FakeOff(error: const NoConnection()),
+        isOnline: () => Completer<bool>().future,
+        connectivityTimeout: const Duration(milliseconds: 50),
+      ).search('protein');
+      expect(results.local.single.name, 'Protein shake');
+      expect(results.remoteError, isA<NoConnection>());
+    });
+
+    test(
+      'an unexpected request error becomes a banner, not a failure',
+      () async {
+        await addLocal('Protein shake');
+        final results = await FoodSearchService(
+          local: repo,
+          remote: _ThrowingOff(),
+          isOnline: () async => true,
+        ).search('protein');
+        expect(results.local, hasLength(1));
+        expect(results.remoteError, isNotNull);
+      },
+    );
+  });
+
+  test(
+    'the stream shows local results before the online lookup ends',
+    () async {
+      await addLocal('Protein shake');
+      final emitted = await service(_FakeOff(products: [bar]))
+          .searchStream('protein')
+          .toList();
+      expect(emitted, hasLength(2));
+      expect(emitted.first.local.single.name, 'Protein shake');
+      expect(emitted.first.remotePending, isTrue);
+      expect(emitted.last.remotePending, isFalse);
+      expect(emitted.last.remote, hasLength(1));
+    },
+  );
+}
+
+class _ThrowingOff extends OpenFoodFactsClient {
+  _ThrowingOff() : super(Dio());
+
+  @override
+  Future<OffSearchPage> search(
+    String query, {
+    int page = 1,
+    int pageSize = 20,
+    CancelToken? cancelToken,
+  }) async => throw const FormatException('bad JSON');
 }
