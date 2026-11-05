@@ -73,10 +73,11 @@ void main() {
     await _pump(tester, db);
 
     expect(find.text('Today'), findsOneWidget);
-    expect(find.text('Calories & macros'), findsOneWidget);
+    // The calories card, without a calorie goal in this database.
+    expect(find.text('Set a calorie goal'), findsOneWidget);
     expect(find.text('This week'), findsOneWidget);
     expect(
-      _top(tester, 'Calories & macros'),
+      _top(tester, 'Set a calorie goal'),
       lessThan(_top(tester, 'LOG FOOD')),
     );
     expect(_top(tester, 'LOG FOOD'), lessThan(_top(tester, 'Weight')));
@@ -115,7 +116,7 @@ void main() {
     // A fresh widget tree reads the same layout back.
     await tester.pumpWidget(const SizedBox());
     await _pump(tester, db);
-    expect(find.text('Calories & macros'), findsOneWidget);
+    expect(find.text('Set a calorie goal'), findsOneWidget);
     expect(find.text('Weight'), findsNothing);
     expect(find.text('Nutrition summary'), findsNothing);
     expect(find.text('This week'), findsOneWidget);
