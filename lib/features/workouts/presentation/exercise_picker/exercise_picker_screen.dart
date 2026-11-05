@@ -1,13 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../../../core/router/placeholder_screen.dart';
+import '../../../../core/database/seed/exercise_seed.dart';
+import '../../../../core/router/routes.dart';
+import '../../application/workout_providers.dart';
+import 'exercise_picker_view.dart';
 
-/// PLACEHOLDER created by #3 (App shell and navigation).
-/// Replaced by #30, which owns this file.
-class ExercisePickerScreen extends StatelessWidget {
+/// Picks an exercise for the active session. Pops with the exercise id
+/// (`context.pop(id)`), or nothing when the user backs out.
+class ExercisePickerScreen extends ConsumerStatefulWidget {
   const ExercisePickerScreen({super.key});
 
   @override
-  Widget build(BuildContext context) =>
-      const PlaceholderScreen(title: 'Add exercise', issue: 30);
+  ConsumerState<ExercisePickerScreen> createState() =>
+      _ExercisePickerScreenState();
 }
+
+class _ExercisePickerScreenState extends ConsumerState<ExercisePickerScreen> {
+  var _query = '';
+  String? _group;
+
+  @override
+  Widget build(BuildContext context) {
+    final exercises = ref.watch(
+      exercisesProvider((query: _query, muscleGroup: _group)),
+    );
+    return ExercisePickerView(
+      muscleGroups: muscleGroups,
+      selectedGroup: _group,
+      rows: exercises.value == null
+          ? null
+          : [
+              for (final e in exercises.value!)
+                ExerciseRowData(
+                  id: e.id,
+                  name: e.name,
+                  detail: [
+                    _capitalize(e.muscleGroup),
+                    ?e.equipment,
+                  ].join(' · '),
+                  isCustom: e.isCustom,
+                ),
+            ],
+      callbacks: ExercisePickerCallbacks(
+        onQuery: (q) => setState(() => _query = q),
+        onMuscleGroup: (g) => setState(() => _group = g),
+        onPick: (id) => context.pop(id),
+        onEdit: (id) => context.push(Routes.editCustomExercise(id)),
+        onCreate: () async {
+          final id = await context.push<int>(Routes.newCustomExercise);
+          if (id != null && context.mounted) context.pop(id);
+        },
+      ),
+    );
+  }
+}
+
+String _capitalize(String s) => s[0].toUpperCase() + s.substring(1);
