@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ic_launcher_background">#5B2A6E</color>
+    <!-- App background while Flutter starts (DESIGN/README.md: background). -->
+    <color name="splash_background">#F5F5F4</color>
+</resources>
