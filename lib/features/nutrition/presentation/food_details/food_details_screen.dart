@@ -28,8 +28,8 @@ final _foodProvider = FutureProvider.autoDispose.family<FoodItem, int>((
 /// A food's label values and a live preview for an amount. Works offline:
 /// it only reads the local catalog (online results are cached on select).
 ///
-/// "Add to diary" opens the entry screen with the food, meal and date. The
-/// amount is not passed on: the route table has no quantity parameter.
+/// "Add to diary" opens the entry screen with the food, meal, date and the
+/// amount entered here.
 class FoodDetailsScreen extends ConsumerStatefulWidget {
   const FoodDetailsScreen({
     super.key,
@@ -49,6 +49,11 @@ class FoodDetailsScreen extends ConsumerStatefulWidget {
 class _FoodDetailsScreenState extends ConsumerState<FoodDetailsScreen> {
   String? _quantityText;
   QuantityUnit? _unit;
+
+  double? get _validQuantity {
+    final q = Units.parseDecimal(_quantityText ?? '');
+    return q != null && q > 0 && _unit != null ? q : null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +82,9 @@ class _FoodDetailsScreenState extends ConsumerState<FoodDetailsScreen> {
           foodId: widget.foodId,
           meal: widget.meal,
           date: widget.date,
+          // Carry over the amount when it is valid.
+          quantity: _validQuantity,
+          unit: _validQuantity == null ? null : FoodRepository.unitCode(_unit!),
         ),
       ),
       onEdit: () => context.push(Routes.editCustomFood(widget.foodId)),

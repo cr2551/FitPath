@@ -106,7 +106,9 @@ void main() {
     await tester.tap(find.text('ADD TO DIARY'));
     await _settle(tester);
     expect(
-      find.text('route /nutrition/entry/new?foodId=$id&meal=snack'),
+      find.text(
+        'route /nutrition/entry/new?foodId=$id&meal=snack&quantity=2.0&unit=serving',
+      ),
       findsOneWidget,
     );
     await _dispose(tester, db);

@@ -28,13 +28,20 @@ abstract final class Routes {
       _with('$nutrition/search', _mealDate(meal, date));
   static String foodDetails(int foodId, {MealType? meal, DateTime? date}) =>
       _with('$nutrition/food/$foodId', _mealDate(meal, date));
+
+  /// [quantity] and [unit] ('g', 'ml' or 'serving') prefill the amount,
+  /// e.g. what the user already typed on the food details screen.
   static String newEntry({
     required int foodId,
     MealType? meal,
     DateTime? date,
+    double? quantity,
+    String? unit,
   }) => _with('$nutrition/entry/new', {
     'foodId': '$foodId',
     ..._mealDate(meal, date),
+    if (quantity != null) 'quantity': '$quantity',
+    'unit': ?unit,
   });
   static String editEntry(int entryId) => '$nutrition/entry/$entryId';
   static const newCustomFood = '$nutrition/custom-food/new';

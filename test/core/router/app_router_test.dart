@@ -186,6 +186,10 @@ void main() {
       Routes.newEntry(foodId: 4, meal: MealType.dinner, date: day),
       '/nutrition/entry/new?foodId=4&meal=dinner&date=2026-11-03',
     );
+    expect(
+      Routes.newEntry(foodId: 4, quantity: 60, unit: 'g'),
+      '/nutrition/entry/new?foodId=4&quantity=60.0&unit=g',
+    );
     expect(Routes.foodSearch(), '/nutrition/search');
   });
 }
