@@ -192,7 +192,7 @@ class _QuickActions extends StatelessWidget {
             style: AppTheme.accentButton(context),
             onPressed: onLogFood,
             icon: const Icon(Icons.add),
-            label: const Text('LOG FOOD'),
+            label: const _OneLine('LOG FOOD'),
           ),
         ),
         const SizedBox(width: AppSpacing.sm),
@@ -200,12 +200,23 @@ class _QuickActions extends StatelessWidget {
           child: FilledButton.icon(
             onPressed: onStartWorkout,
             icon: const Icon(Icons.bolt),
-            label: const Text('START WORKOUT'),
+            label: const _OneLine('START WORKOUT'),
           ),
         ),
       ],
     );
   }
+}
+
+/// A button label that shrinks instead of wrapping on narrow phones.
+class _OneLine extends StatelessWidget {
+  const _OneLine(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) =>
+      FittedBox(fit: BoxFit.scaleDown, child: Text(text, maxLines: 1));
 }
 
 class _EmptyDashboard extends StatelessWidget {
