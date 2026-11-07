@@ -42,8 +42,8 @@ abstract final class ChartAxes {
   };
 }
 
-/// Chart placeholder when the range has no data: same height as a chart,
-/// one muted line and an optional action.
+/// Chart placeholder when the range has no data: at least as tall as a
+/// chart, one muted line and an optional action.
 class EmptyChart extends StatelessWidget {
   const EmptyChart({
     super.key,
@@ -61,23 +61,26 @@ class EmptyChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.fitColors;
-    return SizedBox(
-      height: height,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          border: Border.all(color: c.line),
-          borderRadius: AppRadii.smAll,
-        ),
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(message, style: context.textStyles.label),
-              if (actionLabel != null && onAction != null)
-                TextButton(onPressed: onAction, child: Text(actionLabel!)),
-            ],
+    // At least [height]; taller when large text needs the room.
+    return Container(
+      constraints: BoxConstraints(minHeight: height),
+      alignment: Alignment.center,
+      padding: const EdgeInsets.all(AppSpacing.sm),
+      decoration: BoxDecoration(
+        border: Border.all(color: c.line),
+        borderRadius: AppRadii.smAll,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            message,
+            style: context.textStyles.label,
+            textAlign: TextAlign.center,
           ),
-        ),
+          if (actionLabel != null && onAction != null)
+            TextButton(onPressed: onAction, child: Text(actionLabel!)),
+        ],
       ),
     );
   }

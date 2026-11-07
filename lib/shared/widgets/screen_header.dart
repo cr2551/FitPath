@@ -21,7 +21,8 @@ class ScreenHeader extends StatelessWidget {
   /// A short line under the title, e.g. the goal.
   final String? subtitle;
 
-  static const _slot = 40.0;
+  /// Fits a [HeaderIconButton]'s 48 dp tap target.
+  static const _slot = 48.0;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +59,8 @@ class ScreenHeader extends StatelessWidget {
   }
 }
 
-/// A 40 px square icon button with the `subtle` fill.
+/// A 40 px square icon button with the `subtle` fill, inside a 48 dp tap
+/// target.
 class HeaderIconButton extends StatelessWidget {
   const HeaderIconButton({
     super.key,
@@ -75,7 +77,7 @@ class HeaderIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = context.fitColors;
     return SizedBox.square(
-      dimension: 40,
+      dimension: 48,
       child: IconButton(
         tooltip: tooltip,
         onPressed: onPressed,
@@ -83,6 +85,9 @@ class HeaderIconButton extends StatelessWidget {
         style: IconButton.styleFrom(
           backgroundColor: c.subtle,
           foregroundColor: c.ink,
+          fixedSize: const Size.square(40),
+          minimumSize: const Size.square(40),
+          tapTargetSize: MaterialTapTargetSize.padded,
         ),
         icon: Icon(icon),
       ),

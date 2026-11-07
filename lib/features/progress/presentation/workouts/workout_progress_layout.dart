@@ -112,19 +112,13 @@ class WorkoutProgressLayout extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DropdownButtonFormField<int>(
-                elevation: 0,
-                dropdownColor: Theme.of(context).colorScheme.surface,
-                initialValue: d.selected,
-                isExpanded: true,
-                decoration: const InputDecoration(labelText: 'Exercise'),
-                items: [
-                  for (final e in d.exercises)
-                    DropdownMenuItem(value: e.id, child: Text(e.name)),
+              AppDropdown<int>(
+                label: 'Exercise',
+                value: d.selected,
+                options: [
+                  for (final e in d.exercises) DropdownOption(e.id, e.name),
                 ],
-                onChanged: (id) {
-                  if (id != null) onExercise(id);
-                },
+                onChanged: onExercise,
               ),
               const SizedBox(height: AppSpacing.md),
               if (!d.isBodyweight)

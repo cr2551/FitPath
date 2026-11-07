@@ -23,10 +23,12 @@ class _ExercisePickerScreenState extends ConsumerState<ExercisePickerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final exercises = ref.watch(
-      exercisesProvider((query: _query, muscleGroup: _group)),
-    );
+    final filter = (query: _query, muscleGroup: _group);
+    final exercises = ref.watch(exercisesProvider(filter));
     return ExercisePickerView(
+      onRetry: exercises.hasError && !exercises.hasValue
+          ? () => ref.invalidate(exercisesProvider(filter))
+          : null,
       muscleGroups: muscleGroups,
       selectedGroup: _group,
       rows: exercises.value == null

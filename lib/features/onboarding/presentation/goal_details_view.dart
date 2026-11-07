@@ -134,50 +134,32 @@ class GoalDetailsView extends StatelessWidget {
               gap,
             ],
             if (d.showTraining) ...[
-              DropdownButtonFormField<TrainingExperience>(
-                elevation: 0,
-                dropdownColor: Theme.of(context).colorScheme.surface,
-                initialValue: d.experience,
-                isExpanded: true,
-                decoration: const InputDecoration(
-                  labelText: 'Training experience',
-                ),
-                items: [
+              AppDropdown<TrainingExperience>(
+                label: 'Training experience',
+                value: d.experience,
+                options: [
                   for (final MapEntry(:key, :value) in _experience.entries)
-                    DropdownMenuItem(value: key, child: Text(value)),
+                    DropdownOption(key, value),
                 ],
                 onChanged: cb.onExperience,
               ),
               gap,
             ],
-            DropdownButtonFormField<int>(
-              elevation: 0,
-              dropdownColor: Theme.of(context).colorScheme.surface,
-              initialValue: d.trainingDays,
-              isExpanded: true,
-              decoration: InputDecoration(
-                labelText: d.showTraining
-                    ? 'Training days per week'
-                    : 'Preferred workout days per week (optional)',
-              ),
-              items: [
-                for (var i = 0; i <= 7; i++)
-                  DropdownMenuItem(value: i, child: Text('$i')),
-              ],
+            AppDropdown<int>(
+              label: d.showTraining
+                  ? 'Training days per week'
+                  : 'Preferred workout days per week (optional)',
+              value: d.trainingDays,
+              options: [for (var i = 0; i <= 7; i++) DropdownOption(i, '$i')],
               onChanged: cb.onTrainingDays,
             ),
             gap,
-            DropdownButtonFormField<ActivityLevel>(
-              elevation: 0,
-              dropdownColor: Theme.of(context).colorScheme.surface,
-              initialValue: d.activity,
-              isExpanded: true,
-              decoration: const InputDecoration(
-                labelText: 'Confirm your activity level',
-              ),
-              items: [
+            AppDropdown<ActivityLevel>(
+              label: 'Confirm your activity level',
+              value: d.activity,
+              options: [
                 for (final MapEntry(:key, :value) in activityLabels.entries)
-                  DropdownMenuItem(value: key, child: Text(value)),
+                  DropdownOption(key, value),
               ],
               onChanged: cb.onActivity,
             ),

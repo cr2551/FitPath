@@ -107,6 +107,9 @@ class _ActiveSessionScreenState extends ConsumerState<ActiveSessionScreen> {
     }
 
     return ActiveSessionView(
+      onRetry: active.hasError && session == null
+          ? () => ref.invalidate(activeSessionProvider)
+          : null,
       loading: active.isLoading && session == null,
       data: session == null
           ? null

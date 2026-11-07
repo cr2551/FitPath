@@ -114,30 +114,22 @@ class CustomExerciseView extends StatelessWidget {
                     onChanged: (v) => cb.onChanged(f.copyWith(name: v)),
                   ),
                   gap,
-                  DropdownButtonFormField<String>(
-                    elevation: 0,
-                    dropdownColor: Theme.of(context).colorScheme.surface,
-                    initialValue: f.muscleGroup,
-                    decoration: const InputDecoration(
-                      labelText: 'Muscle group',
-                    ),
-                    items: [
-                      for (final g in muscleGroups)
-                        DropdownMenuItem(value: g, child: Text(_cap(g))),
+                  AppDropdown<String>(
+                    label: 'Muscle group',
+                    value: f.muscleGroup,
+                    options: [
+                      for (final g in muscleGroups) DropdownOption(g, _cap(g)),
                     ],
                     onChanged: (v) =>
                         cb.onChanged(f.copyWith(muscleGroup: () => v)),
                   ),
                   gap,
-                  DropdownButtonFormField<String?>(
-                    elevation: 0,
-                    dropdownColor: Theme.of(context).colorScheme.surface,
-                    initialValue: f.equipment,
-                    decoration: const InputDecoration(labelText: 'Equipment'),
-                    items: [
-                      const DropdownMenuItem(value: null, child: Text('None')),
-                      for (final e in equipment)
-                        DropdownMenuItem(value: e, child: Text(_cap(e))),
+                  AppDropdown<String?>(
+                    label: 'Equipment',
+                    value: f.equipment,
+                    options: [
+                      const DropdownOption(null, 'None'),
+                      for (final e in equipment) DropdownOption(e, _cap(e)),
                     ],
                     onChanged: (v) =>
                         cb.onChanged(f.copyWith(equipment: () => v)),

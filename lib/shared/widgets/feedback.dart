@@ -6,6 +6,7 @@ import '../../core/theme/app_theme.dart';
 import '../../core/theme/fit_colors.dart';
 
 /// One muted line plus one action, for screens and cards with no data yet.
+/// The action moves under the message when both don't fit on one line.
 class EmptyState extends StatelessWidget {
   const EmptyState({
     super.key,
@@ -22,9 +23,12 @@ class EmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
-      child: Row(
+      child: OverflowBar(
+        alignment: MainAxisAlignment.spaceBetween,
+        overflowAlignment: OverflowBarAlignment.start,
+        spacing: AppSpacing.sm,
         children: [
-          Expanded(child: Text(message, style: context.textStyles.label)),
+          Text(message, style: context.textStyles.label),
           if (actionLabel != null && onAction != null)
             TextButton.icon(
               onPressed: onAction,

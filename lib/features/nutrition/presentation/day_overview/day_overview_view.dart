@@ -4,6 +4,7 @@ import 'package:flutter/semantics.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/fit_colors.dart';
 import '../../../../core/utils/formatters.dart';
+import '../../../../shared/extensions/text_scale.dart';
 import '../../../../shared/models/enums.dart';
 import '../../../../shared/widgets/widgets.dart';
 import 'day_overview_view_data.dart';
@@ -161,6 +162,8 @@ class _SummaryCard extends StatelessWidget {
     final goal = s.goalKcal;
     final goalOrZero = goal ?? 0;
     final over = s.hasGoal && s.eatenKcal > goalOrZero;
+    // At large font sizes the ring sits above the numbers.
+    final large = context.hasLargeText;
 
     final String centerLabel;
     final String semantics;
@@ -180,29 +183,37 @@ class _SummaryCard extends StatelessWidget {
         horizontal: AppSpacing.lg,
         vertical: AppSpacing.md + 2,
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Flex(
+        direction: large ? Axis.vertical : Axis.horizontal,
+        crossAxisAlignment: large
+            ? CrossAxisAlignment.stretch
+            : CrossAxisAlignment.center,
         children: [
-          MacroCalorieRing(
-            size: 84,
-            strokeWidth: 10,
-            gap: 6,
-            eatenKcal: s.eatenKcal,
-            goalKcal: goal,
-            segments: [
-              RingSegment(color: c.protein, kcal: s.proteinKcal),
-              RingSegment(color: c.carbs, kcal: s.carbsKcal),
-              RingSegment(color: c.fat, kcal: s.fatKcal),
-              RingSegment(color: c.unknown, kcal: s.unknownKcal),
-            ],
-            semanticsLabel: semantics,
-            center: Text(
-              centerLabel,
-              style: t.cardTitle.copyWith(fontSize: 18),
+          Center(
+            child: MacroCalorieRing(
+              size: 84,
+              strokeWidth: 10,
+              gap: 6,
+              eatenKcal: s.eatenKcal,
+              goalKcal: goal,
+              segments: [
+                RingSegment(color: c.protein, kcal: s.proteinKcal),
+                RingSegment(color: c.carbs, kcal: s.carbsKcal),
+                RingSegment(color: c.fat, kcal: s.fatKcal),
+                RingSegment(color: c.unknown, kcal: s.unknownKcal),
+              ],
+              semanticsLabel: semantics,
+              center: Text(
+                centerLabel,
+                style: t.cardTitle.copyWith(fontSize: 18),
+              ),
             ),
           ),
-          const SizedBox(width: AppSpacing.md + 2),
-          Expanded(
+          const SizedBox(width: AppSpacing.md + 2, height: AppSpacing.md),
+          Flexible(
+            // flex 0 when stacked: the column's height is unbounded.
+            flex: large ? 0 : 1,
+            fit: FlexFit.tight,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -292,6 +303,13 @@ class _MiniMacroRow extends StatelessWidget {
         ? '${Formatters.integer(macro.consumedG)}/${Formatters.grams(target)}'
         : Formatters.grams(macro.consumedG);
 
+    final label = t.label.copyWith(color: c.ink);
+    final bar = FitProgressBar(
+      fraction: hasTarget ? macro.consumedG / target : null,
+      color: color,
+      height: 5,
+    );
+
     return Semantics(
       container: true,
       excludeSemantics: true,
@@ -300,23 +318,28 @@ class _MiniMacroRow extends StatelessWidget {
           '${hasTarget ? ' of ${Formatters.grams(target)}' : ', no target'}',
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 2),
-        child: Row(
-          children: [
-            SizedBox(
-              width: 48,
-              child: Text(macro.label, style: t.label.copyWith(color: c.ink)),
-            ),
-            Expanded(
-              child: FitProgressBar(
-                fraction: hasTarget ? macro.consumedG / target : null,
-                color: color,
-                height: 5,
+        // At large font sizes the label and amount go above the bar.
+        child: context.hasLargeText
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(child: Text(macro.label, style: label)),
+                      Text(amount, style: t.label),
+                    ],
+                  ),
+                  bar,
+                ],
+              )
+            : Row(
+                children: [
+                  SizedBox(width: 48, child: Text(macro.label, style: label)),
+                  Expanded(child: bar),
+                  const SizedBox(width: AppSpacing.sm),
+                  Text(amount, style: t.label),
+                ],
               ),
-            ),
-            const SizedBox(width: AppSpacing.sm),
-            Text(amount, style: t.label),
-          ],
-        ),
       ),
     );
   }

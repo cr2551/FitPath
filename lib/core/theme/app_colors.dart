@@ -33,7 +33,7 @@ abstract final class AppColors {
   static const darkInk = Color(0xFFEDEFEC);
   static const darkInkMuted = Color(0xFFA3A9A5);
   static const darkLine = Color(0xFF2F3431);
-  static const darkAccent = Color(0xFFA866C5);
+  static const darkAccent = Color(0xFFAA69C7);
   static const darkOnAccent = Color(0xFF0F1110);
   static const darkSuccess = Color(0xFF4CC27F);
   static const darkWarning = Color(0xFFE0A040);

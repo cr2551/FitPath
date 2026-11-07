@@ -96,6 +96,8 @@ class _RangeButtons extends StatelessWidget {
                   borderRadius: AppRadii.smAll,
                   onTap: () => onChanged(r),
                   child: Container(
+                    // A 48 dp tap target (Android accessibility guideline).
+                    constraints: const BoxConstraints(minHeight: 48),
                     padding: const EdgeInsets.symmetric(vertical: 6),
                     alignment: Alignment.center,
                     decoration: r == selected

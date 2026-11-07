@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/theme/app_spacing.dart';
 import '../../core/theme/fit_colors.dart';
+import '../extensions/text_scale.dart';
 
 /// A full-width list row: title and subtitle on the left, a value (and
 /// optional unit) and chevron on the right. Separate rows with `Divider`s.
@@ -33,41 +34,58 @@ class ListRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = context.fitColors;
     final t = context.textStyles;
+    final valueText = value == null
+        ? null
+        : Text.rich(
+            TextSpan(
+              text: value,
+              style: t.body.copyWith(fontWeight: FontWeight.w500),
+              children: [
+                if (unit != null) TextSpan(text: ' $unit', style: t.label),
+              ],
+            ),
+          );
+    final chevron = onTap == null || trailing != null
+        ? null
+        : Icon(Icons.chevron_right, size: 18, color: c.inkMuted);
+    final titles = [
+      Text(title, style: t.bodyStrong.copyWith(color: titleColor)),
+      if (subtitle != null) Text(subtitle!, style: t.label),
+    ];
+
+    // At large font sizes the value (or trailing control) goes under the
+    // title instead of beside it.
+    final Widget content = context.hasLargeText
+        ? Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [...titles, ?trailing, ?valueText],
+                ),
+              ),
+              ?chevron,
+            ],
+          )
+        : Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: titles,
+                ),
+              ),
+              const SizedBox(width: AppSpacing.md),
+              ?trailing,
+              if (valueText != null) Flexible(child: valueText),
+              ?chevron,
+            ],
+          );
     return InkWell(
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: AppSpacing.md - 1),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title, style: t.bodyStrong.copyWith(color: titleColor)),
-                  if (subtitle != null) Text(subtitle!, style: t.label),
-                ],
-              ),
-            ),
-            const SizedBox(width: AppSpacing.md),
-            if (trailing != null)
-              trailing!
-            else ...[
-              if (value != null)
-                Text.rich(
-                  TextSpan(
-                    text: value,
-                    style: t.body.copyWith(fontWeight: FontWeight.w500),
-                    children: [
-                      if (unit != null)
-                        TextSpan(text: ' $unit', style: t.label),
-                    ],
-                  ),
-                ),
-              if (onTap != null)
-                Icon(Icons.chevron_right, size: 18, color: c.inkMuted),
-            ],
-          ],
-        ),
+        child: content,
       ),
     );
   }
