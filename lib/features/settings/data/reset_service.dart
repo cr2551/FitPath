@@ -21,6 +21,8 @@ class ResetService {
       await db.delete(db.workoutExercises).go();
       await db.delete(db.workoutSessions).go();
       await db.delete(db.foodEntries).go();
+      await db.delete(db.recipeIngredients).go();
+      await db.delete(db.recipes).go();
 
       await (db.delete(
         db.foodItems,
