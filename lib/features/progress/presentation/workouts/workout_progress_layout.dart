@@ -17,6 +17,19 @@ class ExerciseOption {
   final String name;
 }
 
+/// Weeks in a row with at least one completed workout.
+class StreakData {
+  const StreakData({
+    required this.current,
+    required this.longest,
+    required this.thisWeekDone,
+  });
+
+  final int current;
+  final int longest;
+  final bool thisWeekDone;
+}
+
 class WorkoutProgressData {
   const WorkoutProgressData({
     required this.range,
@@ -24,6 +37,9 @@ class WorkoutProgressData {
     required this.weekCounts,
     required this.firstWeekLabel,
     required this.lastWeekLabel,
+    required this.monthCounts,
+    required this.firstMonthLabel,
+    required this.lastMonthLabel,
     required this.exercises,
     required this.selected,
     required this.isBodyweight,
@@ -39,6 +55,11 @@ class WorkoutProgressData {
   final List<int> weekCounts;
   final String firstWeekLabel;
   final String lastWeekLabel;
+
+  /// Completed sessions per calendar month, oldest first.
+  final List<int> monthCounts;
+  final String firstMonthLabel;
+  final String lastMonthLabel;
 
   /// Exercises done in the range, most frequent first.
   final List<ExerciseOption> exercises;
@@ -62,9 +83,14 @@ class WorkoutProgressLayout extends StatelessWidget {
     required this.data,
     required this.onExercise,
     required this.onMetric,
+    this.streak,
   });
 
+  /// Null when there are no completed workouts in the range.
   final WorkoutProgressData? data;
+
+  /// Null when there are no completed workouts at all.
+  final StreakData? streak;
   final ValueChanged<int> onExercise;
   final ValueChanged<ExerciseMetric> onMetric;
 
@@ -72,15 +98,29 @@ class WorkoutProgressLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = context.textStyles;
     final d = data;
+    final streakCard = streak == null ? null : _StreakCard(streak: streak!);
     if (d == null) {
-      return const SectionCard(
-        header: CardHeader(title: 'Workouts'),
-        child: EmptyChart(message: 'No completed workouts in this range.'),
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (streakCard != null) ...[
+            streakCard,
+            const SizedBox(height: AppSpacing.md),
+          ],
+          const SectionCard(
+            header: CardHeader(title: 'Workouts'),
+            child: EmptyChart(message: 'No completed workouts in this range.'),
+          ),
+        ],
       );
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        if (streakCard != null) ...[
+          streakCard,
+          const SizedBox(height: AppSpacing.md),
+        ],
         SectionCard(
           header: const CardHeader(title: 'Sessions per week'),
           footer: StatRow(items: d.totals),
@@ -101,6 +141,31 @@ class WorkoutProgressLayout extends StatelessWidget {
                   Text(d.firstWeekLabel, style: t.label),
                   const Spacer(),
                   Text(d.lastWeekLabel, style: t.label),
+                ],
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        SectionCard(
+          header: const CardHeader(title: 'Sessions per month'),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Semantics(
+                label:
+                    'Sessions per month, ${d.monthCounts.length} months, '
+                    '${d.monthCounts.fold(0, (a, b) => a + b)} sessions',
+                child: ExcludeSemantics(
+                  child: WeeklySessionsChart(counts: d.monthCounts),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              Row(
+                children: [
+                  Text(d.firstMonthLabel, style: t.label),
+                  const Spacer(),
+                  Text(d.lastMonthLabel, style: t.label),
                 ],
               ),
             ],
@@ -174,6 +239,41 @@ class WorkoutProgressLayout extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _StreakCard extends StatelessWidget {
+  const _StreakCard({required this.streak});
+
+  final StreakData streak;
+
+  String get _note {
+    if (streak.thisWeekDone) return 'This week already counts.';
+    if (streak.current > 0) return 'Work out this week to keep it going.';
+    return 'A week counts when it has at least one workout.';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String weeks(int n) => n == 1 ? 'week' : 'weeks';
+    return SectionCard(
+      header: const CardHeader(title: 'Weekly streak'),
+      footer: StatRow(
+        items: [
+          StatItem(
+            label: 'Current',
+            value: '${streak.current}',
+            unit: weeks(streak.current),
+          ),
+          StatItem(
+            label: 'Longest',
+            value: '${streak.longest}',
+            unit: weeks(streak.longest),
+          ),
+        ],
+      ),
+      child: Text(_note, style: context.textStyles.label),
     );
   }
 }

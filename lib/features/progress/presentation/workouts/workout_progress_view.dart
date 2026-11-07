@@ -10,6 +10,7 @@ import '../../../../shared/widgets/widgets.dart';
 import '../../../profile/application/profile_providers.dart';
 import '../../../workouts/application/workout_providers.dart';
 import '../../../workouts/data/workout_models.dart';
+import '../../../workouts/domain/activity_stats.dart';
 import '../../../workouts/domain/workout_math.dart';
 import '../../application/progress_range_provider.dart';
 import '../weight/weight_chart.dart';
@@ -24,8 +25,14 @@ final _sessionsInRangeProvider =
           .watchCompletedSessions(from: range.start, to: range.end);
     });
 
-/// Progress > Workouts: sessions per week and totals over the range, and
-/// the best set, reps or volume of one exercise per session.
+/// Every completed session, for the streak (which ignores the range).
+final _allSessionsProvider = StreamProvider<List<SessionDetail>>(
+  (ref) => ref.watch(workoutRepositoryProvider).watchCompletedSessions(),
+);
+
+/// Progress > Workouts: the weekly streak, sessions per week and per month
+/// and totals over the range, and the best set, reps or volume of one
+/// exercise per session.
 class WorkoutProgressView extends ConsumerStatefulWidget {
   const WorkoutProgressView({super.key});
 
@@ -42,21 +49,26 @@ class _WorkoutProgressViewState extends ConsumerState<WorkoutProgressView> {
   Widget build(BuildContext context) {
     final range = ref.watch(progressRangeProvider);
     final sessions = ref.watch(_sessionsInRangeProvider(range));
+    final all = ref.watch(_allSessionsProvider);
     final units = ref.watch(unitSystemProvider).value ?? UnitSystem.metric;
 
-    if (sessions.hasError) {
+    if (sessions.hasError || all.hasError) {
       return ErrorState(
         message: "Couldn't load your workouts.",
-        onRetry: () => ref.invalidate(_sessionsInRangeProvider(range)),
+        onRetry: () {
+          ref.invalidate(_sessionsInRangeProvider(range));
+          ref.invalidate(_allSessionsProvider);
+        },
       );
     }
-    if (!sessions.hasValue) {
+    if (!sessions.hasValue || !all.hasValue) {
       return const Padding(
         padding: EdgeInsets.all(24),
         child: Center(child: CircularProgressIndicator()),
       );
     }
     return WorkoutProgressLayout(
+      streak: streakData(all.requireValue, DateTime.now()),
       data: workoutProgressData(
         sessions.requireValue,
         range,
@@ -69,6 +81,19 @@ class _WorkoutProgressViewState extends ConsumerState<WorkoutProgressView> {
       onMetric: (m) => setState(() => _metric = m),
     );
   }
+}
+
+/// The weekly streak as of [now]; null without any completed session.
+StreakData? streakData(List<SessionDetail> completed, DateTime now) {
+  if (completed.isEmpty) return null;
+  final s = ActivityStats.streak([
+    for (final d in completed) d.toLogged(),
+  ], today: now);
+  return StreakData(
+    current: s.current,
+    longest: s.longest,
+    thisWeekDone: s.thisWeekDone,
+  );
 }
 
 /// Maps the sessions in the range (newest first) to the tab's data; null
@@ -104,9 +129,16 @@ WorkoutProgressData? workoutProgressData(
   }
   final summaries = [for (final s in sessions) s.summary];
   final volume = summaries.fold(0.0, (v, s) => v + s.totalVolumeKg);
+  final logged = [for (final s in sessions) s.toLogged()];
+
+  // Calendar months from the range start, or the first session, to now.
+  final months = ActivityStats.monthlyCounts(
+    logged,
+    from: range.start ?? sessions.first.session.startedAt,
+    to: now,
+  );
 
   // Exercises by how many sessions include them.
-  final logged = [for (final s in sessions) s.toLogged()];
   final count = <int, int>{};
   final names = <int, String>{};
   final bodyweight = <int, bool>{};
@@ -146,6 +178,7 @@ WorkoutProgressData? workoutProgressData(
   }
 
   final label = DateFormat('d MMM');
+  final monthLabel = DateFormat('MMM yyyy');
   final unit = Units.weightUnit(units);
   return WorkoutProgressData(
     range: preset,
@@ -164,6 +197,9 @@ WorkoutProgressData? workoutProgressData(
     weekCounts: counts,
     firstWeekLabel: label.format(firstWeek),
     lastWeekLabel: label.format(Dates.startOfWeek(now)),
+    monthCounts: [for (final m in months) m.sessions],
+    firstMonthLabel: monthLabel.format(months.first.month),
+    lastMonthLabel: monthLabel.format(months.last.month),
     exercises: options,
     selected: selected,
     isBodyweight: isBodyweight,
