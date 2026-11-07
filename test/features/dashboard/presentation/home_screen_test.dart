@@ -216,4 +216,19 @@ void main() {
 
     await _dispose(tester, db);
   });
+
+  testWidgets('Phase 2 cards show a placeholder until #117', (tester) async {
+    final db = await _db(tester, withPreset: false);
+    await tester.runAsync(
+      () =>
+          DashboardRepository(db.dashboardDao)
+              .addCard(DashboardCardType.streak),
+    );
+    await _pump(tester, db);
+
+    expect(find.text('Streak'), findsOneWidget);
+    expect(find.text('Coming in #117'), findsOneWidget);
+
+    await _dispose(tester, db);
+  });
 }

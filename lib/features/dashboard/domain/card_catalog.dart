@@ -67,6 +67,24 @@ abstract final class CardCatalog {
       description: 'The last 7 days with workouts and food logged.',
       defaultSize: CardSize.compact,
     ),
+    CardDefinition(
+      type: DashboardCardType.personalRecords,
+      title: 'Personal records',
+      description: 'Your latest personal records and estimated 1RMs.',
+    ),
+    CardDefinition(
+      type: DashboardCardType.streak,
+      title: 'Streak',
+      description: 'Weeks in a row with at least one workout.',
+      defaultSize: CardSize.compact,
+    ),
+    CardDefinition(
+      type: DashboardCardType.weeklyReport,
+      title: "Last week's report",
+      description:
+          'Nutrition, training and weight last week vs the week '
+          'before.',
+    ),
   ];
 
   static CardDefinition of(DashboardCardType type) =>

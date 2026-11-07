@@ -5,6 +5,7 @@ import '../../../shared/models/enums.dart';
 import 'cards/activity_overview_card.dart';
 import 'cards/calories_macros_card.dart';
 import 'cards/nutrition_summary_card.dart';
+import 'cards/placeholder_card.dart';
 import 'cards/recent_sessions_card.dart';
 import 'cards/strength_progression_card.dart';
 import 'cards/weight_trend_card.dart';
@@ -21,5 +22,17 @@ abstract final class CardRegistry {
     DashboardCardType.recentSessions => const RecentSessionsCard(),
     DashboardCardType.strengthProgression => const StrengthProgressionCard(),
     DashboardCardType.activityOverview => const ActivityOverviewCard(),
+    DashboardCardType.personalRecords => const PlaceholderCard(
+      type: DashboardCardType.personalRecords,
+      issue: 117,
+    ),
+    DashboardCardType.streak => const PlaceholderCard(
+      type: DashboardCardType.streak,
+      issue: 117,
+    ),
+    DashboardCardType.weeklyReport => const PlaceholderCard(
+      type: DashboardCardType.weeklyReport,
+      issue: 117,
+    ),
   };
 }
