@@ -136,13 +136,7 @@ class WorkoutProgressLayout extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.xs),
-              Row(
-                children: [
-                  Text(d.firstWeekLabel, style: t.label),
-                  const Spacer(),
-                  Text(d.lastWeekLabel, style: t.label),
-                ],
-              ),
+              _AxisEnds(first: d.firstWeekLabel, last: d.lastWeekLabel),
             ],
           ),
         ),
@@ -161,13 +155,7 @@ class WorkoutProgressLayout extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.xs),
-              Row(
-                children: [
-                  Text(d.firstMonthLabel, style: t.label),
-                  const Spacer(),
-                  Text(d.lastMonthLabel, style: t.label),
-                ],
-              ),
+              _AxisEnds(first: d.firstMonthLabel, last: d.lastMonthLabel),
             ],
           ),
         ),
@@ -268,6 +256,30 @@ class _StreakCard extends StatelessWidget {
         ],
       ),
       child: Text(_note, style: context.textStyles.label),
+    );
+  }
+}
+
+/// The first and last labels under a bar chart; they wrap instead of
+/// overflowing at large font sizes.
+class _AxisEnds extends StatelessWidget {
+  const _AxisEnds({required this.first, required this.last});
+
+  final String first;
+  final String last;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.textStyles;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(child: Text(first, style: t.label)),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: Text(last, style: t.label, textAlign: TextAlign.end),
+        ),
+      ],
     );
   }
 }
