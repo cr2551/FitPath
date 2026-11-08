@@ -144,18 +144,13 @@ class SetupView extends StatelessWidget {
               onChanged: cb.onWeight,
             ),
             gap,
-            DropdownButtonFormField<ActivityLevel>(
-              elevation: 0,
-              dropdownColor: Theme.of(context).colorScheme.surface,
-              initialValue: d.activity,
-              isExpanded: true,
-              decoration: const InputDecoration(
-                labelText: 'Activity level',
-                helperText: 'Outside of planned workouts too',
-              ),
-              items: [
+            AppDropdown<ActivityLevel>(
+              label: 'Activity level',
+              helperText: 'Outside of planned workouts too',
+              value: d.activity,
+              options: [
                 for (final MapEntry(:key, :value) in activityLabels.entries)
-                  DropdownMenuItem(value: key, child: Text(value)),
+                  DropdownOption(key, value),
               ],
               onChanged: cb.onActivity,
             ),

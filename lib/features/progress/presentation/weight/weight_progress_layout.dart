@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/fit_colors.dart';
 import '../../../../core/utils/dates.dart';
+import '../../../../shared/extensions/text_scale.dart';
 import '../../../../shared/widgets/widgets.dart';
 import '../charts/chart_helpers.dart';
 import 'weight_chart.dart';
@@ -98,14 +99,22 @@ class WeightProgressLayout extends StatelessWidget {
       );
     }
 
+    final large = context.hasLargeText;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SectionCard(
-          header: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+          // At large font sizes the change goes under the current weight.
+          header: Flex(
+            direction: large ? Axis.vertical : Axis.horizontal,
+            crossAxisAlignment: large
+                ? CrossAxisAlignment.start
+                : CrossAxisAlignment.end,
             children: [
-              Expanded(
+              Flexible(
+                // flex 0 when stacked: the column's height is unbounded.
+                flex: large ? 0 : 1,
+                fit: FlexFit.tight,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -124,7 +133,9 @@ class WeightProgressLayout extends StatelessWidget {
               ),
               if (d.change != null)
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: large
+                      ? CrossAxisAlignment.start
+                      : CrossAxisAlignment.end,
                   children: [
                     Row(
                       mainAxisSize: MainAxisSize.min,

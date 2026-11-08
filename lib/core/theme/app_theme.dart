@@ -206,6 +206,17 @@ abstract final class AppTheme {
         elevation: 0,
         pressElevation: 0,
       ),
+      dropdownMenuTheme: DropdownMenuThemeData(
+        menuStyle: MenuStyle(
+          backgroundColor: WidgetStatePropertyAll(c.surface),
+          surfaceTintColor: const WidgetStatePropertyAll(Colors.transparent),
+          elevation: const WidgetStatePropertyAll(0),
+          side: WidgetStatePropertyAll(lineSide),
+          shape: const WidgetStatePropertyAll(
+            RoundedRectangleBorder(borderRadius: AppRadii.smAll),
+          ),
+        ),
+      ),
       popupMenuTheme: PopupMenuThemeData(
         color: c.surface,
         elevation: 0,

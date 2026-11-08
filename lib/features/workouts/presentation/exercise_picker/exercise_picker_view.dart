@@ -46,6 +46,7 @@ class ExercisePickerView extends StatelessWidget {
     required this.selectedGroup,
     required this.rows,
     required this.callbacks,
+    this.onRetry,
   });
 
   final List<String> muscleGroups;
@@ -54,6 +55,9 @@ class ExercisePickerView extends StatelessWidget {
   /// Null while loading.
   final List<ExerciseRowData>? rows;
   final ExercisePickerCallbacks callbacks;
+
+  /// Set when the list failed to load.
+  final VoidCallback? onRetry;
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +113,15 @@ class ExercisePickerView extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.sm),
             Expanded(
-              child: rows == null
+              child: onRetry != null
+                  ? Padding(
+                      padding: AppSpacing.screenPadding,
+                      child: ErrorState(
+                        message: "Couldn't load exercises.",
+                        onRetry: onRetry,
+                      ),
+                    )
+                  : rows == null
                   ? const Center(child: CircularProgressIndicator())
                   : rows.isEmpty
                   ? Padding(

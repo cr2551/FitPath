@@ -2,6 +2,7 @@
 /// plain values and callbacks in, styling only from the theme.
 library;
 
+export 'app_dropdown.dart';
 export 'card_footer_strip.dart';
 export 'date_strip.dart';
 export 'feedback.dart';

@@ -146,44 +146,34 @@ class ProfileEditView extends StatelessWidget {
           onSelectionChanged: (s) => cb.onSex(s.single),
         ),
         gap,
-        DropdownButtonFormField<ActivityLevel?>(
-          elevation: 0,
-          dropdownColor: Theme.of(context).colorScheme.surface,
-          initialValue: d.activity,
-          isExpanded: true,
-          decoration: const InputDecoration(labelText: 'Activity level'),
-          items: [
-            const DropdownMenuItem(value: null, child: Text('Not set')),
+        AppDropdown<ActivityLevel?>(
+          label: 'Activity level',
+          value: d.activity,
+          options: [
+            const DropdownOption(null, 'Not set'),
             for (final MapEntry(:key, :value) in _activity.entries)
-              DropdownMenuItem(value: key, child: Text(value)),
+              DropdownOption(key, value),
           ],
           onChanged: cb.onActivity,
         ),
         gap,
-        DropdownButtonFormField<TrainingExperience?>(
-          elevation: 0,
-          dropdownColor: Theme.of(context).colorScheme.surface,
-          initialValue: d.experience,
-          decoration: const InputDecoration(labelText: 'Training experience'),
-          items: [
-            const DropdownMenuItem(value: null, child: Text('Not set')),
+        AppDropdown<TrainingExperience?>(
+          label: 'Training experience',
+          value: d.experience,
+          options: [
+            const DropdownOption(null, 'Not set'),
             for (final MapEntry(:key, :value) in _experience.entries)
-              DropdownMenuItem(value: key, child: Text(value)),
+              DropdownOption(key, value),
           ],
           onChanged: cb.onExperience,
         ),
         gap,
-        DropdownButtonFormField<int?>(
-          elevation: 0,
-          dropdownColor: Theme.of(context).colorScheme.surface,
-          initialValue: d.frequency,
-          decoration: const InputDecoration(
-            labelText: 'Training days per week',
-          ),
-          items: [
-            const DropdownMenuItem(value: null, child: Text('Not set')),
-            for (var i = 0; i <= 14; i++)
-              DropdownMenuItem(value: i, child: Text('$i')),
+        AppDropdown<int?>(
+          label: 'Training days per week',
+          value: d.frequency,
+          options: [
+            const DropdownOption(null, 'Not set'),
+            for (var i = 0; i <= 14; i++) DropdownOption(i, '$i'),
           ],
           onChanged: cb.onFrequency,
         ),

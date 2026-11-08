@@ -131,14 +131,18 @@ class NutritionProgressLayout extends StatelessWidget {
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        d.rows[i].kcal,
-                        style: t.body.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: d.rows[i].overTarget ? c.warning : c.ink,
+                      Flexible(
+                        child: Text.rich(
+                          TextSpan(
+                            text: d.rows[i].kcal,
+                            style: t.body.copyWith(
+                              fontWeight: FontWeight.w500,
+                              color: d.rows[i].overTarget ? c.warning : c.ink,
+                            ),
+                            children: [TextSpan(text: ' kcal', style: t.label)],
+                          ),
                         ),
                       ),
-                      Text(' kcal', style: t.label),
                       Icon(Icons.chevron_right, color: c.inkMuted),
                     ],
                   ),

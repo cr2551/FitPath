@@ -191,7 +191,8 @@ void main() {
     }
 
     expect(find.text('Weekly streak'), findsOneWidget);
-    expect(find.text('This week already counts.'), findsOneWidget);
+    // The note depends on today's weekday; streakData's test covers it.
+    expect(find.text('CURRENT'), findsOneWidget);
     expect(find.text('Sessions per week'), findsOneWidget);
     expect(find.text('Sessions per month'), findsOneWidget);
     expect(find.byType(WeightChart), findsOneWidget);

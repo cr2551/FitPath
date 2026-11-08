@@ -52,12 +52,16 @@ class ActiveSessionView extends StatelessWidget {
     required this.data,
     required this.loading,
     required this.callbacks,
+    this.onRetry,
   });
 
   /// Null when no session is in progress (and not [loading]).
   final ActiveSessionViewData? data;
   final bool loading;
   final ActiveSessionCallbacks callbacks;
+
+  /// Set when the session failed to load.
+  final VoidCallback? onRetry;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +74,15 @@ class ActiveSessionView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Workout')),
       body: SafeArea(
-        child: loading
+        child: onRetry != null
+            ? Padding(
+                padding: AppSpacing.screenPadding,
+                child: ErrorState(
+                  message: "Couldn't load your workout.",
+                  onRetry: onRetry,
+                ),
+              )
+            : loading
             ? const Center(child: CircularProgressIndicator())
             : d == null
             ? Padding(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/theme/app_spacing.dart';
 import '../../core/theme/fit_colors.dart';
+import '../extensions/text_scale.dart';
 
 /// White card with an optional header, divider and footer.
 class SectionCard extends StatelessWidget {
@@ -76,7 +77,7 @@ class CardHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = context.textStyles;
-    return Row(
+    final heading = Row(
       children: [
         if (icon != null) ...[
           IconTile(icon: icon!),
@@ -91,7 +92,17 @@ class CardHeader extends StatelessWidget {
             ],
           ),
         ),
-        ?trailing,
+        if (!context.hasLargeText) ?trailing,
+      ],
+    );
+    // At large font sizes the trailing control goes under the title.
+    if (trailing == null || !context.hasLargeText) return heading;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        heading,
+        const SizedBox(height: AppSpacing.xs),
+        trailing!,
       ],
     );
   }

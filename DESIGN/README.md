@@ -65,7 +65,7 @@ All values live in `lib/core/theme/` and nowhere else.
 - Protein (3.6:1) passes the 3:1 contrast WCAG asks for graphics. Green carbs (2.4:1) and yellow fat (1.8:1) do not. So **color is never the only cue**: the ring always sits next to its legend, every bar carries its name and grams in text, and each macro has its own icon.
 - **Color-blind safety:** red protein and green carbs can look alike to people with red-green color blindness. The fixed segment order (protein, then carbs, then fat), the icons and the text labels keep them distinguishable, and the green is deliberately much lighter than the red.
 
-The dark theme uses `#0F1110` background, `#181B19` surface and `#EDEFEC` ink, with the same macro colors. The accent is lightened to `#A866C5` with dark text on it (4.85:1). It is wired up but only lightly polished for the MVP.
+The dark theme uses `#0F1110` background, `#181B19` surface and `#EDEFEC` ink, with the same macro colors. The accent is lightened to `#AA69C7`, which keeps 4.5:1 as text on the surface and takes dark text on it (5.0:1). It is wired up but only lightly polished for the MVP.
 
 ### Typography
 

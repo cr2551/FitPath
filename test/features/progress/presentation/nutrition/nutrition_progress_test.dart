@@ -138,10 +138,10 @@ void main() {
     await _settle(tester);
 
     expect(find.byType(DailyCaloriesChart), findsOneWidget);
-    expect(find.text('650 / 2,000'), findsOneWidget);
+    expect(find.text('650 / 2,000 kcal', findRichText: true), findsOneWidget);
     expect(find.text('1 of 30'), findsOneWidget);
 
-    await tester.tap(find.text('650 / 2,000'));
+    await tester.tap(find.text('650 / 2,000 kcal', findRichText: true));
     await tester.pumpAndSettle();
     expect(
       find.text('route /nutrition?date=${Dates.localDateKey(DateTime.now())}'),
