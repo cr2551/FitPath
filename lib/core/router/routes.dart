@@ -1,10 +1,10 @@
 import '../../shared/models/enums.dart';
 import '../utils/dates.dart';
 
-/// Every MVP route. Navigate with these, never with string literals:
+/// Every MVP and Phase 2 route. Navigate with these, never with string literals:
 /// `context.go(Routes.nutrition)`, `context.push(Routes.foodDetails(id))`.
 ///
-/// FROZEN after #3: screens are added by replacing their placeholder file,
+/// FROZEN after #3 and again after #103 (Phase 2): screens are added by replacing their placeholder file,
 /// not by editing this table.
 abstract final class Routes {
   // Onboarding (outside the bottom navigation).
@@ -46,6 +46,10 @@ abstract final class Routes {
   static String editEntry(int entryId) => '$nutrition/entry/$entryId';
   static const newCustomFood = '$nutrition/custom-food/new';
   static String editCustomFood(int foodId) => '$nutrition/custom-food/$foodId';
+  static const newRecipe = '$nutrition/recipe/new';
+  static String editRecipe(int foodId) => '$nutrition/recipe/$foodId';
+  static String recipeIdeas({MealType? meal, DateTime? date}) =>
+      _with('$nutrition/recipe-ideas', _mealDate(meal, date));
 
   // Workouts.
   static const activeSession = '$workouts/session';
@@ -54,6 +58,15 @@ abstract final class Routes {
   static String editCustomExercise(int exerciseId) =>
       '$workouts/exercises/$exerciseId';
   static String sessionDetail(int sessionId) => '$workouts/history/$sessionId';
+  static String exerciseHistory(int exerciseId) =>
+      '$workouts/exercise-history/$exerciseId';
+
+  // Progress.
+  /// [weekStart] is any day of the week to show; without it, last week.
+  static String weeklyReport({DateTime? weekStart}) => _with(
+    '$progress/weekly-report',
+    {if (weekStart != null) 'week': Dates.localDateKey(weekStart)},
+  );
 
   // Profile & Settings.
   static const profileDetails = '$profile/details';
@@ -62,6 +75,7 @@ abstract final class Routes {
   static const backup = '$profile/backup';
   static const reset = '$profile/reset';
   static const about = '$profile/about';
+  static const whatIf = '$profile/what-if';
 
   static Map<String, String> _mealDate(MealType? meal, DateTime? date) => {
     'meal': ?meal?.name,

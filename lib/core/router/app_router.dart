@@ -8,6 +8,8 @@ import '../../features/nutrition/presentation/custom_food/custom_food_screen.dar
 import '../../features/nutrition/presentation/day_overview/day_overview_screen.dart';
 import '../../features/nutrition/presentation/entry/entry_screen.dart';
 import '../../features/nutrition/presentation/food_details/food_details_screen.dart';
+import '../../features/nutrition/presentation/recipe/recipe_screen.dart';
+import '../../features/nutrition/presentation/recipe_ideas/recipe_ideas_screen.dart';
 import '../../features/nutrition/presentation/search/food_search_screen.dart';
 import '../../features/onboarding/application/onboarding_status_provider.dart';
 import '../../features/onboarding/presentation/estimates_screen.dart';
@@ -15,7 +17,9 @@ import '../../features/onboarding/presentation/goal_details_screen.dart';
 import '../../features/onboarding/presentation/goals_screen.dart';
 import '../../features/onboarding/presentation/setup_screen.dart';
 import '../../features/onboarding/presentation/welcome_screen.dart';
+import '../../features/planning/presentation/what_if_screen.dart';
 import '../../features/progress/presentation/progress_screen.dart';
+import '../../features/reports/presentation/weekly_report_screen.dart';
 import '../../features/settings/presentation/about_screen.dart';
 import '../../features/settings/presentation/backup_screen.dart';
 import '../../features/settings/presentation/goals_screen.dart';
@@ -25,6 +29,7 @@ import '../../features/settings/presentation/settings_screen.dart';
 import '../../features/settings/presentation/targets_screen.dart';
 import '../../features/workouts/presentation/active_session/active_session_screen.dart';
 import '../../features/workouts/presentation/custom_exercise/custom_exercise_screen.dart';
+import '../../features/workouts/presentation/exercise_history/exercise_history_screen.dart';
 import '../../features/workouts/presentation/exercise_picker/exercise_picker_screen.dart';
 import '../../features/workouts/presentation/session_detail/session_detail_screen.dart';
 import '../../features/workouts/presentation/workouts_screen.dart';
@@ -38,7 +43,7 @@ import 'routes.dart';
 /// keep their own navigation stack. Detail screens are pushed inside their
 /// tab, so the bottom bar stays visible and back returns within the tab.
 ///
-/// FROZEN after #3: features replace their placeholder screen files instead.
+/// FROZEN after #3 and again after #103 (Phase 2): features replace their placeholder screen files instead.
 final appRouterProvider = Provider<GoRouter>((ref) {
   // Re-run the redirect when onboarding completes (or is reset).
   final refresh = ValueNotifier(0);
@@ -117,6 +122,16 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                       (id) => CustomFoodScreen(foodId: id),
                     ),
                   ),
+                  _route('recipe/new', (_) => const RecipeScreen()),
+                  _route(
+                    'recipe/:foodId',
+                    (s) =>
+                        _withId(s, 'foodId', (id) => RecipeScreen(foodId: id)),
+                  ),
+                  _route(
+                    'recipe-ideas',
+                    (s) => RecipeIdeasScreen(meal: _meal(s), date: _date(s)),
+                  ),
                 ],
               ),
             ],
@@ -146,12 +161,31 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                       (id) => SessionDetailScreen(sessionId: id),
                     ),
                   ),
+                  _route(
+                    'exercise-history/:exerciseId',
+                    (s) => _withId(
+                      s,
+                      'exerciseId',
+                      (id) => ExerciseHistoryScreen(exerciseId: id),
+                    ),
+                  ),
                 ],
               ),
             ],
           ),
           StatefulShellBranch(
-            routes: [_route(Routes.progress, (_) => const ProgressScreen())],
+            routes: [
+              _route(
+                Routes.progress,
+                (_) => const ProgressScreen(),
+                routes: [
+                  _route(
+                    'weekly-report',
+                    (s) => WeeklyReportScreen(weekStart: _date(s, 'week')),
+                  ),
+                ],
+              ),
+            ],
           ),
           StatefulShellBranch(
             routes: [
@@ -165,6 +199,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                   _route('backup', (_) => const BackupScreen()),
                   _route('reset', (_) => const ResetScreen()),
                   _route('about', (_) => const AboutScreen()),
+                  _route('what-if', (_) => const WhatIfScreen()),
                 ],
               ),
             ],
@@ -202,8 +237,8 @@ int? _int(String? v) => v == null ? null : int.tryParse(v);
 MealType? _meal(GoRouterState s) =>
     MealType.values.asNameMap()[s.uri.queryParameters['meal']];
 
-DateTime? _date(GoRouterState s) {
-  final key = s.uri.queryParameters['date'];
+DateTime? _date(GoRouterState s, [String param = 'date']) {
+  final key = s.uri.queryParameters[param];
   if (key == null) return null;
   try {
     return Dates.fromLocalDateKey(key);
