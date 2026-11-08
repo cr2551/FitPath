@@ -96,6 +96,61 @@ void main() {
     expect(pull.unit, 'reps');
   });
 
+  test('monthly counts and streak match the seeded history', () async {
+    final db = createTestDatabase();
+    addTearDown(db.close);
+    // 25 Oct (Sunday), 30 Oct and 3 Nov.
+    final sessions = await _seed(db, now);
+
+    final d = workoutProgressData(
+      sessions,
+      RangePreset.days30,
+      now,
+      UnitSystem.metric,
+    )!;
+    // The 30-day range starts on 6 Oct.
+    expect(d.monthCounts, [2, 1]);
+    expect((d.firstMonthLabel, d.lastMonthLabel), ('Oct 2026', 'Nov 2026'));
+
+    final streak = streakData(sessions, now)!;
+    // Weeks of 25 Oct and 1 Nov; this week already has a workout.
+    expect((streak.current, streak.longest, streak.thisWeekDone), (2, 2, true));
+    expect(streakData(const [], now), isNull);
+  });
+
+  testWidgets('older workouts: the streak shows above an empty range', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.light,
+        home: Scaffold(
+          body: ListView(
+            children: [
+              WorkoutProgressLayout(
+                data: null,
+                streak: const StreakData(
+                  current: 0,
+                  longest: 3,
+                  thisWeekDone: false,
+                ),
+                onExercise: (_) {},
+                onMetric: (_) {},
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    expect(find.text('Weekly streak'), findsOneWidget);
+    expect(find.text('3 weeks', findRichText: true), findsOneWidget);
+    expect(
+      find.text('A week counts when it has at least one workout.'),
+      findsOneWidget,
+    );
+    expect(find.text('No completed workouts in this range.'), findsOneWidget);
+  });
+
   test('imperial and an empty range', () async {
     final db = createTestDatabase();
     addTearDown(db.close);
@@ -135,7 +190,10 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
     }
 
+    expect(find.text('Weekly streak'), findsOneWidget);
+    expect(find.text('This week already counts.'), findsOneWidget);
     expect(find.text('Sessions per week'), findsOneWidget);
+    expect(find.text('Sessions per month'), findsOneWidget);
     expect(find.byType(WeightChart), findsOneWidget);
     expect(find.text('BEST LOAD'), findsOneWidget);
 
@@ -178,6 +236,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
     }
     expect(find.text('No completed workouts in this range.'), findsOneWidget);
+    expect(find.text('Weekly streak'), findsNothing);
     await tester.pumpWidget(const SizedBox());
     await tester.pump(const Duration(seconds: 1));
     await tester.runAsync(db.close);

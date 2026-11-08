@@ -6,6 +6,7 @@ abstract final class FoodLabels {
     FoodSource.bundled => 'Bundled',
     FoodSource.openFoodFacts => 'Open Food Facts',
     FoodSource.custom => 'Custom',
+    FoodSource.recipe => 'Recipe',
   };
 
   /// "100 g", "100 ml", or the serving description ("1 bar").

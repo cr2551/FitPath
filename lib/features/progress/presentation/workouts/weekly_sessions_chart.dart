@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/fit_colors.dart';
 
-/// Completed sessions per week as ink bars, with the count above each bar.
+/// Completed sessions per period (week or month) as ink bars, with the
+/// count above each bar.
 class WeeklySessionsChart extends StatelessWidget {
   const WeeklySessionsChart({
     super.key,
@@ -10,7 +11,7 @@ class WeeklySessionsChart extends StatelessWidget {
     this.height = 120,
   });
 
-  /// One count per week, oldest first.
+  /// One count per period, oldest first.
   final List<int> counts;
   final double height;
 

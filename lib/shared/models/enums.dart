@@ -29,7 +29,8 @@ enum MealType { breakfast, lunch, dinner, snack }
 /// never treated as interchangeable.
 enum ReferenceBasis { per100g, per100ml, perServing }
 
-enum FoodSource { bundled, openFoodFacts, custom }
+/// [recipe] is a food row built from a recipe's ingredients (Phase 2).
+enum FoodSource { bundled, openFoodFacts, custom, recipe }
 
 /// Only [completed] sessions count toward summaries and history.
 enum WorkoutStatus { inProgress, completed, discarded }
@@ -42,6 +43,9 @@ enum DashboardCardType {
   recentSessions,
   strengthProgression,
   activityOverview,
+  personalRecords,
+  streak,
+  weeklyReport,
 }
 
 enum CardSize { compact, regular }

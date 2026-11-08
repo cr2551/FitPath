@@ -105,6 +105,14 @@ void main() {
       Routes.backup: 'Backup & restore',
       Routes.reset: 'Reset data',
       Routes.about: 'About',
+      // Phase 2 placeholders.
+      Routes.exerciseHistory(3): 'Exercise history',
+      Routes.whatIf: 'What if',
+      Routes.weeklyReport(): 'Weekly report',
+      Routes.weeklyReport(weekStart: day): 'Weekly report',
+      Routes.newRecipe: 'Recipe',
+      Routes.editRecipe(12): 'Recipe',
+      Routes.recipeIdeas(meal: MealType.dinner, date: day): 'Recipe ideas',
     };
 
     for (final MapEntry(key: location, value: title) in routes.entries) {
@@ -117,7 +125,12 @@ void main() {
   testWidgets('unknown locations and bad ids show "not found"', (tester) async {
     final h = await _pump(tester);
 
-    for (final location in ['/nope', '/nutrition/food/abc']) {
+    for (final location in [
+      '/nope',
+      '/nutrition/food/abc',
+      '/nutrition/recipe/abc',
+      '/workouts/exercise-history/abc',
+    ]) {
       h.router.go(location);
       await tester.pumpAndSettle();
       expect(find.text('Page not found'), findsOneWidget, reason: location);
@@ -139,6 +152,36 @@ void main() {
     await tester.pageBack();
     await tester.pumpAndSettle();
     expect(_title('Nutrition'), findsOneWidget);
+  });
+
+  testWidgets('Phase 2 screens open inside their tab and back returns', (
+    tester,
+  ) async {
+    final h = await _pump(tester);
+
+    for (final (tab, tabTitle, location, title) in [
+      (
+        Routes.workouts,
+        'Workouts',
+        Routes.exerciseHistory(1),
+        'Exercise history',
+      ),
+      (Routes.profile, 'Profile', Routes.whatIf, 'What if'),
+      (Routes.progress, 'Progress', Routes.weeklyReport(), 'Weekly report'),
+      (Routes.nutrition, 'Nutrition', Routes.newRecipe, 'Recipe'),
+      (Routes.nutrition, 'Nutrition', Routes.recipeIdeas(), 'Recipe ideas'),
+    ]) {
+      h.router.go(tab);
+      await tester.pumpAndSettle();
+      unawaited(h.router.push(location));
+      await tester.pumpAndSettle();
+      expect(_title(title), findsOneWidget, reason: location);
+      expect(find.byType(NavigationBar), findsOneWidget, reason: location);
+
+      await tester.pageBack();
+      await tester.pumpAndSettle();
+      expect(_title(tabTitle), findsOneWidget, reason: location);
+    }
   });
 
   testWidgets('each tab keeps its own stack', (tester) async {
@@ -191,5 +234,16 @@ void main() {
       '/nutrition/entry/new?foodId=4&quantity=60.0&unit=g',
     );
     expect(Routes.foodSearch(), '/nutrition/search');
+    expect(Routes.exerciseHistory(3), '/workouts/exercise-history/3');
+    expect(Routes.weeklyReport(), '/progress/weekly-report');
+    expect(
+      Routes.weeklyReport(weekStart: day),
+      '/progress/weekly-report?week=2026-11-03',
+    );
+    expect(Routes.editRecipe(8), '/nutrition/recipe/8');
+    expect(
+      Routes.recipeIdeas(meal: MealType.lunch, date: day),
+      '/nutrition/recipe-ideas?meal=lunch&date=2026-11-03',
+    );
   });
 }

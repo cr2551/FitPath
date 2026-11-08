@@ -2,11 +2,12 @@ import 'package:drift/drift.dart';
 
 import '../app_database.dart';
 import '../tables/food_tables.dart';
+import '../tables/recipe_tables.dart';
 
 part 'food_dao.g.dart';
 
 /// Food catalog and diary queries.
-@DriftAccessor(tables: [FoodItems, FoodEntries])
+@DriftAccessor(tables: [FoodItems, FoodEntries, RecipeIngredients])
 class FoodDao extends DatabaseAccessor<AppDatabase> with _$FoodDaoMixin {
   FoodDao(super.attachedDatabase);
 
@@ -49,13 +50,21 @@ class FoodDao extends DatabaseAccessor<AppDatabase> with _$FoodDaoMixin {
         food.copyWith(updatedAt: Value(DateTime.now())),
       );
 
+  /// Whether a diary entry or a recipe ingredient uses [foodId], so it can
+  /// only be made inactive, not deleted.
   Future<bool> isReferenced(int foodId) async =>
       await (selectOnly(foodEntries)
-            ..addColumns([foodEntries.id])
-            ..where(foodEntries.foodItemId.equals(foodId))
-            ..limit(1))
-          .getSingleOrNull() !=
-      null;
+                ..addColumns([foodEntries.id])
+                ..where(foodEntries.foodItemId.equals(foodId))
+                ..limit(1))
+              .getSingleOrNull() !=
+          null ||
+      await (selectOnly(recipeIngredients)
+                ..addColumns([recipeIngredients.id])
+                ..where(recipeIngredients.foodItemId.equals(foodId))
+                ..limit(1))
+              .getSingleOrNull() !=
+          null;
 
   Future<void> deleteFood(int id) =>
       (delete(foodItems)..where((f) => f.id.equals(id))).go();
