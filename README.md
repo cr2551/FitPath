@@ -30,6 +30,12 @@ flutter analyze
 flutter test
 ```
 
+End-to-end tests (`integration_test/`) need a device, an emulator or the desktop (`flutter devices` lists them):
+
+```bash
+flutter test integration_test -d <device id>
+```
+
 Build a signed release bundle for Google Play (needs `android/key.properties`; see [docs/release.md](docs/release.md)):
 
 ```bash
