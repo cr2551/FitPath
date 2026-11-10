@@ -42,6 +42,14 @@ Future<void> _fill(AppDatabase db) async {
       kcal: const Value(52),
     ),
   );
+  final recipeOnlyFood = await db.foodDao.insertFood(
+    FoodItemsCompanion.insert(
+      name: 'Oats',
+      referenceBasis: ReferenceBasis.per100g,
+      source: FoodSource.bundled,
+      kcal: const Value(389),
+    ),
+  );
   final foods = FoodRepository(db.foodDao);
   final granola = await foods.createCustomFood(
     const FoodDetails(
@@ -50,11 +58,33 @@ Future<void> _fill(AppDatabase db) async {
       nutrients: Nutrients(kcal: 450, proteinG: 10),
     ),
   );
-  for (final id in [apple, granola]) {
+  final recipeFood = await db.foodDao.insertFood(
+    FoodItemsCompanion.insert(
+      name: 'Apple granola bowl',
+      referenceBasis: ReferenceBasis.perServing,
+      source: FoodSource.recipe,
+      kcal: const Value(502),
+    ),
+  );
+  final recipe = await db
+      .into(db.recipes)
+      .insert(RecipesCompanion.insert(foodItemId: recipeFood, servings: 2));
+  await db
+      .into(db.recipeIngredients)
+      .insert(
+        RecipeIngredientsCompanion.insert(
+          recipeId: recipe,
+          foodItemId: recipeOnlyFood,
+          quantity: 100,
+          unit: 'g',
+          position: 0,
+        ),
+      );
+  for (final id in [apple, granola, recipeFood]) {
     await foods.logFood(
       foodId: id,
-      quantity: 100,
-      unit: QuantityUnit.gram,
+      quantity: id == recipeFood ? 1 : 100,
+      unit: id == recipeFood ? QuantityUnit.serving : QuantityUnit.gram,
       meal: MealType.breakfast,
     );
   }
@@ -107,6 +137,8 @@ Future<Map<String, List<Object>>> _snapshot(AppDatabase db) async => {
   'weights': await db.select(db.weightEntries).get(),
   'targets': await db.select(db.nutritionTargets).get(),
   'foods': await db.select(db.foodItems).get(),
+  'recipes': await db.select(db.recipes).get(),
+  'recipeIngredients': await db.select(db.recipeIngredients).get(),
   'entries': await db.select(db.foodEntries).get(),
   'exercises': await db.select(db.exercises).get(),
   'sessions': await db.select(db.workoutSessions).get(),
@@ -161,6 +193,16 @@ void main() {
     for (final e in entries) {
       expect(await target.foodDao.foodById(e.foodItemId), isNotNull);
     }
+    final recipe = await target.select(target.recipes).getSingle();
+    final ingredient = await target
+        .select(target.recipeIngredients)
+        .getSingle();
+    expect(ingredient.recipeId, recipe.id);
+    expect(ingredient.foodItemId, isNot(recipe.foodItemId));
+    expect(
+      (await target.foodDao.foodById(ingredient.foodItemId))?.name,
+      'Oats',
+    );
     final set = await target.select(target.workoutSets).getSingle();
     final we = await (target.select(
       target.workoutExercises,
@@ -189,7 +231,7 @@ void main() {
     });
 
     test('newer or missing version', () {
-      rejects(_tamper(json, (d) => d['format_version'] = 2), 'newer version');
+      rejects(_tamper(json, (d) => d['format_version'] = 3), 'newer version');
       rejects(
         _tamper(json, (d) => d.remove('format_version')),
         'format version',
@@ -220,6 +262,13 @@ void main() {
     test('broken references and duplicate ids', () {
       rejects(
         _tamper(json, (d) {
+          final rows = (d['tables'] as Map)['recipe_ingredients'] as List;
+          (rows.first as Map)['foodItemId'] = 999;
+        }),
+        '"recipe_ingredients" refers',
+      );
+      rejects(
+        _tamper(json, (d) {
           final rows = (d['tables'] as Map)['food_entries'] as List;
           (rows.first as Map)['foodItemId'] = 999;
         }),
@@ -240,6 +289,37 @@ void main() {
         'twice',
       );
     });
+  });
+
+  test('v1 backup restores into a v2 database without recipes', () async {
+    final v1 = _tamper(await _export(source), (d) {
+      d['format_version'] = 1;
+      final tables = d['tables'] as Map;
+      tables.remove('recipes');
+      tables.remove('recipe_ingredients');
+      (tables['food_items'] as List).removeWhere(
+        (food) => (food as Map)['source'] == 'recipe',
+      );
+      (tables['food_entries'] as List).removeWhere(
+        (entry) => (entry as Map)['nameSnapshot'] == 'Apple granola bowl',
+      );
+    });
+    final before = BackupValidator.parse(v1);
+    expect(before.recipes, isEmpty);
+    await ImportService(target).restore(before);
+    expect(await target.select(target.recipes).get(), isEmpty);
+    expect(await target.select(target.foodEntries).get(), hasLength(2));
+  });
+
+  test('invalid v2 recipe reference leaves existing data unchanged', () async {
+    await ProfileRepository(target.profileDao).logWeight(99);
+    final before = await _snapshot(target);
+    final invalid = _tamper(await _export(source), (d) {
+      final ingredients = (d['tables'] as Map)['recipe_ingredients'] as List;
+      (ingredients.single as Map)['recipeId'] = 999;
+    });
+    expect(() => BackupValidator.parse(invalid), throwsA(isA<InvalidBackup>()));
+    expect(await _snapshot(target), before);
   });
 
   test('a failing restore rolls back everything', () async {
@@ -291,7 +371,7 @@ void main() {
     await tester.tap(find.text('CHOOSE BACKUP FILE'));
     await tester.pumpAndSettle();
     expect(find.text('Replace your data?'), findsOneWidget);
-    expect(find.textContaining('2 diary entries, 1 workout'), findsOneWidget);
+    expect(find.textContaining('3 diary entries, 1 workout'), findsOneWidget);
     await tester.tap(find.text('RESTORE'));
     await tester.runAsync(
       () => Future<void>.delayed(const Duration(milliseconds: 100)),
@@ -301,7 +381,7 @@ void main() {
     final entries = await tester.runAsync(
       () => target.select(target.foodEntries).get(),
     );
-    expect(entries, hasLength(2));
+    expect(entries, hasLength(3));
 
     await tester.pumpWidget(const SizedBox());
     await tester.pump(const Duration(seconds: 5));

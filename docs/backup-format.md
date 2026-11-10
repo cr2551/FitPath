@@ -1,4 +1,4 @@
-# FitPath backup format (version 1)
+# FitPath backup format (version 2)
 
 A backup is one UTF-8 JSON file, named `fitpath-backup-YYYY-MM-DD.json`. It is
 written by `ExportService` (`lib/features/settings/backup/export_service.dart`)
@@ -9,7 +9,7 @@ and read by the import feature (#41).
 ```json
 {
   "format": "fitpath-backup",
-  "format_version": 1,
+  "format_version": 2,
   "app_version": "1.0.0+1",
   "exported_at": "2026-11-04T18:20:00.000Z",
   "tables": { "app_settings": [ ... ], "user_profile": [ ... ], ... }
@@ -36,7 +36,9 @@ foreign keys when rows are inserted front to back:
 | `fitness_goals` | All goals, including inactive ones. |
 | `weight_entries` | Every weight entry. |
 | `nutrition_targets` | Target history (each row applies from `effectiveFrom`). |
-| `food_items` | Custom foods, cached Open Food Facts foods, and the bundled foods that a diary entry references. |
+| `food_items` | Custom foods, cached Open Food Facts foods, recipe food rows, and bundled foods referenced by a diary entry or recipe ingredient. |
+| `recipes` | Recipes, with their food row and serving count. New in version 2. |
+| `recipe_ingredients` | Recipe ingredients, including quantity, unit and order. New in version 2. |
 | `food_entries` | The diary, with each entry's nutrient snapshot. |
 | `exercises` | Custom exercises (including soft-deleted ones), and the bundled exercises that a session uses. |
 | `workout_sessions` | Every session, any status. |
@@ -53,7 +55,7 @@ Each row is the Drift `toJson` of the table's data class:
 
 - **Keys** are the Dart field names in camelCase (`foodItemId`, `consumedAt`).
 - **Ids** are kept as they are in the database, so every relationship
-  (`foodItemId`, `sessionId`, `workoutExerciseId`, `exerciseId`) still points
+  (`foodItemId`, `recipeId`, `sessionId`, `workoutExerciseId`, `exerciseId`) still points
   at the right row after a restore.
 - **Dates and times** are ISO 8601 strings. `localDate` and `effectiveFrom`
   are `yyyy-MM-dd` text.
@@ -77,7 +79,14 @@ checks the whole file before anything changes:
 - every table is present and every row parses into its data class (types and
   required fields);
 - ids are unique per table and every reference (`foodItemId`, `sessionId`,
-  `exerciseId`, `workoutExerciseId`) points at a row in the file.
+  `exerciseId`, `workoutExerciseId`, `recipeId`) points at a row in the file.
+
+Version 1 files have no `recipes` or `recipe_ingredients` arrays. The version 2
+importer accepts them and restores the original data without recipes. Version
+2 files require both arrays, including when empty. Recipe rows must point to
+food rows with `source: "recipe"`; ingredient rows must point to included
+recipes and foods. The exporter includes bundled ingredient foods even when
+they have no diary entries.
 
 `ImportService` then replaces all user data in one transaction: user rows
 are deleted, the backup's rows are inserted with their ids, and bundled

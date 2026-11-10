@@ -29,7 +29,13 @@ class ExportService {
     ];
 
     final entries = await _db.select(_db.foodEntries).get();
-    final usedFoods = {for (final e in entries) e.foodItemId};
+    final recipes = await _db.select(_db.recipes).get();
+    final recipeIngredients = await _db.select(_db.recipeIngredients).get();
+    final usedFoods = {
+      for (final e in entries) e.foodItemId,
+      for (final r in recipes) r.foodItemId,
+      for (final i in recipeIngredients) i.foodItemId,
+    };
     final foods =
         await (_db.select(_db.foodItems)
               ..where(
@@ -65,6 +71,8 @@ class ExportService {
           await _db.select(_db.nutritionTargets).get(),
         ),
         BackupTables.foodItems: rows(foods),
+        BackupTables.recipes: rows(recipes),
+        BackupTables.recipeIngredients: rows(recipeIngredients),
         BackupTables.foodEntries: rows(entries),
         BackupTables.exercises: rows(exercises),
         BackupTables.workoutSessions: rows(
