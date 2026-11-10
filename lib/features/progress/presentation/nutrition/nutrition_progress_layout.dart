@@ -110,9 +110,17 @@ class NutritionProgressLayout extends StatelessWidget {
               const SizedBox(height: AppSpacing.xs),
               Row(
                 children: [
-                  Text(d.firstLabel, style: t.label),
+                  // Flexible: date labels at large text can be wider than
+                  // half the card.
+                  Flexible(child: Text(d.firstLabel, style: t.label)),
                   const Spacer(),
-                  Text(d.lastLabel, style: t.label),
+                  Flexible(
+                    child: Text(
+                      d.lastLabel,
+                      style: t.label,
+                      textAlign: TextAlign.end,
+                    ),
+                  ),
                 ],
               ),
             ],
