@@ -185,4 +185,13 @@ void main() {
     expect(find.text('route /nutrition/custom-food/new'), findsOneWidget);
     await _dispose(tester, db);
   });
+
+  testWidgets('offers to create a recipe', (tester) async {
+    final db = await _db(tester);
+    await _pump(tester, db, _FakeOff(), online: false);
+    await tester.tap(find.text('Create recipe'));
+    await _settle(tester);
+    expect(find.text('route /nutrition/recipe/new'), findsOneWidget);
+    await _dispose(tester, db);
+  });
 }
