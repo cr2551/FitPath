@@ -110,9 +110,23 @@ class NutritionProgressLayout extends StatelessWidget {
               const SizedBox(height: AppSpacing.xs),
               Row(
                 children: [
-                  Text(d.firstLabel, style: t.label),
-                  const Spacer(),
-                  Text(d.lastLabel, style: t.label),
+                  Expanded(
+                    child: Text(
+                      d.firstLabel,
+                      style: t.label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      d.lastLabel,
+                      style: t.label,
+                      textAlign: TextAlign.end,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ],
               ),
             ],
