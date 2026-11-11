@@ -22,7 +22,7 @@ Future<void> _settle(WidgetTester tester) async {
 }
 
 /// A database whose dashboard is the "lose weight" preset:
-/// Calories & macros, Weight, Nutrition summary, This week.
+/// Calories & macros, Weight, Nutrition summary, Workouts this week.
 Future<AppDatabase> _db(WidgetTester tester, {bool withPreset = true}) async {
   final db = createTestDatabase();
   if (withPreset) {
@@ -75,7 +75,7 @@ void main() {
     expect(find.text('Today'), findsOneWidget);
     // The calories card, without a calorie goal in this database.
     expect(find.text('Set a calorie goal'), findsOneWidget);
-    expect(find.text('This week'), findsOneWidget);
+    expect(find.text('Workouts this week'), findsOneWidget);
     expect(
       _top(tester, 'Set a calorie goal'),
       lessThan(_top(tester, 'LOG FOOD')),
@@ -84,7 +84,7 @@ void main() {
     expect(_top(tester, 'Weight'), lessThan(_top(tester, 'Nutrition summary')));
     expect(
       _top(tester, 'Nutrition summary'),
-      lessThan(_top(tester, 'This week')),
+      lessThan(_top(tester, 'Workouts this week')),
     );
 
     await _dispose(tester, db);
@@ -119,7 +119,7 @@ void main() {
     expect(find.text('Set a calorie goal'), findsOneWidget);
     expect(find.text('Weight'), findsNothing);
     expect(find.text('Nutrition summary'), findsNothing);
-    expect(find.text('This week'), findsOneWidget);
+    expect(find.text('Workouts this week'), findsOneWidget);
 
     await _dispose(tester, db);
   });
@@ -182,7 +182,7 @@ void main() {
 
     // No goal yet: the general fitness preset.
     expect(find.text('Your dashboard is empty'), findsNothing);
-    expect(find.text('This week'), findsOneWidget);
+    expect(find.text('Workouts this week'), findsOneWidget);
     expect(find.text('Activity overview'), findsOneWidget);
 
     await _dispose(tester, db);

@@ -177,7 +177,7 @@ We are not adding a separate design-system package, code-generated tokens or cus
 - **Date strip** for the current week; the selected day is ink with a white marker.
 - **Calories card** (reference layout, section 4).
 - **Quick actions:** **Log food** (açaí) and **Start workout** (ink).
-- **Weight** and **This week** cards below. Order and visibility are user-configurable (FR-12).
+- **Weight** and **Workouts this week** cards below. Order and visibility are user-configurable (FR-12).
 
 ### Nutrition (see `screens.html`)
 - **Header:** centered title, with a "+" button for creating a custom food.
@@ -188,7 +188,7 @@ We are not adding a separate design-system package, code-generated tokens or cus
 ### Workouts
 - **Open session first:** a session left in progress comes first as a card with an ink left edge, an açaí "live" marker and set progress, with Resume (primary) and Discard (error text) buttons.
 - **Start button:** "Start new workout" is outlined while a session is open. Otherwise it is the accent (açaí) button.
-- **This week:** the week strip plus Sessions / Sets / Volume stat tiles.
+- **Workouts this week:** the week strip plus Sessions / Sets / Volume stat tiles.
 - **Recent sessions:** a list card. A history button sits in the header.
 
 ### Progress

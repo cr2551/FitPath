@@ -197,6 +197,26 @@ void main() {
     );
   });
 
+  testWidgets('date strip marks today when another day is selected', (
+    tester,
+  ) async {
+    await pump(
+      tester,
+      DateStrip(
+        days: week,
+        selected: week[5],
+        today: week[2],
+        onSelected: (_) {},
+      ),
+    );
+
+    expect(
+      find.bySemanticsLabel(RegExp(r'^Tuesday 3 November, today')),
+      findsOneWidget,
+    );
+    expect(find.bySemanticsLabel(RegExp(r', today')), findsOneWidget);
+  });
+
   testWidgets('macro legend shows "Set target" without a target', (
     tester,
   ) async {

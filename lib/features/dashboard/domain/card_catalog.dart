@@ -48,7 +48,7 @@ abstract final class CardCatalog {
     ),
     CardDefinition(
       type: DashboardCardType.workoutSummary,
-      title: 'This week',
+      title: 'Workouts this week',
       description: 'Training days, sessions, sets and volume this week.',
     ),
     CardDefinition(
