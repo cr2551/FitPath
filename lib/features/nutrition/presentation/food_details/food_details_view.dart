@@ -140,12 +140,9 @@ class _Details extends StatelessWidget {
           onPressed: onAddToDiary,
           child: const Text('ADD TO DIARY'),
         ),
-        if (data.canEdit) ...[
+        if (data.editLabel != null) ...[
           const SizedBox(height: AppSpacing.sm),
-          OutlinedButton(
-            onPressed: onEdit,
-            child: const Text('EDIT CUSTOM FOOD'),
-          ),
+          OutlinedButton(onPressed: onEdit, child: Text(data.editLabel!)),
         ],
       ],
     );
