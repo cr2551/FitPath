@@ -6,7 +6,8 @@ import '../../core/theme/fit_colors.dart';
 import '../../core/utils/dates.dart';
 
 /// A row of day tiles (usually one week). The selected day is an ink tile
-/// with white text; a small square marker means the day has entries.
+/// with white text; a small square marker means the day has entries, and an
+/// accent bar under the date marks today.
 class DateStrip extends StatelessWidget {
   const DateStrip({
     super.key,
@@ -39,6 +40,7 @@ class DateStrip extends StatelessWidget {
               day: days[i],
               selected: Dates.isSameDay(days[i], selected),
               past: Dates.startOfDay(days[i]).isBefore(now),
+              isToday: Dates.isSameDay(days[i], now),
               hasEntries: daysWithEntries.contains(Dates.localDateKey(days[i])),
               onTap: () => onSelected(Dates.startOfDay(days[i])),
             ),
@@ -54,6 +56,7 @@ class _DayTile extends StatelessWidget {
     required this.day,
     required this.selected,
     required this.past,
+    required this.isToday,
     required this.hasEntries,
     required this.onTap,
   });
@@ -61,6 +64,7 @@ class _DayTile extends StatelessWidget {
   final DateTime day;
   final bool selected;
   final bool past;
+  final bool isToday;
   final bool hasEntries;
   final VoidCallback onTap;
 
@@ -76,6 +80,7 @@ class _DayTile extends StatelessWidget {
       selected: selected,
       label:
           '${DateFormat('EEEE d MMMM').format(day)}'
+          '${isToday ? ', today' : ''}'
           '${hasEntries ? ', has entries' : ''}',
       excludeSemantics: true,
       child: Material(
@@ -108,6 +113,18 @@ class _DayTile extends StatelessWidget {
                   Text(
                     day.day.toString().padLeft(2, '0'),
                     style: t.cardTitle.copyWith(fontSize: 19, color: fg),
+                  ),
+                  // Today marker: an accent bar under the date, kept (as
+                  // transparent) on other days so every tile is the same height.
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: SizedBox(
+                      width: 14,
+                      height: 3,
+                      child: ColoredBox(
+                        color: isToday ? c.accent : Colors.transparent,
+                      ),
+                    ),
                   ),
                 ],
               ),
