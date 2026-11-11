@@ -170,7 +170,7 @@ void main() {
       await tester.runAsync(() => Future<void>.delayed(Duration.zero));
       await tester.pump(const Duration(milliseconds: 300));
     }
-    expect(find.text('This week'), findsOneWidget);
+    expect(find.text('Workouts this week'), findsOneWidget);
     expect(find.text('Recent sessions'), findsOneWidget);
     expect(find.text('Push'), findsOneWidget);
     expect(find.text('Strength progression'), findsOneWidget);

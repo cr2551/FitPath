@@ -19,8 +19,8 @@ import '../../../workouts/data/workout_models.dart';
 /// sessions, progression).
 const dashboardSessionLimit = 30;
 
-/// Home "This week": training days, sessions (against the weekly training
-/// days from the profile, when set), completed sets and volume.
+/// Home "Workouts this week": training days, sessions (against the weekly
+/// training days from the profile, when set), completed sets and volume.
 class WorkoutSummaryCard extends ConsumerWidget {
   const WorkoutSummaryCard({super.key});
 
@@ -112,7 +112,7 @@ WorkoutSummaryData workoutSummaryData(
   );
 }
 
-/// Pure layout for the "This week" card (DESIGN/home.html).
+/// Pure layout for the "Workouts this week" card (DESIGN/home.html).
 class WorkoutSummaryCardView extends StatelessWidget {
   const WorkoutSummaryCardView({
     super.key,
@@ -131,7 +131,8 @@ class WorkoutSummaryCardView extends StatelessWidget {
     return SectionCard(
       onTap: onTap,
       header: CardHeader(
-        title: 'This week',
+        title: 'Workouts this week',
+        icon: Icons.fitness_center_outlined,
         trailing: Text(d.headline, style: t.label),
       ),
       child: Column(

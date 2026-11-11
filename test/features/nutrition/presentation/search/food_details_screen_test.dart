@@ -3,7 +3,9 @@ import 'package:fitpath/core/database/database_provider.dart';
 import 'package:fitpath/core/theme/app_theme.dart';
 import 'package:fitpath/features/nutrition/application/food_search_service.dart';
 import 'package:fitpath/features/nutrition/data/local/food_repository.dart';
+import 'package:fitpath/features/nutrition/data/local/recipe_repository.dart';
 import 'package:fitpath/features/nutrition/data/remote/off_product.dart';
+import 'package:fitpath/features/nutrition/domain/nutrition_math.dart';
 import 'package:fitpath/features/nutrition/presentation/food_details/food_details_screen.dart';
 import 'package:fitpath/shared/models/enums.dart';
 import 'package:flutter/material.dart';
@@ -111,6 +113,35 @@ void main() {
       ),
       findsOneWidget,
     );
+    await _dispose(tester, db);
+  });
+
+  testWidgets('a recipe is logged per serving and opens the recipe editor', (
+    tester,
+  ) async {
+    final (db, barId) = await _db(tester);
+    final id = (await tester.runAsync(
+      () => RecipeRepository(db.recipeDao, db.foodDao).create(
+        RecipeInput(
+          name: 'Bar crumble',
+          servings: 2,
+          ingredients: [
+            IngredientInput(
+              foodId: barId,
+              quantity: 1,
+              unit: QuantityUnit.serving,
+            ),
+          ],
+        ),
+      ),
+    ))!;
+    await _pump(tester, db, FoodDetailsScreen(foodId: id));
+    expect(find.text('Recipe'), findsOneWidget);
+    expect(find.text('serving'), findsOneWidget); // the only unit
+    expect(find.text('EDIT CUSTOM FOOD'), findsNothing);
+    await tester.tap(find.text('EDIT RECIPE'));
+    await _settle(tester);
+    expect(find.text('route /nutrition/recipe/$id'), findsOneWidget);
     await _dispose(tester, db);
   });
 

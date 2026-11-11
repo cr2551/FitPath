@@ -6,6 +6,7 @@ import 'package:fitpath/core/router/routes.dart';
 import 'package:fitpath/core/theme/app_theme.dart';
 import 'package:fitpath/features/dashboard/data/dashboard_repository.dart';
 import 'package:fitpath/features/nutrition/data/local/food_repository.dart';
+import 'package:fitpath/features/nutrition/data/local/recipe_repository.dart';
 import 'package:fitpath/features/nutrition/domain/nutrients.dart';
 import 'package:fitpath/features/nutrition/domain/nutrition_math.dart';
 import 'package:fitpath/features/onboarding/application/onboarding_status_provider.dart';
@@ -21,11 +22,11 @@ import 'package:flutter_test/flutter_test.dart';
 import '../helpers/test_database.dart';
 
 /// Ids of the seeded rows the routes below open.
-late int _foodId, _entryId, _sessionId, _exerciseId;
+late int _foodId, _entryId, _sessionId, _exerciseId, _recipeId;
 
 /// A realistic database: Alex's profile, weights, goals and targets, the
-/// "lose weight" dashboard, a custom food logged today and a completed
-/// workout with a custom exercise.
+/// "lose weight" dashboard, a custom food logged today, a recipe made from
+/// it and a completed workout with a custom exercise.
 Future<AppDatabase> _seed() async {
   final db = createTestDatabase();
   final now = DateTime.now();
@@ -50,6 +51,19 @@ Future<AppDatabase> _seed() async {
     quantity: 250,
     unit: QuantityUnit.gram,
     meal: MealType.breakfast,
+  );
+  _recipeId = await RecipeRepository(db.recipeDao, db.foodDao).create(
+    RecipeInput(
+      name: 'Overnight yogurt pots for the whole week, with extra granola',
+      servings: 6,
+      ingredients: [
+        IngredientInput(
+          foodId: _foodId,
+          quantity: 3,
+          unit: QuantityUnit.serving,
+        ),
+      ],
+    ),
   );
 
   _exerciseId = await db.workoutDao.insertExercise(
@@ -153,6 +167,8 @@ void main() {
         Routes.editEntry(_entryId),
         Routes.newCustomFood,
         Routes.editCustomFood(_foodId),
+        Routes.newRecipe,
+        Routes.editRecipe(_recipeId),
         Routes.workouts,
         Routes.exercisePicker,
         Routes.newCustomExercise,

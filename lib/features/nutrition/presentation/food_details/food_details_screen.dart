@@ -87,7 +87,15 @@ class _FoodDetailsScreenState extends ConsumerState<FoodDetailsScreen> {
           unit: _validQuantity == null ? null : FoodRepository.unitCode(_unit!),
         ),
       ),
-      onEdit: () => context.push(Routes.editCustomFood(widget.foodId)),
+      onEdit: () async {
+        await context.push(
+          food.value?.source == FoodSource.recipe
+              ? Routes.editRecipe(widget.foodId)
+              : Routes.editCustomFood(widget.foodId),
+        );
+        // Show the edited values.
+        if (mounted) ref.invalidate(_foodProvider(widget.foodId));
+      },
       onRetry: () => ref.invalidate(_foodProvider(widget.foodId)),
     );
   }
@@ -144,7 +152,11 @@ class _FoodDetailsScreenState extends ConsumerState<FoodDetailsScreen> {
             value: '${Formatters.integer(n.sodiumMg)} mg',
           ),
       ],
-      canEdit: f.source == FoodSource.custom,
+      editLabel: switch (f.source) {
+        FoodSource.custom => 'EDIT CUSTOM FOOD',
+        FoodSource.recipe => 'EDIT RECIPE',
+        _ => null,
+      },
       attribution: f.source == FoodSource.openFoodFacts
           ? 'Data from Open Food Facts (openfoodfacts.org), available under '
                 'the Open Database License. Values may be incomplete.'

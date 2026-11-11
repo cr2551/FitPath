@@ -18,11 +18,20 @@ import 'food_search_view_data.dart';
 /// Hybrid food search: local results first, then Open Food Facts. An online
 /// problem shows a banner and never hides local results. Opening an online
 /// result caches it locally first, so it can be logged offline later.
+///
+/// With [pickIngredient], recipes are left out and choosing a food pops this
+/// screen with its id (used by the recipe builder).
 class FoodSearchScreen extends ConsumerStatefulWidget {
-  const FoodSearchScreen({super.key, this.meal, this.date});
+  const FoodSearchScreen({
+    super.key,
+    this.meal,
+    this.date,
+    this.pickIngredient = false,
+  });
 
   final MealType? meal;
   final DateTime? date;
+  final bool pickIngredient;
 
   @override
   ConsumerState<FoodSearchScreen> createState() => _FoodSearchScreenState();
@@ -35,9 +44,21 @@ class _FoodSearchScreenState extends ConsumerState<FoodSearchScreen> {
   FoodSearchResults? _last;
   bool _opening = false;
 
-  Future<void> _openLocal(FoodItem food) => context.push(
-    Routes.foodDetails(food.id, meal: widget.meal, date: widget.date),
-  );
+  /// Local results as shown: no recipes when picking an ingredient.
+  List<FoodItem> get _local => [
+    for (final f in _last?.local ?? const <FoodItem>[])
+      if (!widget.pickIngredient || f.source != FoodSource.recipe) f,
+  ];
+
+  Future<void> _open(int foodId) async {
+    if (widget.pickIngredient) {
+      Navigator.of(context).pop(foodId);
+      return;
+    }
+    await context.push(
+      Routes.foodDetails(foodId, meal: widget.meal, date: widget.date),
+    );
+  }
 
   Future<void> _openRemote(OffProduct product) async {
     if (_opening) return;
@@ -45,9 +66,7 @@ class _FoodSearchScreenState extends ConsumerState<FoodSearchScreen> {
     try {
       final id = await ref.read(foodSearchServiceProvider).select(product);
       if (!mounted) return;
-      await context.push(
-        Routes.foodDetails(id, meal: widget.meal, date: widget.date),
-      );
+      await _open(id);
     } on Object {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -82,6 +101,7 @@ class _FoodSearchScreenState extends ConsumerState<FoodSearchScreen> {
       } else {
         body = _results(
           last,
+          _local,
           loading: last.query != q || value.isLoading || last.remotePending,
         );
       }
@@ -91,14 +111,18 @@ class _FoodSearchScreenState extends ConsumerState<FoodSearchScreen> {
       body: body,
       target: _target(),
       onQueryChanged: (text) => setState(() => _query = text),
-      onOpenLocal: (i) => _openLocal(_last!.local[i]),
+      onOpenLocal: (i) => _open(_local[i].id),
       onOpenRemote: (i) => _openRemote(_last!.remote[i]),
       onCreateCustomFood: () => context.push(Routes.newCustomFood),
+      onCreateRecipe: widget.pickIngredient
+          ? null
+          : () => context.push(Routes.newRecipe),
       onRetry: () => ref.invalidate(foodSearchProvider(q)),
     );
   }
 
   String? _target() {
+    if (widget.pickIngredient) return 'Choose an ingredient';
     final meal = widget.meal;
     final date = widget.date;
     if (meal == null && date == null) return null;
@@ -112,7 +136,8 @@ class _FoodSearchScreenState extends ConsumerState<FoodSearchScreen> {
   }
 
   static SearchResults _results(
-    FoodSearchResults r, {
+    FoodSearchResults r,
+    List<FoodItem> local, {
     required bool loading,
   }) => SearchResults(
     query: r.query,
@@ -124,7 +149,7 @@ class _FoodSearchScreenState extends ConsumerState<FoodSearchScreen> {
       _ => "Couldn't reach Open Food Facts. Showing foods saved on this phone.",
     },
     local: [
-      for (final f in r.local)
+      for (final f in local)
         FoodResultRow(
           name: f.name,
           detail: [?f.brand, FoodLabels.source(f.source)].join(' · '),

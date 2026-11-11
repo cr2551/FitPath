@@ -15,6 +15,7 @@ class FoodSearchView extends StatelessWidget {
     required this.onOpenRemote,
     required this.onCreateCustomFood,
     required this.onRetry,
+    this.onCreateRecipe,
     this.target,
   });
 
@@ -26,6 +27,9 @@ class FoodSearchView extends StatelessWidget {
   final ValueChanged<int> onOpenLocal;
   final ValueChanged<int> onOpenRemote;
   final VoidCallback onCreateCustomFood;
+
+  /// Null hides "Create recipe".
+  final VoidCallback? onCreateRecipe;
   final VoidCallback onRetry;
 
   @override
@@ -58,11 +62,8 @@ class FoodSearchView extends StatelessWidget {
             const SizedBox(height: AppSpacing.md),
             ...switch (body) {
               SearchIdle() => [
-                EmptyState(
-                  message: 'Type a food name or brand.',
-                  actionLabel: 'Create custom food',
-                  onAction: onCreateCustomFood,
-                ),
+                const EmptyState(message: 'Type a food name or brand.'),
+                _createActions(),
               ],
               SearchFailed(:final message) => [
                 ErrorState(message: message, onRetry: onRetry),
@@ -96,12 +97,10 @@ class FoodSearchView extends StatelessWidget {
             ],
           ),
         ),
-      if (r.isEmpty && !r.loading)
-        EmptyState(
-          message: 'No foods match "${r.query}".',
-          actionLabel: 'Create custom food',
-          onAction: onCreateCustomFood,
-        ),
+      if (r.isEmpty && !r.loading) ...[
+        EmptyState(message: 'No foods match "${r.query}".'),
+        _createActions(),
+      ],
       if (r.local.isNotEmpty)
         _Section(title: 'Your foods', rows: r.local, onOpen: onOpenLocal),
       if (r.remote.isNotEmpty) ...[
@@ -114,17 +113,27 @@ class FoodSearchView extends StatelessWidget {
       ],
       if (!r.isEmpty) ...[
         const SizedBox(height: AppSpacing.sm),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: TextButton.icon(
-            onPressed: onCreateCustomFood,
-            icon: const Icon(Icons.add, size: 16),
-            label: const Text('Create custom food'),
-          ),
-        ),
+        _createActions(),
       ],
     ];
   }
+
+  Widget _createActions() => Wrap(
+    spacing: AppSpacing.sm,
+    children: [
+      TextButton.icon(
+        onPressed: onCreateCustomFood,
+        icon: const Icon(Icons.add, size: 16),
+        label: const Text('Create custom food'),
+      ),
+      if (onCreateRecipe != null)
+        TextButton.icon(
+          onPressed: onCreateRecipe,
+          icon: const Icon(Icons.add, size: 16),
+          label: const Text('Create recipe'),
+        ),
+    ],
+  );
 }
 
 class _Section extends StatelessWidget {

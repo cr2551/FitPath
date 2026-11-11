@@ -110,7 +110,7 @@ void main() {
       Routes.whatIf: 'What if',
       Routes.weeklyReport(): 'Weekly report',
       Routes.weeklyReport(weekStart: day): 'Weekly report',
-      Routes.newRecipe: 'Recipe',
+      Routes.newRecipe: 'New recipe',
       Routes.editRecipe(12): 'Recipe',
       Routes.recipeIdeas(meal: MealType.dinner, date: day): 'Recipe ideas',
     };
@@ -168,7 +168,7 @@ void main() {
       ),
       (Routes.profile, 'Profile', Routes.whatIf, 'What if'),
       (Routes.progress, 'Progress', Routes.weeklyReport(), 'Weekly report'),
-      (Routes.nutrition, 'Nutrition', Routes.newRecipe, 'Recipe'),
+      (Routes.nutrition, 'Nutrition', Routes.newRecipe, 'New recipe'),
       (Routes.nutrition, 'Nutrition', Routes.recipeIdeas(), 'Recipe ideas'),
     ]) {
       h.router.go(tab);

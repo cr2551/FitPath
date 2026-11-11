@@ -31,7 +31,7 @@ class FoodDetailsData extends FoodDetailsBody {
     required this.selectedUnit,
     required this.amountLabel,
     required this.nutrients,
-    required this.canEdit,
+    required this.editLabel,
     this.attribution,
   });
 
@@ -52,8 +52,9 @@ class FoodDetailsData extends FoodDetailsBody {
   final String amountLabel;
   final List<NutrientLine> nutrients;
 
-  /// Custom foods can be edited.
-  final bool canEdit;
+  /// Label of the edit button; null when the food can't be edited (only
+  /// custom foods and recipes can).
+  final String? editLabel;
 
   /// Data-source credit, e.g. for Open Food Facts.
   final String? attribution;
