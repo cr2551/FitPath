@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../../core/router/routes.dart';
+
 import 'package:intl/intl.dart';
 
 import '../../../../core/utils/dates.dart';
@@ -77,6 +81,7 @@ class _WorkoutProgressViewState extends ConsumerState<WorkoutProgressView> {
         exerciseId: _exercise,
         metric: _metric,
       ),
+      onHistory: (id) => context.push(Routes.exerciseHistory(id)),
       onExercise: (id) => setState(() => _exercise = id),
       onMetric: (m) => setState(() => _metric = m),
     );

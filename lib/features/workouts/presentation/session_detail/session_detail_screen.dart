@@ -11,6 +11,7 @@ import '../../../../shared/widgets/widgets.dart';
 import '../../../profile/application/profile_providers.dart';
 import '../../application/workout_providers.dart';
 import '../../data/workout_models.dart';
+import '../../domain/strength_stats.dart';
 import 'session_detail_view.dart';
 
 /// A finished session: totals, exercises (under the names they had then)
@@ -26,9 +27,19 @@ class SessionDetailScreen extends ConsumerWidget {
     final units = ref.watch(unitSystemProvider).value ?? UnitSystem.metric;
     final s = session.value;
 
+    final history = ref.watch(completedWorkoutHistoryProvider).value;
+    final records = s == null || history == null
+        ? const <NewPr>[]
+        : StrengthStats.newPrs(
+            s.toLogged(),
+            history.map((item) => item.toLogged()),
+          );
     return SessionDetailView(
+      onExerciseHistory: (id) => context.push(Routes.exerciseHistory(id)),
       loading: !session.hasValue && !session.hasError,
-      data: s == null ? null : sessionDetailViewData(s, units),
+      data: s == null
+          ? null
+          : sessionDetailViewData(s, units, records: records),
       onDelete: () async {
         final ok = await showConfirmDialog(
           context,
@@ -46,7 +57,11 @@ class SessionDetailScreen extends ConsumerWidget {
   }
 }
 
-SessionDetailViewData sessionDetailViewData(SessionDetail s, UnitSystem units) {
+SessionDetailViewData sessionDetailViewData(
+  SessionDetail s,
+  UnitSystem units, {
+  List<NewPr> records = const [],
+}) {
   final summary = s.summary;
   final start = s.session.startedAt, end = s.session.completedAt;
   final time = DateFormat('HH:mm');
@@ -82,15 +97,22 @@ SessionDetailViewData sessionDetailViewData(SessionDetail s, UnitSystem units) {
       ),
     ],
     notes: s.session.notes,
+    hasNewPr: records.isNotEmpty,
     exercises: [
-      for (final e in s.exercises)
+      for (final (exerciseIndex, e) in s.exercises.indexed)
         ExerciseSetsData(
           name: e.name,
+          exerciseId: e.entry.exerciseId,
           sets: [
-            for (final x in e.sets)
+            for (final (setIndex, x) in e.sets.indexed)
               SetLineData(
                 number: x.setNumber,
                 completed: x.completed,
+                newPr: records.any(
+                  (r) =>
+                      r.exerciseIndex == exerciseIndex &&
+                      r.setIndex == setIndex,
+                ),
                 text: _setText(
                   x.repetitions,
                   x.weightKg == null ? null : '${load(x.weightKg!)} $unit',

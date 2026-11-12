@@ -84,6 +84,7 @@ class WorkoutProgressLayout extends StatelessWidget {
     required this.onExercise,
     required this.onMetric,
     this.streak,
+    this.onHistory,
   });
 
   /// Null when there are no completed workouts in the range.
@@ -92,6 +93,7 @@ class WorkoutProgressLayout extends StatelessWidget {
   /// Null when there are no completed workouts at all.
   final StreakData? streak;
   final ValueChanged<int> onExercise;
+  final ValueChanged<int>? onHistory;
   final ValueChanged<ExerciseMetric> onMetric;
 
   @override
@@ -161,7 +163,16 @@ class WorkoutProgressLayout extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.md),
         SectionCard(
-          header: const CardHeader(title: 'Exercise performance'),
+          header: CardHeader(
+            title: 'Exercise performance',
+            trailing: d.selected == null || onHistory == null
+                ? null
+                : IconButton(
+                    tooltip: 'View exercise history',
+                    onPressed: () => onHistory!(d.selected!),
+                    icon: const Icon(Icons.history),
+                  ),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

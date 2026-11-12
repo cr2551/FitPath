@@ -11,6 +11,7 @@ class SessionDetailViewData {
     required this.stats,
     required this.notes,
     required this.exercises,
+    this.hasNewPr = false,
   });
 
   final String title;
@@ -22,13 +23,19 @@ class SessionDetailViewData {
   final List<StatItem> stats;
   final String? notes;
   final List<ExerciseSetsData> exercises;
+  final bool hasNewPr;
 }
 
 class ExerciseSetsData {
-  const ExerciseSetsData({required this.name, required this.sets});
+  const ExerciseSetsData({
+    required this.name,
+    required this.sets,
+    this.exerciseId,
+  });
 
   /// The name as it was when the session was logged.
   final String name;
+  final int? exerciseId;
   final List<SetLineData> sets;
 }
 
@@ -37,6 +44,7 @@ class SetLineData {
     required this.number,
     required this.text,
     required this.completed,
+    this.newPr = false,
   });
 
   final int number;
@@ -44,6 +52,7 @@ class SetLineData {
   /// "8 × 60 kg", "12 reps", "12 reps · +10 kg".
   final String text;
   final bool completed;
+  final bool newPr;
 }
 
 /// Pure layout for a completed session: header with totals, then each
@@ -54,12 +63,14 @@ class SessionDetailView extends StatelessWidget {
     required this.data,
     required this.loading,
     required this.onDelete,
+    this.onExerciseHistory,
   });
 
   /// Null when the session does not exist (and not [loading]).
   final SessionDetailViewData? data;
   final bool loading;
   final VoidCallback onDelete;
+  final ValueChanged<int>? onExerciseHistory;
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +115,7 @@ class SessionDetailView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         StatRow(items: d.stats),
+                        if (d.hasNewPr) const Text('New PR'),
                         if (d.notes != null) ...[
                           const SizedBox(height: AppSpacing.md),
                           Text(d.notes!, style: t.body),
@@ -114,7 +126,18 @@ class SessionDetailView extends StatelessWidget {
                   for (final e in d.exercises) ...[
                     gap,
                     SectionCard(
-                      header: CardHeader(title: e.name),
+                      header: CardHeader(
+                        title: e.name,
+                        trailing:
+                            e.exerciseId == null || onExerciseHistory == null
+                            ? null
+                            : IconButton(
+                                tooltip: 'View exercise history for ${e.name}',
+                                onPressed: () =>
+                                    onExerciseHistory!(e.exerciseId!),
+                                icon: const Icon(Icons.history),
+                              ),
+                      ),
                       child: e.sets.isEmpty
                           ? Text('No sets logged', style: t.label)
                           : Column(
@@ -135,7 +158,9 @@ class SessionDetailView extends StatelessWidget {
                                         ),
                                         Expanded(
                                           child: Text(
-                                            s.text,
+                                            s.newPr
+                                                ? '${s.text} · New PR'
+                                                : s.text,
                                             style: s.completed
                                                 ? t.bodyStrong
                                                 : t.body.copyWith(
