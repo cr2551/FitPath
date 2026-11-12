@@ -63,10 +63,21 @@ abstract final class Dates {
       RangePreset.days7 => addDays(end, -7),
       RangePreset.days30 => addDays(end, -30),
       RangePreset.days90 => addDays(end, -90),
-      RangePreset.year => DateTime(today.year - 1, today.month, today.day + 1),
+      RangePreset.year => _startOfYearRange(today),
       RangePreset.all => null,
     };
     return DateRange(start: start, end: end);
+  }
+
+  /// The day after the same calendar date last year. Clamp leap day to
+  /// February 28 when the previous year has no February 29.
+  static DateTime _startOfYearRange(DateTime today) {
+    final previousYear = today.year - 1;
+    final lastDayOfMonth = DateTime(previousYear, today.month + 1, 0).day;
+    final anniversaryDay = today.day > lastDayOfMonth
+        ? lastDayOfMonth
+        : today.day;
+    return DateTime(previousYear, today.month, anniversaryDay + 1);
   }
 }
 

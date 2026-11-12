@@ -79,6 +79,18 @@ void main() {
       expect(Dates.rangeFor(RangePreset.year, today).days, 365);
     });
 
+    test('1Y includes leap day without skipping the adjacent day', () {
+      final leapDay = Dates.rangeFor(RangePreset.year, DateTime(2024, 2, 29));
+      expect(leapDay.start, DateTime(2023, 3, 1));
+      expect(leapDay.end, DateTime(2024, 3, 1));
+      expect(leapDay.days, 366);
+
+      final nextYear = Dates.rangeFor(RangePreset.year, DateTime(2025, 2, 28));
+      expect(nextYear.start, DateTime(2024, 2, 29));
+      expect(nextYear.end, DateTime(2025, 3, 1));
+      expect(nextYear.days, 366);
+    });
+
     test('7D covers 28 Oct to 3 Nov', () {
       final r = Dates.rangeFor(RangePreset.days7, today);
       expect(r.start, DateTime(2026, 10, 28));
