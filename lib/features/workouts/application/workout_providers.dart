@@ -42,3 +42,7 @@ final exerciseHistoryProvider =
       (ref, exerciseId) =>
           ref.watch(workoutRepositoryProvider).watchExerciseHistory(exerciseId),
     );
+
+final completedWorkoutHistoryProvider = StreamProvider.autoDispose(
+  (ref) => ref.watch(workoutRepositoryProvider).watchCompletedSessions(),
+);
