@@ -4,7 +4,7 @@ import 'package:drift/drift.dart';
 const backupFormatId = 'fitpath-backup';
 
 /// Bumped when the backup layout changes incompatibly.
-const backupFormatVersion = 1;
+const backupFormatVersion = 2;
 
 /// Dates are ISO 8601 strings, so files are readable and timezone-explicit.
 const backupSerializer = ValueSerializer.defaults(
@@ -20,6 +20,8 @@ abstract final class BackupTables {
   static const weightEntries = 'weight_entries';
   static const nutritionTargets = 'nutrition_targets';
   static const foodItems = 'food_items';
+  static const recipes = 'recipes';
+  static const recipeIngredients = 'recipe_ingredients';
   static const foodEntries = 'food_entries';
   static const exercises = 'exercises';
   static const workoutSessions = 'workout_sessions';
@@ -34,6 +36,8 @@ abstract final class BackupTables {
     weightEntries,
     nutritionTargets,
     foodItems,
+    recipes,
+    recipeIngredients,
     foodEntries,
     exercises,
     workoutSessions,

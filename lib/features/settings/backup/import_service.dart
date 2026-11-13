@@ -48,6 +48,8 @@ class ImportService {
           ..insertAll(db.weightEntries, b.weights)
           ..insertAll(db.nutritionTargets, b.targets)
           ..insertAllOnConflictUpdate(db.foodItems, b.foods)
+          ..insertAll(db.recipes, b.recipes)
+          ..insertAll(db.recipeIngredients, b.recipeIngredients)
           ..insertAll(db.foodEntries, b.entries)
           ..insertAllOnConflictUpdate(db.exercises, b.exercises)
           ..insertAll(db.workoutSessions, b.sessions)

@@ -158,7 +158,7 @@ void main() {
           jsonDecode(ExportService.encode(doc)) as Map<String, dynamic>;
 
       expect(json['format'], 'fitpath-backup');
-      expect(json['format_version'], 1);
+      expect(json['format_version'], 2);
       expect(json['app_version'], '1.0.0+1');
       expect(json['exported_at'], '2026-11-04T18:20:00.000Z');
       final tables = json['tables'] as Map<String, dynamic>;
@@ -193,6 +193,8 @@ void main() {
       final doc = await ExportService(db).buildBackup(appVersion: 'x');
       expect(doc.tables[BackupTables.appSettings], hasLength(1));
       expect(doc.rowCount, 1);
+      expect(doc.tables[BackupTables.recipes], isEmpty);
+      expect(doc.tables[BackupTables.recipeIngredients], isEmpty);
     });
 
     test('file name', () {

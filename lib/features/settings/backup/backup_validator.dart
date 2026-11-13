@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import '../../../core/database/app_database.dart';
+import '../../../shared/models/enums.dart';
 import 'backup_models.dart';
 
 /// Why a file can't be restored. [message] is shown to the user.
@@ -24,6 +25,8 @@ class ValidBackup {
     required this.weights,
     required this.targets,
     required this.foods,
+    required this.recipes,
+    required this.recipeIngredients,
     required this.entries,
     required this.exercises,
     required this.sessions,
@@ -40,6 +43,8 @@ class ValidBackup {
   final List<WeightEntry> weights;
   final List<NutritionTarget> targets;
   final List<FoodItem> foods;
+  final List<Recipe> recipes;
+  final List<RecipeIngredient> recipeIngredients;
   final List<FoodEntry> entries;
   final List<Exercise> exercises;
   final List<WorkoutSession> sessions;
@@ -139,6 +144,15 @@ abstract final class BackupValidator {
         BackupTables.foodItems,
         (j) => FoodItem.fromJson(j, serializer: s),
       ),
+      recipes: version >= 2
+          ? rows(BackupTables.recipes, (j) => Recipe.fromJson(j, serializer: s))
+          : const [],
+      recipeIngredients: version >= 2
+          ? rows(
+              BackupTables.recipeIngredients,
+              (j) => RecipeIngredient.fromJson(j, serializer: s),
+            )
+          : const [],
       entries: rows(
         BackupTables.foodEntries,
         (j) => FoodEntry.fromJson(j, serializer: s),
@@ -190,6 +204,32 @@ abstract final class BackupValidator {
     }
 
     final foods = ids(BackupTables.foodItems, b.foods.map((f) => f.id));
+    final recipes = ids(BackupTables.recipes, b.recipes.map((r) => r.id));
+    final recipeFoods = <int>{};
+    for (final recipe in b.recipes) {
+      if (!recipeFoods.add(recipe.foodItemId)) {
+        throw InvalidBackup(
+          '"${BackupTables.recipes}" contains the food id ${recipe.foodItemId} twice.',
+        );
+      }
+      final food = b.foods.where((f) => f.id == recipe.foodItemId);
+      if (food.isEmpty || food.single.source != FoodSource.recipe) {
+        throw InvalidBackup(
+          '"${BackupTables.recipes}" refers to a missing or non-recipe food (${recipe.foodItemId}).',
+        );
+      }
+    }
+    ids(BackupTables.recipeIngredients, b.recipeIngredients.map((i) => i.id));
+    refs(
+      BackupTables.recipeIngredients,
+      b.recipeIngredients.map((i) => i.recipeId),
+      recipes,
+    );
+    refs(
+      BackupTables.recipeIngredients,
+      b.recipeIngredients.map((i) => i.foodItemId),
+      foods,
+    );
     final exercises = ids(BackupTables.exercises, b.exercises.map((e) => e.id));
     final sessions = ids(
       BackupTables.workoutSessions,
