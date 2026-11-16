@@ -4,9 +4,8 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/fit_colors.dart';
 import '../../../core/utils/dates.dart';
 import '../../../shared/widgets/widgets.dart';
+import '../application/progress_range_provider.dart' show ProgressTab;
 import 'charts/chart_helpers.dart';
-
-enum ProgressTab { weight, nutrition, workouts }
 
 /// Pure layout for the Progress tab: the dataset control, the shared range
 /// buttons and the selected tab's body.

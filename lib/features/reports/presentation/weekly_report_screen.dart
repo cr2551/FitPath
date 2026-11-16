@@ -10,7 +10,7 @@ import '../../../core/utils/units.dart';
 import '../../../shared/models/enums.dart';
 import '../../profile/application/profile_providers.dart';
 import '../../progress/domain/weekly_report.dart';
-import '../../workouts/domain/strength_stats.dart';
+import '../../workouts/presentation/widgets/pr_label.dart';
 import '../application/weekly_report_providers.dart';
 import 'weekly_report_view.dart';
 
@@ -184,7 +184,7 @@ WeeklyReportViewData weeklyReportViewData(
         ReportPrRow(
           exerciseId: r.pr.exerciseId,
           exercise: r.exerciseName,
-          record: _record(r.pr, kg, unit),
+          record: prRecordLabel(r.pr, units),
           date: DateFormat('EEE d MMM').format(r.pr.set.date.toLocal()),
         ),
     ],
@@ -237,14 +237,3 @@ String _signed(double v, String Function(double) format) {
 /// One decimal, without a trailing ".0".
 String _decimal(double v) =>
     v.toStringAsFixed(1).replaceFirst(RegExp(r'\.0$'), '');
-
-String _record(NewPr pr, String Function(double) kg, String unit) {
-  final s = pr.set;
-  return switch (pr.kind) {
-    PrKind.heaviestLoad => 'Heaviest load · ${kg(s.weightKg!)} $unit',
-    PrKind.repsAtLoad => '${s.reps} reps at ${kg(s.weightKg!)} $unit',
-    PrKind.setVolume => 'Best set volume · ${kg(s.volumeKg!)} $unit',
-    PrKind.oneRepMax => 'Estimated 1RM · ${kg(s.oneRepMax!.epleyKg)} $unit',
-    PrKind.mostReps => 'Most reps · ${s.reps}',
-  };
-}

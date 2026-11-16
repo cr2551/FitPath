@@ -3,36 +3,30 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/router/routes.dart';
-
 import '../application/progress_range_provider.dart';
 import 'nutrition/nutrition_progress_view.dart';
 import 'progress_view.dart';
 import 'weight/weight_progress_view.dart';
 import 'workouts/workout_progress_view.dart';
 
-/// The Progress tab. The range is shared by all three datasets
-/// (`progressRangeProvider`); each tab body reads its own data.
-class ProgressScreen extends ConsumerStatefulWidget {
+/// The Progress tab. The range (`progressRangeProvider`) is shared by all
+/// three datasets and the dataset is `progressTabProvider`; each tab body
+/// reads its own data.
+class ProgressScreen extends ConsumerWidget {
   const ProgressScreen({super.key});
 
   @override
-  ConsumerState<ProgressScreen> createState() => _ProgressScreenState();
-}
-
-class _ProgressScreenState extends ConsumerState<ProgressScreen> {
-  var _tab = ProgressTab.weight;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tab = ref.watch(progressTabProvider);
     return ProgressView(
-      tab: _tab,
+      tab: tab,
       range: ref.watch(progressRangeProvider),
-      body: switch (_tab) {
+      body: switch (tab) {
         ProgressTab.weight => const WeightProgressView(),
         ProgressTab.nutrition => const NutritionProgressView(),
         ProgressTab.workouts => const WorkoutProgressView(),
       },
-      onTabChanged: (t) => setState(() => _tab = t),
+      onTabChanged: ref.read(progressTabProvider.notifier).select,
       onRangeChanged: ref.read(progressRangeProvider.notifier).select,
       onWeeklyReport: () => context.push(Routes.weeklyReport()),
     );
