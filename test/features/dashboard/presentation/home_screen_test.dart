@@ -217,17 +217,40 @@ void main() {
     await _dispose(tester, db);
   });
 
-  testWidgets('Phase 2 cards show a placeholder until #117', (tester) async {
+  testWidgets('Phase 2 cards can be added, hidden and survive a restart', (
+    tester,
+  ) async {
     final db = await _db(tester, withPreset: false);
-    await tester.runAsync(
-      () =>
-          DashboardRepository(db.dashboardDao)
-              .addCard(DashboardCardType.streak),
-    );
+    final repo = DashboardRepository(db.dashboardDao);
+    await tester.runAsync(() async {
+      await repo.addCard(DashboardCardType.personalRecords);
+      await repo.addCard(DashboardCardType.streak);
+      await repo.addCard(DashboardCardType.weeklyReport);
+    });
     await _pump(tester, db);
 
+    expect(find.text('Personal records'), findsOneWidget);
+    expect(find.textContaining('No personal records yet'), findsOneWidget);
     expect(find.text('Streak'), findsOneWidget);
-    expect(find.text('Coming in #117'), findsOneWidget);
+    expect(find.textContaining('No workouts yet'), findsOneWidget);
+    expect(find.text("Last week's report"), findsOneWidget);
+    expect(find.text('Nothing logged last week.'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Edit dashboard'));
+    await _settle(tester);
+    await tester.tap(find.byTooltip('Hide Streak'));
+    await _settle(tester);
+
+    // A fresh widget tree reads the same layout back.
+    await tester.pumpWidget(const SizedBox());
+    await _pump(tester, db);
+    expect(find.text('Personal records'), findsOneWidget);
+    expect(find.text('Streak'), findsNothing);
+    expect(find.text("Last week's report"), findsOneWidget);
+    expect(
+      _top(tester, 'Personal records'),
+      lessThan(_top(tester, "Last week's report")),
+    );
 
     await _dispose(tester, db);
   });
