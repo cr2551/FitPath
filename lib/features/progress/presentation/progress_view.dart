@@ -18,6 +18,7 @@ class ProgressView extends StatelessWidget {
     required this.body,
     required this.onTabChanged,
     required this.onRangeChanged,
+    this.onWeeklyReport,
   });
 
   final ProgressTab tab;
@@ -25,6 +26,7 @@ class ProgressView extends StatelessWidget {
   final Widget body;
   final ValueChanged<ProgressTab> onTabChanged;
   final ValueChanged<RangePreset> onRangeChanged;
+  final VoidCallback? onWeeklyReport;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,16 @@ class ProgressView extends StatelessWidget {
             AppSpacing.xl,
           ),
           children: [
-            const ScreenHeader(title: 'Progress'),
+            ScreenHeader(
+              title: 'Progress',
+              trailing: onWeeklyReport == null
+                  ? null
+                  : HeaderIconButton(
+                      icon: Icons.summarize_outlined,
+                      tooltip: 'Weekly report',
+                      onPressed: onWeeklyReport,
+                    ),
+            ),
             SegmentedButton<ProgressTab>(
               showSelectedIcon: false,
               segments: const [

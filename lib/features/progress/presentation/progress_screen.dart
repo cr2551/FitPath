@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../core/router/routes.dart';
 
 import '../application/progress_range_provider.dart';
 import 'nutrition/nutrition_progress_view.dart';
@@ -31,6 +34,7 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
       },
       onTabChanged: (t) => setState(() => _tab = t),
       onRangeChanged: ref.read(progressRangeProvider.notifier).select,
+      onWeeklyReport: () => context.push(Routes.weeklyReport()),
     );
   }
 }
