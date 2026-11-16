@@ -48,6 +48,7 @@ class SettingsCallbacks {
     required this.onEditDetails,
     required this.onGoals,
     required this.onTargets,
+    required this.onWhatIf,
     required this.onUnitsChanged,
     required this.onThemeChanged,
     required this.onDashboard,
@@ -60,6 +61,7 @@ class SettingsCallbacks {
   final VoidCallback onEditDetails;
   final VoidCallback onGoals;
   final VoidCallback onTargets;
+  final VoidCallback onWhatIf;
   final ValueChanged<UnitSystem> onUnitsChanged;
   final ValueChanged<ThemeChoice> onThemeChanged;
   final VoidCallback onDashboard;
@@ -180,6 +182,11 @@ class SettingsView extends StatelessWidget {
             title: 'Nutrition targets',
             subtitle: d.targetsSummary,
             onTap: cb.onTargets,
+          ),
+          ListRow(
+            title: 'What if',
+            subtitle: 'Project your weight for a daily intake',
+            onTap: cb.onWhatIf,
           ),
         ],
       ),

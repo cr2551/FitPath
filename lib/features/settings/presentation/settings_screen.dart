@@ -95,6 +95,7 @@ class SettingsScreen extends ConsumerWidget {
         onEditDetails: () => context.push(Routes.profileDetails),
         onGoals: () => context.push(Routes.goals),
         onTargets: () => context.push(Routes.targets),
+        onWhatIf: () => context.push(Routes.whatIf),
         onUnitsChanged: repo.setUnitSystem,
         onThemeChanged: (t) => repo.setThemeMode(t.name),
         onDashboard: () => context.go(Routes.home),
