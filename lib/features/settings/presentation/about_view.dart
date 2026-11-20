@@ -120,6 +120,16 @@ class AboutView extends StatelessWidget {
                     'The built-in food list is based on USDA FoodData '
                     'Central (fdc.nal.usda.gov), public domain, rounded.',
                   ),
+                  Text(
+                    'Bundled recipes and substitutions',
+                    style: t.bodyStrong,
+                  ),
+                  para(
+                    'Recipe data: UniTools — theunitools.com, and '
+                    'substitution data: Wikibooks Cookbook contributors. '
+                    'Both are CC BY-SA 4.0 adaptations. Recipe nutrition '
+                    'is an estimate.',
+                  ),
                   Text('Fonts', style: t.bodyStrong),
                   Text(
                     'Barlow and Barlow Condensed, by The Barlow Project '

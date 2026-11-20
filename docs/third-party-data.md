@@ -1,5 +1,13 @@
 # Third-party data
 
+## UniTools World Recipes
+
+FitPath bundles an English-only subset of [UniTools World Recipes](https://theunitools.com/en/data), version 2.0.0. Recipe data is attributed to **UniTools — theunitools.com** and licensed [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). The bundled data file is an adaptation under the same licence: it maps compatible ingredients to FitPath's starter-food catalog, omits unsupported ingredients and units, and does not include the source photos. Source nutrition is computed from ingredients and is shown as an estimate, not medical or laboratory data.
+
+## Wikibooks Cookbook substitutions
+
+FitPath's bundled substitution table is adapted from [Wikibooks Cookbook: Substitutions](https://en.wikibooks.org/wiki/Cookbook:Substitutions), attributed to **Wikibooks Cookbook contributors** and licensed [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). The adapted table is released under the same licence. It contains only substitutions that map to the starter-food catalog, with ratios normalized for FitPath and explanatory notes retained.
+
 ## Open Food Facts
 
 FitPath looks up packaged foods in [Open Food Facts](https://world.openfoodfacts.org) (OFF), a free, community-built food database.

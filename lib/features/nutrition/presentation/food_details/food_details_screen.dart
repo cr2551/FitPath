@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/database/app_database.dart';
+import '../../../../core/database/database_provider.dart';
 import '../../../../core/router/routes.dart';
 import '../../../../core/utils/formatters.dart';
 import '../../../../core/utils/units.dart';
@@ -24,6 +25,10 @@ final _foodProvider = FutureProvider.autoDispose.family<FoodItem, int>((
   return food;
   // A missing food will not appear by retrying.
 }, retry: (_, _) => null);
+
+final _recipeProvider = FutureProvider.autoDispose.family<Recipe?, int>(
+  (ref, id) => ref.watch(appDatabaseProvider).recipeDao.recipeByFoodId(id),
+);
 
 /// A food's label values and a live preview for an amount. Works offline:
 /// it only reads the local catalog (online results are cached on select).
@@ -62,11 +67,19 @@ class _FoodDetailsScreenState extends ConsumerState<FoodDetailsScreen> {
     List<QuantityUnit> units = const [];
     if (food.hasValue) {
       final f = food.requireValue;
+      final recipe = f.source == FoodSource.recipe
+          ? ref.watch(_recipeProvider(widget.foodId)).value
+          : null;
       final nutrition = FoodRepository.foodNutrition(f);
       units = NutritionMath.allowedUnits(nutrition);
       _unit ??= units.first;
       _quantityText ??= _number(_defaultAmount(nutrition, _unit!));
-      body = _data(f, nutrition, units);
+      body = _data(
+        f,
+        nutrition,
+        units,
+        isBundledRecipe: recipe?.bundledId != null,
+      );
     } else if (food.hasError) {
       body = const FoodDetailsError("This food doesn't exist any more.");
     } else {
@@ -103,8 +116,9 @@ class _FoodDetailsScreenState extends ConsumerState<FoodDetailsScreen> {
   FoodDetailsData _data(
     FoodItem f,
     FoodNutrition nutrition,
-    List<QuantityUnit> units,
-  ) {
+    List<QuantityUnit> units, {
+    required bool isBundledRecipe,
+  }) {
     final unit = _unit!;
     final q = Units.parseDecimal(_quantityText ?? '');
     final String? error = q == null
@@ -157,10 +171,15 @@ class _FoodDetailsScreenState extends ConsumerState<FoodDetailsScreen> {
         FoodSource.recipe => 'EDIT RECIPE',
         _ => null,
       },
-      attribution: f.source == FoodSource.openFoodFacts
-          ? 'Data from Open Food Facts (openfoodfacts.org), available under '
-                'the Open Database License. Values may be incomplete.'
-          : null,
+      attribution: switch (f.source) {
+        FoodSource.openFoodFacts =>
+          'Data from Open Food Facts (openfoodfacts.org), available under '
+              'the Open Database License. Values may be incomplete.',
+        FoodSource.recipe when isBundledRecipe =>
+          'Recipe: UniTools — theunitools.com, CC BY-SA '
+              '4.0. Nutrition is an estimate.',
+        _ => null,
+      },
     );
   }
 

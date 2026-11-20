@@ -10,6 +10,7 @@ import 'daos/recipe_dao.dart';
 import 'daos/workout_dao.dart';
 import 'seed/exercise_seed.dart';
 import 'seed/food_seed.dart';
+import 'seed/recipe_seed.dart';
 import 'tables/app_tables.dart';
 import 'tables/food_tables.dart';
 import 'tables/profile_tables.dart';
@@ -67,6 +68,7 @@ class AppDatabase extends _$AppDatabase {
       if (seedCatalogs) {
         await seedFoods(this);
         await seedExercises(this);
+        await seedRecipes(this);
       }
     },
     // Steps between committed schemas (`drift_schemas/`); regenerate
