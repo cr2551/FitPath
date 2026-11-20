@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/database/seed/exercise_seed.dart';
 import '../../../core/database/seed/food_seed.dart';
+import '../../../core/database/seed/recipe_seed.dart';
 import '../../../shared/models/enums.dart';
 
 /// Wipes everything the user created and returns the app to a fresh-install
@@ -54,6 +55,7 @@ class ResetService {
     if (db.seedCatalogs) {
       await seedFoods(db);
       await seedExercises(db);
+      await seedRecipes(db);
     }
   }
 }

@@ -1,0 +1,4929 @@
+{
+  "version": 1,
+  "dataset": {
+    "name": "UniTools World Recipes",
+    "version": "2.0.0",
+    "sourceUrl": "https://github.com/farcrak/unitools-recipes/blob/main/unitools-recipes-v1.json",
+    "landingPage": "https://theunitools.com/en/data",
+    "license": "CC BY-SA 4.0",
+    "attribution": "UniTools — theunitools.com",
+    "retrievedAt": "2026-11-20",
+    "changes": "English-only subset; ingredient ids mapped to FitPath starter foods; unsupported ingredients and units omitted; no photos."
+  },
+  "recipes": [
+    {
+      "id": "aji-de-gallina",
+      "name": "Ají de gallina",
+      "category": "main",
+      "diets": [],
+      "servings": 5,
+      "kcal": 680,
+      "proteinG": 48,
+      "carbsG": 56,
+      "fatG": 30,
+      "ingredients": [
+        {
+          "foodName": "Chicken breast, skinless, roasted",
+          "quantity": 800.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Whole milk",
+          "quantity": 400.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Walnuts",
+          "quantity": 80.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Parmesan, grated",
+          "quantity": 60.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 5.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 600.0,
+          "unit": "g",
+          "note": "boiled"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 4.0,
+          "unit": "serving",
+          "note": "hard-boiled"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 350.0,
+          "unit": "g",
+          "note": "to serve"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 54.6,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "arroz-con-coco",
+      "name": "Coconut rice",
+      "category": "side",
+      "diets": [
+        "vegetarian",
+        "vegan",
+        "gluten-free"
+      ],
+      "servings": 6,
+      "kcal": 520,
+      "proteinG": 8,
+      "carbsG": 68,
+      "fatG": 24,
+      "ingredients": [
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 500.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Oat milk",
+          "quantity": 800.0,
+          "unit": "ml",
+          "note": "full-fat"
+        },
+        {
+          "foodName": "Raisins",
+          "quantity": 80.0,
+          "unit": "g",
+          "note": "optional"
+        }
+      ],
+      "omittedIngredientCount": 3
+    },
+    {
+      "id": "asado-negro",
+      "name": "Asado negro",
+      "category": "main",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 8,
+      "kcal": 720,
+      "proteinG": 54,
+      "carbsG": 52,
+      "fatG": 30,
+      "ingredients": [
+        {
+          "foodName": "Ground beef 85% lean, cooked",
+          "quantity": 2000.0,
+          "unit": "g",
+          "note": "in one piece"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Carrot, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 8.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 500.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 72.8,
+          "unit": "g"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 500.0,
+          "unit": "g",
+          "note": "to serve"
+        }
+      ],
+      "omittedIngredientCount": 7
+    },
+    {
+      "id": "attieke-poisson",
+      "name": "Attiéké with fish",
+      "category": "main",
+      "diets": [
+        "pescatarian",
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 560,
+      "proteinG": 40,
+      "carbsG": 58,
+      "fatG": 20,
+      "ingredients": [
+        {
+          "foodName": "Tilapia, cooked",
+          "quantity": 4.0,
+          "unit": "serving",
+          "note": "whole, gutted"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 5.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 30.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 72.8,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "avgolemono",
+      "name": "Avgolemono",
+      "category": "soup",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 5,
+      "kcal": 420,
+      "proteinG": 38,
+      "carbsG": 28,
+      "fatG": 16,
+      "ingredients": [
+        {
+          "foodName": "Chicken breast, skinless, roasted",
+          "quantity": 1300.0,
+          "unit": "g",
+          "note": "whole"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 120.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Carrot, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Celery, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 27.3,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 3
+    },
+    {
+      "id": "bacalhau-a-bras",
+      "name": "Bacalhau à brás",
+      "category": "main",
+      "diets": [
+        "pescatarian"
+      ],
+      "servings": 4,
+      "kcal": 610,
+      "proteinG": 42,
+      "carbsG": 34,
+      "fatG": 34,
+      "ingredients": [
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 700.0,
+          "unit": "g",
+          "note": "in matchsticks"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 8.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving",
+          "note": "thinly sliced"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 72.8,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "baleadas",
+      "name": "Baleadas",
+      "category": "breakfast",
+      "diets": [
+        "vegetarian"
+      ],
+      "servings": 4,
+      "kcal": 520,
+      "proteinG": 18,
+      "carbsG": 58,
+      "fatG": 24,
+      "ingredients": [
+        {
+          "foodName": "Black beans, boiled",
+          "quantity": 400.0,
+          "unit": "g",
+          "note": "cooked"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 150.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 4.0,
+          "unit": "serving",
+          "note": "optional"
+        },
+        {
+          "foodName": "Avocado, raw",
+          "quantity": 1.0,
+          "unit": "serving",
+          "note": "optional"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 36.4,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "banitsa",
+      "name": "Banitsa",
+      "category": "breakfast",
+      "diets": [
+        "vegetarian"
+      ],
+      "servings": 8,
+      "kcal": 520,
+      "proteinG": 20,
+      "carbsG": 38,
+      "fatG": 32,
+      "ingredients": [
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 500.0,
+          "unit": "g",
+          "note": "crumbled"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 5.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Yogurt, plain, whole milk",
+          "quantity": 250.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 120.0,
+          "unit": "g",
+          "note": "melted"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 54.6,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 2
+    },
+    {
+      "id": "banku-with-tilapia",
+      "name": "Banku with tilapia",
+      "category": "main",
+      "diets": [
+        "pescatarian"
+      ],
+      "servings": 4,
+      "kcal": 640,
+      "proteinG": 38,
+      "carbsG": 78,
+      "fatG": 20,
+      "ingredients": [
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 30.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 72.8,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "baursaki",
+      "name": "Baursak",
+      "category": "bread",
+      "diets": [
+        "vegetarian"
+      ],
+      "servings": 8,
+      "kcal": 330,
+      "proteinG": 8,
+      "carbsG": 44,
+      "fatG": 14,
+      "ingredients": [
+        {
+          "foodName": "Whole milk",
+          "quantity": 300.0,
+          "unit": "ml",
+          "note": "warm"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 50.0,
+          "unit": "g",
+          "note": "melted"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 910.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "bibimbap",
+      "name": "Bibimbap",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 640,
+      "proteinG": 34,
+      "carbsG": 76,
+      "fatG": 22,
+      "ingredients": [
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 600.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Ground beef 85% lean, cooked",
+          "quantity": 250.0,
+          "unit": "g",
+          "note": "in thin strips"
+        },
+        {
+          "foodName": "Spinach, raw",
+          "quantity": 200.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Carrot, raw",
+          "quantity": 1.0,
+          "unit": "serving",
+          "note": "julienned"
+        },
+        {
+          "foodName": "Mushrooms, white, raw",
+          "quantity": 150.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "boorsok",
+      "name": "Boorsok",
+      "category": "bread",
+      "diets": [
+        "vegetarian"
+      ],
+      "servings": 10,
+      "kcal": 320,
+      "proteinG": 7,
+      "carbsG": 42,
+      "fatG": 14,
+      "ingredients": [
+        {
+          "foodName": "Whole milk",
+          "quantity": 350.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Sugar, white",
+          "quantity": 40.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 60.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 819.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 3
+    },
+    {
+      "id": "borscht",
+      "name": "Borscht",
+      "category": "soup",
+      "diets": [],
+      "servings": 6,
+      "kcal": 320,
+      "proteinG": 18,
+      "carbsG": 30,
+      "fatG": 14,
+      "ingredients": [
+        {
+          "foodName": "Ground beef 85% lean, cooked",
+          "quantity": 700.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Cabbage, raw",
+          "quantity": 300.0,
+          "unit": "g",
+          "note": "shredded"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Carrot, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        }
+      ],
+      "omittedIngredientCount": 6
+    },
+    {
+      "id": "bosanski-lonac",
+      "name": "Bosanski lonac",
+      "category": "main",
+      "diets": [],
+      "servings": 6,
+      "kcal": 660,
+      "proteinG": 44,
+      "carbsG": 42,
+      "fatG": 32,
+      "ingredients": [
+        {
+          "foodName": "Ground beef 85% lean, cooked",
+          "quantity": 600.0,
+          "unit": "g",
+          "note": "in large pieces"
+        },
+        {
+          "foodName": "Cabbage, raw",
+          "quantity": 500.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 600.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Carrot, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 1.0,
+          "unit": "serving",
+          "note": "whole head"
+        },
+        {
+          "foodName": "Bacon, pan-fried",
+          "quantity": 150.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 6
+    },
+    {
+      "id": "bryndzove-halusky",
+      "name": "Bryndzové halušky",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 640,
+      "proteinG": 24,
+      "carbsG": 58,
+      "fatG": 34,
+      "ingredients": [
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 1000.0,
+          "unit": "g",
+          "note": "raw, finely grated"
+        },
+        {
+          "foodName": "Bacon, pan-fried",
+          "quantity": 200.0,
+          "unit": "g",
+          "note": "diced"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 1.0,
+          "unit": "serving"
+        }
+      ],
+      "omittedIngredientCount": 3
+    },
+    {
+      "id": "cachapas",
+      "name": "Cachapas",
+      "category": "breakfast",
+      "diets": [
+        "vegetarian",
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 430,
+      "proteinG": 16,
+      "carbsG": 48,
+      "fatG": 20,
+      "ingredients": [
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 300.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Whole milk",
+          "quantity": 80.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 50.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 3
+    },
+    {
+      "id": "caldo-verde",
+      "name": "Caldo verde",
+      "category": "soup",
+      "diets": [],
+      "servings": 5,
+      "kcal": 420,
+      "proteinG": 12,
+      "carbsG": 42,
+      "fatG": 24,
+      "ingredients": [
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 800.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Kale, raw",
+          "quantity": 300.0,
+          "unit": "g",
+          "note": "shredded to threads"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 91.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "White bread",
+          "quantity": 300.0,
+          "unit": "g",
+          "note": "to serve"
+        }
+      ],
+      "omittedIngredientCount": 2
+    },
+    {
+      "id": "casado",
+      "name": "Casado",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 740,
+      "proteinG": 48,
+      "carbsG": 92,
+      "fatG": 20,
+      "ingredients": [
+        {
+          "foodName": "Chicken breast, skinless, roasted",
+          "quantity": 600.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 350.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Black beans, boiled",
+          "quantity": 400.0,
+          "unit": "g",
+          "note": "cooked"
+        },
+        {
+          "foodName": "Carrot, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Cabbage, raw",
+          "quantity": 200.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 54.6,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 6
+    },
+    {
+      "id": "chakalaka",
+      "name": "Chakalaka",
+      "category": "side",
+      "diets": [
+        "vegetarian",
+        "vegan",
+        "gluten-free"
+      ],
+      "servings": 6,
+      "kcal": 220,
+      "proteinG": 8,
+      "carbsG": 26,
+      "fatG": 10,
+      "ingredients": [
+        {
+          "foodName": "Carrot, raw",
+          "quantity": 4.0,
+          "unit": "serving",
+          "note": "grated"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Black beans, boiled",
+          "quantity": 400.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 400.0,
+          "unit": "g",
+          "note": "chopped"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 20.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 45.5,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "chiles-en-nogada",
+      "name": "Chiles rellenos",
+      "category": "main",
+      "diets": [
+        "vegetarian"
+      ],
+      "servings": 4,
+      "kcal": 520,
+      "proteinG": 24,
+      "carbsG": 24,
+      "fatG": 36,
+      "ingredients": [
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 350.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 600.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 364.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "chivito",
+      "name": "Chivito",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 890,
+      "proteinG": 52,
+      "carbsG": 46,
+      "fatG": 54,
+      "ingredients": [
+        {
+          "foodName": "Ground beef 85% lean, cooked",
+          "quantity": 500.0,
+          "unit": "g",
+          "note": "in thin slices"
+        },
+        {
+          "foodName": "Bacon, pan-fried",
+          "quantity": 150.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 200.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 27.3,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 6
+    },
+    {
+      "id": "chorreadas",
+      "name": "Chorreadas",
+      "category": "breakfast",
+      "diets": [
+        "vegetarian",
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 380,
+      "proteinG": 12,
+      "carbsG": 44,
+      "fatG": 18,
+      "ingredients": [
+        {
+          "foodName": "Sugar, white",
+          "quantity": 40.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 40.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 150.0,
+          "unit": "g",
+          "note": "to serve"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "clam-chowder",
+      "name": "New England clam chowder",
+      "category": "soup",
+      "diets": [
+        "pescatarian"
+      ],
+      "servings": 4,
+      "kcal": 520,
+      "proteinG": 28,
+      "carbsG": 34,
+      "fatG": 30,
+      "ingredients": [
+        {
+          "foodName": "Bacon, pan-fried",
+          "quantity": 120.0,
+          "unit": "g",
+          "note": "diced"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 500.0,
+          "unit": "g",
+          "note": "in 1.5 cm dice"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Celery, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Whole milk",
+          "quantity": 300.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 40.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 6
+    },
+    {
+      "id": "colcannon",
+      "name": "Colcannon",
+      "category": "side",
+      "diets": [
+        "vegetarian",
+        "gluten-free"
+      ],
+      "servings": 6,
+      "kcal": 420,
+      "proteinG": 8,
+      "carbsG": 42,
+      "fatG": 26,
+      "ingredients": [
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 1200.0,
+          "unit": "g",
+          "note": "floury variety"
+        },
+        {
+          "foodName": "Cabbage, raw",
+          "quantity": 500.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Whole milk",
+          "quantity": 250.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 150.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 3
+    },
+    {
+      "id": "coq-au-vin",
+      "name": "Coq au vin",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 680,
+      "proteinG": 48,
+      "carbsG": 16,
+      "fatG": 38,
+      "ingredients": [
+        {
+          "foodName": "Chicken breast, skinless, roasted",
+          "quantity": 1500.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Bacon, pan-fried",
+          "quantity": 150.0,
+          "unit": "g",
+          "note": "in lardons"
+        },
+        {
+          "foodName": "Mushrooms, white, raw",
+          "quantity": 300.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 250.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Carrot, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 40.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "dal-bhat",
+      "name": "Dal bhat",
+      "category": "main",
+      "diets": [
+        "vegetarian",
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 620,
+      "proteinG": 22,
+      "carbsG": 98,
+      "fatG": 16,
+      "ingredients": [
+        {
+          "foodName": "Lentils, boiled",
+          "quantity": 250.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 400.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 500.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Spinach, raw",
+          "quantity": 200.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 6
+    },
+    {
+      "id": "doro-wat",
+      "name": "Doro wat",
+      "category": "main",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 6,
+      "kcal": 620,
+      "proteinG": 46,
+      "carbsG": 18,
+      "fatG": 40,
+      "ingredients": [
+        {
+          "foodName": "Chicken breast, skinless, roasted",
+          "quantity": 1400.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1000.0,
+          "unit": "g",
+          "note": "very finely chopped"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 6.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 40.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 6.0,
+          "unit": "serving",
+          "note": "hard-boiled"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "draniki",
+      "name": "Draniki",
+      "category": "main",
+      "diets": [
+        "vegetarian",
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 390,
+      "proteinG": 8,
+      "carbsG": 42,
+      "fatG": 22,
+      "ingredients": [
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 1000.0,
+          "unit": "g",
+          "note": "floury variety"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 91.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 3
+    },
+    {
+      "id": "ema-datshi",
+      "name": "Ema datshi",
+      "category": "main",
+      "diets": [
+        "vegetarian",
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 380,
+      "proteinG": 16,
+      "carbsG": 26,
+      "fatG": 24,
+      "ingredients": [
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 300.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 5.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 30.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 350.0,
+          "unit": "g",
+          "note": "to serve"
+        }
+      ],
+      "omittedIngredientCount": 2
+    },
+    {
+      "id": "encebollado",
+      "name": "Encebollado",
+      "category": "soup",
+      "diets": [
+        "pescatarian",
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 420,
+      "proteinG": 40,
+      "carbsG": 42,
+      "fatG": 11,
+      "ingredients": [
+        {
+          "foodName": "Tuna, canned in water, drained",
+          "quantity": 700.0,
+          "unit": "g",
+          "note": "fresh, in one piece"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving",
+          "note": "thinly sliced"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 36.4,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "fanesca",
+      "name": "Fanesca",
+      "category": "soup",
+      "diets": [
+        "pescatarian"
+      ],
+      "servings": 10,
+      "kcal": 680,
+      "proteinG": 42,
+      "carbsG": 68,
+      "fatG": 28,
+      "ingredients": [
+        {
+          "foodName": "Whole milk",
+          "quantity": 1500.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Zucchini, raw",
+          "quantity": 400.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Black beans, boiled",
+          "quantity": 150.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Lentils, boiled",
+          "quantity": 150.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Green peas, boiled",
+          "quantity": 150.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 100.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Peanuts, dry-roasted",
+          "quantity": 100.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 200.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 5.0,
+          "unit": "serving",
+          "note": "boiled, to serve"
+        }
+      ],
+      "omittedIngredientCount": 8
+    },
+    {
+      "id": "frikadeller",
+      "name": "Frikadeller",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 620,
+      "proteinG": 36,
+      "carbsG": 42,
+      "fatG": 34,
+      "ingredients": [
+        {
+          "foodName": "Pork tenderloin, roasted",
+          "quantity": 400.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving",
+          "note": "grated"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Whole milk",
+          "quantity": 150.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 60.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 800.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "galayet-bandora",
+      "name": "Galayet bandora",
+      "category": "main",
+      "diets": [
+        "vegetarian",
+        "vegan"
+      ],
+      "servings": 4,
+      "kcal": 380,
+      "proteinG": 8,
+      "carbsG": 32,
+      "fatG": 26,
+      "ingredients": [
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 1200.0,
+          "unit": "g",
+          "note": "ripe"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 109.2,
+          "unit": "g"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 6.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "gallo-pinto",
+      "name": "Gallo pinto",
+      "category": "breakfast",
+      "diets": [
+        "vegetarian",
+        "vegan",
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 480,
+      "proteinG": 18,
+      "carbsG": 76,
+      "fatG": 12,
+      "ingredients": [
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 600.0,
+          "unit": "g",
+          "note": "day-old, cold"
+        },
+        {
+          "foodName": "Black beans, boiled",
+          "quantity": 400.0,
+          "unit": "g",
+          "note": "cooked, with liquid"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 36.4,
+          "unit": "g"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 4.0,
+          "unit": "serving",
+          "note": "to serve"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "gallo-pinto-nicaraguense",
+      "name": "Nicaraguan gallo pinto",
+      "category": "breakfast",
+      "diets": [
+        "vegetarian",
+        "vegan",
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 480,
+      "proteinG": 18,
+      "carbsG": 72,
+      "fatG": 14,
+      "ingredients": [
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 600.0,
+          "unit": "g",
+          "note": "day-old, cold"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 45.5,
+          "unit": "g"
+        },
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 150.0,
+          "unit": "g",
+          "note": "to serve"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "gazpacho",
+      "name": "Gazpacho",
+      "category": "soup",
+      "diets": [
+        "vegetarian",
+        "vegan"
+      ],
+      "servings": 4,
+      "kcal": 220,
+      "proteinG": 4,
+      "carbsG": 17,
+      "fatG": 16,
+      "ingredients": [
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 1000.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Cucumber, raw",
+          "quantity": 1.0,
+          "unit": "serving",
+          "note": "peeled"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "White bread",
+          "quantity": 80.0,
+          "unit": "g",
+          "note": "crumb only, soaked"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 72.8,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 3
+    },
+    {
+      "id": "goulash",
+      "name": "Goulash",
+      "category": "soup",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 6,
+      "kcal": 520,
+      "proteinG": 42,
+      "carbsG": 32,
+      "fatG": 24,
+      "ingredients": [
+        {
+          "foodName": "Ground beef 85% lean, cooked",
+          "quantity": 1000.0,
+          "unit": "g",
+          "note": "in 3 cm cubes"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1000.0,
+          "unit": "g",
+          "note": "finely chopped"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 400.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "hangi-style-chicken",
+      "name": "Hāngī-style chicken",
+      "category": "main",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 6,
+      "kcal": 620,
+      "proteinG": 44,
+      "carbsG": 58,
+      "fatG": 24,
+      "ingredients": [
+        {
+          "foodName": "Chicken breast, skinless, roasted",
+          "quantity": 1800.0,
+          "unit": "g",
+          "note": "in pieces"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 700.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Cabbage, raw",
+          "quantity": 400.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 80.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "iraqi-biryani",
+      "name": "Iraqi biryani",
+      "category": "main",
+      "diets": [],
+      "servings": 6,
+      "kcal": 780,
+      "proteinG": 42,
+      "carbsG": 86,
+      "fatG": 32,
+      "ingredients": [
+        {
+          "foodName": "Chicken breast, skinless, roasted",
+          "quantity": 1200.0,
+          "unit": "g",
+          "note": "in pieces"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 600.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Green peas, boiled",
+          "quantity": 200.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Carrot, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Raisins",
+          "quantity": 80.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        }
+      ],
+      "omittedIngredientCount": 7
+    },
+    {
+      "id": "jasha-maroo",
+      "name": "Jasha maroo",
+      "category": "main",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 520,
+      "proteinG": 42,
+      "carbsG": 40,
+      "fatG": 22,
+      "ingredients": [
+        {
+          "foodName": "Chicken breast, skinless, roasted",
+          "quantity": 1000.0,
+          "unit": "g",
+          "note": "chopped through the bone"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 60.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 8.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 45.5,
+          "unit": "g"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 350.0,
+          "unit": "g",
+          "note": "to serve"
+        }
+      ],
+      "omittedIngredientCount": 3
+    },
+    {
+      "id": "joojeh-kabab",
+      "name": "Joojeh kabab",
+      "category": "main",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 5,
+      "kcal": 680,
+      "proteinG": 48,
+      "carbsG": 52,
+      "fatG": 30,
+      "ingredients": [
+        {
+          "foodName": "Chicken breast, skinless, roasted",
+          "quantity": 1200.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 80.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 54.6,
+          "unit": "g"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 6.0,
+          "unit": "serving",
+          "note": "to serve"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 500.0,
+          "unit": "g",
+          "note": "to serve"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "jota",
+      "name": "Jota",
+      "category": "soup",
+      "diets": [],
+      "servings": 6,
+      "kcal": 490,
+      "proteinG": 26,
+      "carbsG": 46,
+      "fatG": 22,
+      "ingredients": [
+        {
+          "foodName": "Black beans, boiled",
+          "quantity": 300.0,
+          "unit": "g",
+          "note": "soaked overnight"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 500.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 36.4,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "kacamak",
+      "name": "Kačamak",
+      "category": "main",
+      "diets": [
+        "vegetarian",
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 720,
+      "proteinG": 24,
+      "carbsG": 58,
+      "fatG": 44,
+      "ingredients": [
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 600.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 300.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 100.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Whole milk",
+          "quantity": 200.0,
+          "unit": "ml"
+        }
+      ],
+      "omittedIngredientCount": 3
+    },
+    {
+      "id": "kaesespaetzle",
+      "name": "Käsespätzle",
+      "category": "main",
+      "diets": [
+        "vegetarian"
+      ],
+      "servings": 4,
+      "kcal": 720,
+      "proteinG": 30,
+      "carbsG": 78,
+      "fatG": 32,
+      "ingredients": [
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 250.0,
+          "unit": "g",
+          "note": "grated"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 3.0,
+          "unit": "serving",
+          "note": "in thin rings"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 60.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "karjalanpiirakka",
+      "name": "Karelian pies",
+      "category": "bread",
+      "diets": [
+        "vegetarian"
+      ],
+      "servings": 8,
+      "kcal": 240,
+      "proteinG": 6,
+      "carbsG": 32,
+      "fatG": 10,
+      "ingredients": [
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 150.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Whole milk",
+          "quantity": 700.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 100.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 3.0,
+          "unit": "serving",
+          "note": "hard-boiled"
+        }
+      ],
+      "omittedIngredientCount": 3
+    },
+    {
+      "id": "katsudon",
+      "name": "Katsudon",
+      "category": "main",
+      "diets": [],
+      "servings": 2,
+      "kcal": 780,
+      "proteinG": 42,
+      "carbsG": 78,
+      "fatG": 32,
+      "ingredients": [
+        {
+          "foodName": "Pork tenderloin, roasted",
+          "quantity": 2.0,
+          "unit": "serving",
+          "note": "150 g each, beaten flat"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving",
+          "note": "thinly sliced"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 400.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 455.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 6
+    },
+    {
+      "id": "kavarma",
+      "name": "Kavarma",
+      "category": "main",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 620,
+      "proteinG": 46,
+      "carbsG": 16,
+      "fatG": 40,
+      "ingredients": [
+        {
+          "foodName": "Pork tenderloin, roasted",
+          "quantity": 700.0,
+          "unit": "g",
+          "note": "diced"
+        },
+        {
+          "foodName": "Mushrooms, white, raw",
+          "quantity": 300.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 150.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 54.6,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 6
+    },
+    {
+      "id": "kolduny",
+      "name": "Kalduny",
+      "category": "main",
+      "diets": [],
+      "servings": 5,
+      "kcal": 620,
+      "proteinG": 26,
+      "carbsG": 44,
+      "fatG": 38,
+      "ingredients": [
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 1500.0,
+          "unit": "g",
+          "note": "floury variety"
+        },
+        {
+          "foodName": "Pork tenderloin, roasted",
+          "quantity": 400.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Mushrooms, white, raw",
+          "quantity": 30.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 91.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "koshari",
+      "name": "Koshari",
+      "category": "main",
+      "diets": [
+        "vegetarian",
+        "vegan"
+      ],
+      "servings": 6,
+      "kcal": 640,
+      "proteinG": 22,
+      "carbsG": 100,
+      "fatG": 18,
+      "ingredients": [
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 300.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Lentils, boiled",
+          "quantity": 200.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Chickpeas, boiled",
+          "quantity": 200.0,
+          "unit": "g",
+          "note": "cooked"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 4.0,
+          "unit": "serving",
+          "note": "in thin rings"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 800.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 6.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 182.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "kugelis",
+      "name": "Kugelis",
+      "category": "main",
+      "diets": [],
+      "servings": 8,
+      "kcal": 480,
+      "proteinG": 14,
+      "carbsG": 48,
+      "fatG": 26,
+      "ingredients": [
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 2000.0,
+          "unit": "g",
+          "note": "floury variety"
+        },
+        {
+          "foodName": "Bacon, pan-fried",
+          "quantity": 300.0,
+          "unit": "g",
+          "note": "diced"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Whole milk",
+          "quantity": 200.0,
+          "unit": "ml",
+          "note": "hot"
+        }
+      ],
+      "omittedIngredientCount": 3
+    },
+    {
+      "id": "langos",
+      "name": "Lángos",
+      "category": "snack",
+      "diets": [
+        "vegetarian"
+      ],
+      "servings": 4,
+      "kcal": 640,
+      "proteinG": 18,
+      "carbsG": 68,
+      "fatG": 32,
+      "ingredients": [
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 150.0,
+          "unit": "g",
+          "note": "boiled and mashed"
+        },
+        {
+          "foodName": "Whole milk",
+          "quantity": 200.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 150.0,
+          "unit": "g",
+          "note": "grated"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 637.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "llapingachos",
+      "name": "Llapingachos",
+      "category": "side",
+      "diets": [
+        "vegetarian",
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 520,
+      "proteinG": 20,
+      "carbsG": 50,
+      "fatG": 27,
+      "ingredients": [
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 1000.0,
+          "unit": "g",
+          "note": "floury variety"
+        },
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 250.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Whole milk",
+          "quantity": 250.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 54.6,
+          "unit": "g"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 4.0,
+          "unit": "serving",
+          "note": "to serve"
+        }
+      ],
+      "omittedIngredientCount": 3
+    },
+    {
+      "id": "lok-lak",
+      "name": "Lok lak",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 520,
+      "proteinG": 42,
+      "carbsG": 18,
+      "fatG": 30,
+      "ingredients": [
+        {
+          "foodName": "Ground beef 85% lean, cooked",
+          "quantity": 600.0,
+          "unit": "g",
+          "note": "in three-centimetre cubes"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 5.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Cucumber, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 36.4,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 7
+    },
+    {
+      "id": "lomo-saltado",
+      "name": "Lomo saltado",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 720,
+      "proteinG": 42,
+      "carbsG": 76,
+      "fatG": 26,
+      "ingredients": [
+        {
+          "foodName": "Ground beef 85% lean, cooked",
+          "quantity": 600.0,
+          "unit": "g",
+          "note": "in strips"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving",
+          "note": "in thick wedges"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 3.0,
+          "unit": "serving",
+          "note": "in wedges"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 600.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 400.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "maltese-rabbit-stew",
+      "name": "Maltese rabbit stew",
+      "category": "main",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 620,
+      "proteinG": 48,
+      "carbsG": 44,
+      "fatG": 24,
+      "ingredients": [
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 10.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 600.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Green peas, boiled",
+          "quantity": 200.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Carrot, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 54.6,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "mandazi",
+      "name": "Mandazi",
+      "category": "snack",
+      "diets": [
+        "vegetarian"
+      ],
+      "servings": 8,
+      "kcal": 340,
+      "proteinG": 6,
+      "carbsG": 48,
+      "fatG": 14,
+      "ingredients": [
+        {
+          "foodName": "Oat milk",
+          "quantity": 250.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Sugar, white",
+          "quantity": 80.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 50.0,
+          "unit": "g",
+          "note": "melted"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 910.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "mangu",
+      "name": "Mangú",
+      "category": "breakfast",
+      "diets": [],
+      "servings": 4,
+      "kcal": 720,
+      "proteinG": 30,
+      "carbsG": 58,
+      "fatG": 42,
+      "ingredients": [
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 60.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 200.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 54.6,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "maqluba",
+      "name": "Maqluba",
+      "category": "main",
+      "diets": [],
+      "servings": 6,
+      "kcal": 690,
+      "proteinG": 34,
+      "carbsG": 72,
+      "fatG": 30,
+      "ingredients": [
+        {
+          "foodName": "Chicken breast, skinless, roasted",
+          "quantity": 1200.0,
+          "unit": "g",
+          "note": "in pieces"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 500.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Cauliflower, raw",
+          "quantity": 500.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 182.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 6
+    },
+    {
+      "id": "matapa",
+      "name": "Matapa",
+      "category": "main",
+      "diets": [
+        "pescatarian",
+        "gluten-free"
+      ],
+      "servings": 5,
+      "kcal": 580,
+      "proteinG": 32,
+      "carbsG": 40,
+      "fatG": 34,
+      "ingredients": [
+        {
+          "foodName": "Peanuts, dry-roasted",
+          "quantity": 200.0,
+          "unit": "g",
+          "note": "ground"
+        },
+        {
+          "foodName": "Oat milk",
+          "quantity": 400.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Shrimp, cooked",
+          "quantity": 400.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 6.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 350.0,
+          "unit": "g",
+          "note": "to serve"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 54.6,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 3
+    },
+    {
+      "id": "mchuzi-wa-samaki",
+      "name": "Mchuzi wa samaki",
+      "category": "main",
+      "diets": [
+        "pescatarian",
+        "gluten-free"
+      ],
+      "servings": 5,
+      "kcal": 520,
+      "proteinG": 44,
+      "carbsG": 18,
+      "fatG": 30,
+      "ingredients": [
+        {
+          "foodName": "Tilapia, cooked",
+          "quantity": 1000.0,
+          "unit": "g",
+          "note": "in steaks"
+        },
+        {
+          "foodName": "Oat milk",
+          "quantity": 600.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 5.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 30.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 54.6,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "melanzane-alla-parmigiana",
+      "name": "Melanzane alla parmigiana",
+      "category": "main",
+      "diets": [
+        "vegetarian"
+      ],
+      "servings": 6,
+      "kcal": 520,
+      "proteinG": 24,
+      "carbsG": 24,
+      "fatG": 36,
+      "ingredients": [
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 800.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Parmesan, grated",
+          "quantity": 150.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 182.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "misir-wat",
+      "name": "Misir wat",
+      "category": "main",
+      "diets": [
+        "vegetarian",
+        "vegan",
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 420,
+      "proteinG": 20,
+      "carbsG": 48,
+      "fatG": 18,
+      "ingredients": [
+        {
+          "foodName": "Lentils, boiled",
+          "quantity": 300.0,
+          "unit": "g",
+          "note": "rinsed"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 600.0,
+          "unit": "g",
+          "note": "very finely chopped"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 5.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 30.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 72.8,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "moqueca-baiana",
+      "name": "Moqueca baiana",
+      "category": "main",
+      "diets": [
+        "pescatarian",
+        "gluten-free"
+      ],
+      "servings": 5,
+      "kcal": 620,
+      "proteinG": 48,
+      "carbsG": 34,
+      "fatG": 32,
+      "ingredients": [
+        {
+          "foodName": "Tilapia, cooked",
+          "quantity": 1000.0,
+          "unit": "g",
+          "note": "firm fillet, in large pieces"
+        },
+        {
+          "foodName": "Shrimp, cooked",
+          "quantity": 300.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Oat milk",
+          "quantity": 400.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 6.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 400.0,
+          "unit": "g",
+          "note": "to serve"
+        }
+      ],
+      "omittedIngredientCount": 6
+    },
+    {
+      "id": "moussaka",
+      "name": "Moussaka",
+      "category": "main",
+      "diets": [],
+      "servings": 6,
+      "kcal": 580,
+      "proteinG": 28,
+      "carbsG": 34,
+      "fatG": 36,
+      "ingredients": [
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 2.0,
+          "unit": "serving",
+          "note": "thinly sliced"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 400.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 80.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Whole milk",
+          "quantity": 700.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 80.0,
+          "unit": "g",
+          "note": "grated"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 54.6,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 7
+    },
+    {
+      "id": "mucenici",
+      "name": "Mucenici",
+      "category": "dessert",
+      "diets": [
+        "vegetarian"
+      ],
+      "servings": 12,
+      "kcal": 420,
+      "proteinG": 9,
+      "carbsG": 60,
+      "fatG": 16,
+      "ingredients": [
+        {
+          "foodName": "Whole milk",
+          "quantity": 280.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Sugar, white",
+          "quantity": 100.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 100.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Honey",
+          "quantity": 200.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Walnuts",
+          "quantity": 200.0,
+          "unit": "g",
+          "note": "ground"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "mulgipuder",
+      "name": "Mulgipuder",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 560,
+      "proteinG": 18,
+      "carbsG": 64,
+      "fatG": 26,
+      "ingredients": [
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 1000.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Bacon, pan-fried",
+          "quantity": 250.0,
+          "unit": "g",
+          "note": "diced"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 50.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Whole milk",
+          "quantity": 150.0,
+          "unit": "ml"
+        }
+      ],
+      "omittedIngredientCount": 2
+    },
+    {
+      "id": "murgh-makhani",
+      "name": "Butter chicken",
+      "category": "main",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 640,
+      "proteinG": 42,
+      "carbsG": 18,
+      "fatG": 42,
+      "ingredients": [
+        {
+          "foodName": "Chicken breast, skinless, roasted",
+          "quantity": 700.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Yogurt, plain, whole milk",
+          "quantity": 150.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 20.0,
+          "unit": "g",
+          "note": "grated"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 400.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 60.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 7
+    },
+    {
+      "id": "muriwo-unedovi",
+      "name": "Muriwo unedovi",
+      "category": "side",
+      "diets": [
+        "vegetarian",
+        "vegan",
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 320,
+      "proteinG": 12,
+      "carbsG": 18,
+      "fatG": 24,
+      "ingredients": [
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 36.4,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 3
+    },
+    {
+      "id": "nasi-goreng",
+      "name": "Nasi goreng",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 620,
+      "proteinG": 34,
+      "carbsG": 70,
+      "fatG": 22,
+      "ingredients": [
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 600.0,
+          "unit": "g",
+          "note": "cold, from the day before"
+        },
+        {
+          "foodName": "Chicken breast, skinless, roasted",
+          "quantity": 250.0,
+          "unit": "g",
+          "note": "diced"
+        },
+        {
+          "foodName": "Shrimp, cooked",
+          "quantity": 150.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Cabbage, raw",
+          "quantity": 150.0,
+          "unit": "g",
+          "note": "shredded"
+        }
+      ],
+      "omittedIngredientCount": 6
+    },
+    {
+      "id": "nasi-lemak",
+      "name": "Nasi lemak",
+      "category": "breakfast",
+      "diets": [],
+      "servings": 5,
+      "kcal": 720,
+      "proteinG": 26,
+      "carbsG": 82,
+      "fatG": 34,
+      "ingredients": [
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 500.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Oat milk",
+          "quantity": 400.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 30.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 5.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Peanuts, dry-roasted",
+          "quantity": 100.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 5.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Cucumber, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 136.5,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 8
+    },
+    {
+      "id": "ndizi-nyama",
+      "name": "Ndizi na nyama",
+      "category": "main",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 620,
+      "proteinG": 34,
+      "carbsG": 56,
+      "fatG": 30,
+      "ingredients": [
+        {
+          "foodName": "Ground beef 85% lean, cooked",
+          "quantity": 600.0,
+          "unit": "g",
+          "note": "diced"
+        },
+        {
+          "foodName": "Oat milk",
+          "quantity": 400.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 30.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 45.5,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "ndole",
+      "name": "Ndolé",
+      "category": "main",
+      "diets": [],
+      "servings": 6,
+      "kcal": 680,
+      "proteinG": 42,
+      "carbsG": 34,
+      "fatG": 42,
+      "ingredients": [
+        {
+          "foodName": "Peanuts, dry-roasted",
+          "quantity": 300.0,
+          "unit": "g",
+          "note": "raw, shelled"
+        },
+        {
+          "foodName": "Ground beef 85% lean, cooked",
+          "quantity": 600.0,
+          "unit": "g",
+          "note": "diced"
+        },
+        {
+          "foodName": "Shrimp, cooked",
+          "quantity": 300.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 6.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 40.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 109.2,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "njeguski-steak",
+      "name": "Njeguški steak",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 820,
+      "proteinG": 54,
+      "carbsG": 44,
+      "fatG": 48,
+      "ingredients": [
+        {
+          "foodName": "Pork tenderloin, roasted",
+          "quantity": 800.0,
+          "unit": "g",
+          "note": "in thick pieces"
+        },
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 200.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 273.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 800.0,
+          "unit": "g",
+          "note": "to serve"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "oshi-plov-tajik",
+      "name": "Tajik oshi palav",
+      "category": "main",
+      "diets": [],
+      "servings": 6,
+      "kcal": 780,
+      "proteinG": 34,
+      "carbsG": 76,
+      "fatG": 38,
+      "ingredients": [
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 700.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Carrot, raw",
+          "quantity": 800.0,
+          "unit": "g",
+          "note": "in thick batons"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 2.0,
+          "unit": "serving",
+          "note": "whole heads"
+        },
+        {
+          "foodName": "Chickpeas, boiled",
+          "quantity": 100.0,
+          "unit": "g",
+          "note": "soaked overnight"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "pabellon-criollo",
+      "name": "Pabellón criollo",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 780,
+      "proteinG": 45,
+      "carbsG": 96,
+      "fatG": 24,
+      "ingredients": [
+        {
+          "foodName": "Ground beef 85% lean, cooked",
+          "quantity": 800.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Black beans, boiled",
+          "quantity": 350.0,
+          "unit": "g",
+          "note": "soaked overnight"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 350.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 5.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 400.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 72.8,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "pao-de-queijo",
+      "name": "Pão de queijo",
+      "category": "bread",
+      "diets": [
+        "vegetarian",
+        "gluten-free"
+      ],
+      "servings": 6,
+      "kcal": 380,
+      "proteinG": 12,
+      "carbsG": 40,
+      "fatG": 20,
+      "ingredients": [
+        {
+          "foodName": "Whole milk",
+          "quantity": 250.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 109.2,
+          "unit": "g"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 200.0,
+          "unit": "g",
+          "note": "grated"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "pastel-de-choclo",
+      "name": "Pastel de choclo",
+      "category": "main",
+      "diets": [],
+      "servings": 6,
+      "kcal": 620,
+      "proteinG": 34,
+      "carbsG": 62,
+      "fatG": 27,
+      "ingredients": [
+        {
+          "foodName": "Ground beef 85% lean, cooked",
+          "quantity": 700.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Chicken breast, skinless, roasted",
+          "quantity": 400.0,
+          "unit": "g",
+          "note": "poached, in pieces"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 3.0,
+          "unit": "serving",
+          "note": "boiled, halved"
+        },
+        {
+          "foodName": "Raisins",
+          "quantity": 60.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Whole milk",
+          "quantity": 250.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 60.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 6
+    },
+    {
+      "id": "peka",
+      "name": "Peka",
+      "category": "main",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 6,
+      "kcal": 820,
+      "proteinG": 54,
+      "carbsG": 48,
+      "fatG": 44,
+      "ingredients": [
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 1500.0,
+          "unit": "g",
+          "note": "in large wedges"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Carrot, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 10.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 136.5,
+          "unit": "g"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "pelekie-zirni-ar-speki",
+      "name": "Grey peas with speck",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 610,
+      "proteinG": 28,
+      "carbsG": 54,
+      "fatG": 30,
+      "ingredients": [
+        {
+          "foodName": "Green peas, boiled",
+          "quantity": 500.0,
+          "unit": "g",
+          "note": "soaked overnight"
+        },
+        {
+          "foodName": "Bacon, pan-fried",
+          "quantity": 300.0,
+          "unit": "g",
+          "note": "diced"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        }
+      ],
+      "omittedIngredientCount": 3
+    },
+    {
+      "id": "plokkfiskur",
+      "name": "Plokkfiskur",
+      "category": "main",
+      "diets": [
+        "pescatarian"
+      ],
+      "servings": 4,
+      "kcal": 480,
+      "proteinG": 38,
+      "carbsG": 42,
+      "fatG": 18,
+      "ingredients": [
+        {
+          "foodName": "Cod, cooked",
+          "quantity": 700.0,
+          "unit": "g",
+          "note": "fillet"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 700.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 60.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Whole milk",
+          "quantity": 500.0,
+          "unit": "ml"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "poulet-dg",
+      "name": "Poulet DG",
+      "category": "main",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 5,
+      "kcal": 720,
+      "proteinG": 42,
+      "carbsG": 62,
+      "fatG": 34,
+      "ingredients": [
+        {
+          "foodName": "Chicken breast, skinless, roasted",
+          "quantity": 1400.0,
+          "unit": "g",
+          "note": "in pieces"
+        },
+        {
+          "foodName": "Carrot, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 5.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 30.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 273.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 6
+    },
+    {
+      "id": "poulet-moambe",
+      "name": "Poulet moambé",
+      "category": "main",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 5,
+      "kcal": 720,
+      "proteinG": 44,
+      "carbsG": 44,
+      "fatG": 42,
+      "ingredients": [
+        {
+          "foodName": "Chicken breast, skinless, roasted",
+          "quantity": 1500.0,
+          "unit": "g",
+          "note": "in pieces"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 6.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 30.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Spinach, raw",
+          "quantity": 200.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 45.5,
+          "unit": "g"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 400.0,
+          "unit": "g",
+          "note": "to serve"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "ravitoto",
+      "name": "Ravitoto",
+      "category": "main",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 5,
+      "kcal": 700,
+      "proteinG": 32,
+      "carbsG": 38,
+      "fatG": 48,
+      "ingredients": [
+        {
+          "foodName": "Oat milk",
+          "quantity": 300.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 6.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 30.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 400.0,
+          "unit": "g",
+          "note": "to serve"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 36.4,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 3
+    },
+    {
+      "id": "risotto-alla-milanese",
+      "name": "Risotto alla milanese",
+      "category": "main",
+      "diets": [
+        "vegetarian"
+      ],
+      "servings": 4,
+      "kcal": 560,
+      "proteinG": 15,
+      "carbsG": 71,
+      "fatG": 22,
+      "ingredients": [
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 320.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving",
+          "note": "finely chopped"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 80.0,
+          "unit": "g",
+          "note": "cold"
+        },
+        {
+          "foodName": "Parmesan, grated",
+          "quantity": 80.0,
+          "unit": "g",
+          "note": "grated"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "roesti",
+      "name": "Rösti",
+      "category": "side",
+      "diets": [
+        "vegetarian",
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 420,
+      "proteinG": 8,
+      "carbsG": 48,
+      "fatG": 22,
+      "ingredients": [
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 1000.0,
+          "unit": "g",
+          "note": "boiled the day before"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 60.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Bacon, pan-fried",
+          "quantity": 100.0,
+          "unit": "g",
+          "note": "optional"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving",
+          "note": "optional"
+        },
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 100.0,
+          "unit": "g",
+          "note": "optional"
+        }
+      ],
+      "omittedIngredientCount": 1
+    },
+    {
+      "id": "rolex-uganda",
+      "name": "Rolex",
+      "category": "breakfast",
+      "diets": [
+        "vegetarian"
+      ],
+      "servings": 4,
+      "kcal": 560,
+      "proteinG": 20,
+      "carbsG": 52,
+      "fatG": 30,
+      "ingredients": [
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 8.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Cabbage, raw",
+          "quantity": 200.0,
+          "unit": "g",
+          "note": "finely shredded"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Carrot, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 109.2,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "romazava",
+      "name": "Romazava",
+      "category": "soup",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 5,
+      "kcal": 520,
+      "proteinG": 42,
+      "carbsG": 52,
+      "fatG": 16,
+      "ingredients": [
+        {
+          "foodName": "Ground beef 85% lean, cooked",
+          "quantity": 500.0,
+          "unit": "g",
+          "note": "diced"
+        },
+        {
+          "foodName": "Pork tenderloin, roasted",
+          "quantity": 300.0,
+          "unit": "g",
+          "note": "diced"
+        },
+        {
+          "foodName": "Spinach, raw",
+          "quantity": 300.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 5.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 30.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 400.0,
+          "unit": "g",
+          "note": "to serve"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 36.4,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 3
+    },
+    {
+      "id": "ropa-vieja",
+      "name": "Ropa vieja",
+      "category": "main",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 6,
+      "kcal": 620,
+      "proteinG": 46,
+      "carbsG": 48,
+      "fatG": 26,
+      "ingredients": [
+        {
+          "foodName": "Ground beef 85% lean, cooked",
+          "quantity": 1200.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving",
+          "note": "thinly sliced"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 6.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 400.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 54.6,
+          "unit": "g"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 600.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 6
+    },
+    {
+      "id": "sadza-ne-nyama",
+      "name": "Sadza ne nyama",
+      "category": "main",
+      "diets": [],
+      "servings": 5,
+      "kcal": 640,
+      "proteinG": 42,
+      "carbsG": 66,
+      "fatG": 24,
+      "ingredients": [
+        {
+          "foodName": "Ground beef 85% lean, cooked",
+          "quantity": 800.0,
+          "unit": "g",
+          "note": "on the bone, in pieces"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 45.5,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "saltah",
+      "name": "Saltah",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 620,
+      "proteinG": 38,
+      "carbsG": 44,
+      "fatG": 32,
+      "ingredients": [
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 300.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 6.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 150.0,
+          "unit": "g",
+          "note": "cooked"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 54.6,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "sancocho-colombiano",
+      "name": "Colombian sancocho",
+      "category": "soup",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 8,
+      "kcal": 620,
+      "proteinG": 44,
+      "carbsG": 68,
+      "fatG": 20,
+      "ingredients": [
+        {
+          "foodName": "Chicken breast, skinless, roasted",
+          "quantity": 2000.0,
+          "unit": "g",
+          "note": "free-range, in pieces"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 600.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 6.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 400.0,
+          "unit": "g",
+          "note": "to serve"
+        },
+        {
+          "foodName": "Avocado, raw",
+          "quantity": 2.0,
+          "unit": "serving",
+          "note": "to serve"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 54.6,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 8
+    },
+    {
+      "id": "sel-roti",
+      "name": "Sel roti",
+      "category": "bread",
+      "diets": [
+        "vegetarian",
+        "gluten-free"
+      ],
+      "servings": 8,
+      "kcal": 380,
+      "proteinG": 5,
+      "carbsG": 60,
+      "fatG": 14,
+      "ingredients": [
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 600.0,
+          "unit": "g",
+          "note": "soaked overnight"
+        },
+        {
+          "foodName": "Sugar, white",
+          "quantity": 150.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Whole milk",
+          "quantity": 150.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Banana, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 1365.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "selsko-meso",
+      "name": "Selsko meso",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 640,
+      "proteinG": 44,
+      "carbsG": 16,
+      "fatG": 40,
+      "ingredients": [
+        {
+          "foodName": "Pork tenderloin, roasted",
+          "quantity": 700.0,
+          "unit": "g",
+          "note": "diced"
+        },
+        {
+          "foodName": "Mushrooms, white, raw",
+          "quantity": 400.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 200.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 54.6,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 6
+    },
+    {
+      "id": "shakshuka-tunisienne",
+      "name": "Tunisian lablabi",
+      "category": "soup",
+      "diets": [
+        "vegetarian"
+      ],
+      "servings": 4,
+      "kcal": 520,
+      "proteinG": 22,
+      "carbsG": 60,
+      "fatG": 22,
+      "ingredients": [
+        {
+          "foodName": "Chickpeas, boiled",
+          "quantity": 400.0,
+          "unit": "g",
+          "note": "soaked overnight"
+        },
+        {
+          "foodName": "White bread",
+          "quantity": 300.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 8.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 72.8,
+          "unit": "g"
+        },
+        {
+          "foodName": "Tuna, canned in water, drained",
+          "quantity": 150.0,
+          "unit": "g",
+          "note": "optional"
+        }
+      ],
+      "omittedIngredientCount": 6
+    },
+    {
+      "id": "silpancho",
+      "name": "Silpancho",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 810,
+      "proteinG": 42,
+      "carbsG": 82,
+      "fatG": 36,
+      "ingredients": [
+        {
+          "foodName": "Ground beef 85% lean, cooked",
+          "quantity": 600.0,
+          "unit": "g",
+          "note": "thin cuts for pounding"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 300.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 600.0,
+          "unit": "g",
+          "note": "boiled and sliced"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 136.5,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "sopa-paraguaya",
+      "name": "Sopa paraguaya",
+      "category": "side",
+      "diets": [
+        "vegetarian",
+        "gluten-free"
+      ],
+      "servings": 8,
+      "kcal": 540,
+      "proteinG": 22,
+      "carbsG": 42,
+      "fatG": 32,
+      "ingredients": [
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 500.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Whole milk",
+          "quantity": 400.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 5.0,
+          "unit": "serving"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "souvlaki",
+      "name": "Souvlaki",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 660,
+      "proteinG": 46,
+      "carbsG": 32,
+      "fatG": 38,
+      "ingredients": [
+        {
+          "foodName": "Pork tenderloin, roasted",
+          "quantity": 800.0,
+          "unit": "g",
+          "note": "in 3 cm cubes"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 72.8,
+          "unit": "g"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Yogurt, plain, whole milk",
+          "quantity": 200.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Cucumber, raw",
+          "quantity": 0.5,
+          "unit": "serving",
+          "note": "grated and squeezed"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "stamppot",
+      "name": "Stamppot",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 780,
+      "proteinG": 30,
+      "carbsG": 62,
+      "fatG": 46,
+      "ingredients": [
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 1200.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Kale, raw",
+          "quantity": 500.0,
+          "unit": "g",
+          "note": "shredded fine"
+        },
+        {
+          "foodName": "Bacon, pan-fried",
+          "quantity": 150.0,
+          "unit": "g",
+          "note": "diced"
+        },
+        {
+          "foodName": "Whole milk",
+          "quantity": 150.0,
+          "unit": "ml",
+          "note": "hot"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 60.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "sukuma-wiki",
+      "name": "Sukuma wiki",
+      "category": "side",
+      "diets": [
+        "vegetarian",
+        "vegan",
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 180,
+      "proteinG": 6,
+      "carbsG": 14,
+      "fatG": 12,
+      "ingredients": [
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 45.5,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "tigadegena",
+      "name": "Tigadegena",
+      "category": "main",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 6,
+      "kcal": 780,
+      "proteinG": 44,
+      "carbsG": 54,
+      "fatG": 44,
+      "ingredients": [
+        {
+          "foodName": "Ground beef 85% lean, cooked",
+          "quantity": 900.0,
+          "unit": "g",
+          "note": "in pieces"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Cabbage, raw",
+          "quantity": 300.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Carrot, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 400.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 54.6,
+          "unit": "g"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 450.0,
+          "unit": "g",
+          "note": "to serve"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "tortilla-espanola",
+      "name": "Spanish tortilla",
+      "category": "main",
+      "diets": [
+        "vegetarian",
+        "gluten-free"
+      ],
+      "servings": 4,
+      "kcal": 430,
+      "proteinG": 15,
+      "carbsG": 30,
+      "fatG": 28,
+      "ingredients": [
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 600.0,
+          "unit": "g",
+          "note": "sliced thin"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 1.0,
+          "unit": "serving",
+          "note": "thinly sliced"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 6.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 364.0,
+          "unit": "g",
+          "note": "nearly all of it goes back in the bottle"
+        }
+      ],
+      "omittedIngredientCount": 1
+    },
+    {
+      "id": "trdelnik",
+      "name": "Trdelník",
+      "category": "dessert",
+      "diets": [
+        "vegetarian"
+      ],
+      "servings": 6,
+      "kcal": 470,
+      "proteinG": 9,
+      "carbsG": 68,
+      "fatG": 18,
+      "ingredients": [
+        {
+          "foodName": "Whole milk",
+          "quantity": 220.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Sugar, white",
+          "quantity": 60.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Butter, salted",
+          "quantity": 80.0,
+          "unit": "g",
+          "note": "softened"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Walnuts",
+          "quantity": 100.0,
+          "unit": "g",
+          "note": "finely chopped"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "tsuivan",
+      "name": "Tsuivan",
+      "category": "main",
+      "diets": [],
+      "servings": 4,
+      "kcal": 660,
+      "proteinG": 32,
+      "carbsG": 72,
+      "fatG": 28,
+      "ingredients": [
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Carrot, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Cabbage, raw",
+          "quantity": 250.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 4.0,
+          "unit": "serving"
+        }
+      ],
+      "omittedIngredientCount": 5
+    },
+    {
+      "id": "vitumbua",
+      "name": "Vitumbua",
+      "category": "breakfast",
+      "diets": [
+        "vegetarian",
+        "vegan",
+        "gluten-free"
+      ],
+      "servings": 8,
+      "kcal": 320,
+      "proteinG": 5,
+      "carbsG": 48,
+      "fatG": 12,
+      "ingredients": [
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 400.0,
+          "unit": "g",
+          "note": "soaked overnight"
+        },
+        {
+          "foodName": "Oat milk",
+          "quantity": 300.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Sugar, white",
+          "quantity": 120.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 109.2,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 4
+    },
+    {
+      "id": "vori-vori",
+      "name": "Vori vori",
+      "category": "soup",
+      "diets": [
+        "gluten-free"
+      ],
+      "servings": 6,
+      "kcal": 560,
+      "proteinG": 38,
+      "carbsG": 46,
+      "fatG": 24,
+      "ingredients": [
+        {
+          "foodName": "Chicken breast, skinless, roasted",
+          "quantity": 1400.0,
+          "unit": "g",
+          "note": "in pieces"
+        },
+        {
+          "foodName": "Cheddar cheese",
+          "quantity": 250.0,
+          "unit": "g",
+          "note": "grated"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 2.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Tomato, raw",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Carrot, raw",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 45.5,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 6
+    },
+    {
+      "id": "zanzibar-pilau",
+      "name": "Zanzibar pilau",
+      "category": "main",
+      "diets": [],
+      "servings": 6,
+      "kcal": 700,
+      "proteinG": 38,
+      "carbsG": 82,
+      "fatG": 26,
+      "ingredients": [
+        {
+          "foodName": "Ground beef 85% lean, cooked",
+          "quantity": 800.0,
+          "unit": "g",
+          "note": "diced"
+        },
+        {
+          "foodName": "White rice, cooked",
+          "quantity": 600.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Onion, raw",
+          "quantity": 4.0,
+          "unit": "serving",
+          "note": "thinly sliced"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 6.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 40.0,
+          "unit": "g"
+        },
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 3.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 91.0,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 6
+    },
+    {
+      "id": "zemiakove-placky",
+      "name": "Zemiakové placky",
+      "category": "snack",
+      "diets": [
+        "vegetarian"
+      ],
+      "servings": 4,
+      "kcal": 380,
+      "proteinG": 8,
+      "carbsG": 40,
+      "fatG": 22,
+      "ingredients": [
+        {
+          "foodName": "Potato, baked, with skin",
+          "quantity": 1000.0,
+          "unit": "g",
+          "note": "floury variety"
+        },
+        {
+          "foodName": "Garlic, raw",
+          "quantity": 6.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Egg, whole, hard-boiled",
+          "quantity": 1.0,
+          "unit": "serving"
+        },
+        {
+          "foodName": "Whole milk",
+          "quantity": 60.0,
+          "unit": "ml"
+        },
+        {
+          "foodName": "Olive oil",
+          "quantity": 136.5,
+          "unit": "g"
+        }
+      ],
+      "omittedIngredientCount": 3
+    }
+  ]
+}

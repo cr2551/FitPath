@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "dataset": {
+    "name": "Wikibooks Cookbook: Substitutions",
+    "sourceUrl": "https://en.wikibooks.org/wiki/Cookbook:Substitutions",
+    "revision": "oldid=4528639",
+    "retrievedAt": "2026-11-20",
+    "license": "CC BY-SA 4.0",
+    "attribution": "Wikibooks Cookbook contributors",
+    "changes": "Curated to substitutions whose ingredients map to FitPath's starter-food catalog; ratios were normalized to one original unit."
+  },
+  "substitutions": [
+    {
+      "fromFoodName": "Sugar, white",
+      "toFoodName": "Honey",
+      "ratio": 1.0,
+      "note": "For one cup sugar, use one cup liquid honey and reduce the recipe liquid by one cup."
+    },
+    {
+      "fromFoodName": "Honey",
+      "toFoodName": "Sugar, white",
+      "ratio": 1.25,
+      "note": "For one cup liquid honey, use 1¼ cups sugar and add ¼ cup water."
+    }
+  ]
+}
