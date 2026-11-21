@@ -33,8 +33,9 @@ final backupFilePickerProvider = Provider<Future<String?> Function()>(
 class BackupRestoreSection extends ConsumerStatefulWidget {
   const BackupRestoreSection({super.key, required this.onExportFirst});
 
-  /// Shares a backup of the current data.
-  final Future<void> Function() onExportFirst;
+  /// Shares a backup of the current data. Returns false if no backup was
+  /// made (it failed or the user dismissed the share sheet).
+  final Future<bool> Function() onExportFirst;
 
   @override
   ConsumerState<BackupRestoreSection> createState() =>
@@ -75,8 +76,19 @@ class _BackupRestoreSectionState extends ConsumerState<BackupRestoreSection> {
     final choice = await _confirm(backup);
     if (choice == null || !mounted) return;
     if (choice == _Choice.exportFirst) {
-      await widget.onExportFirst();
+      final exported = await widget.onExportFirst();
       if (!mounted) return;
+      if (!exported) {
+        messenger.showSnackBar(
+          const SnackBar(
+            content: Text(
+              'No backup of your current data was made, so nothing was '
+              'restored.',
+            ),
+          ),
+        );
+        return;
+      }
       if (await _confirm(backup, afterExport: true) != _Choice.restore) {
         return;
       }

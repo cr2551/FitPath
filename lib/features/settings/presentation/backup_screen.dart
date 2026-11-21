@@ -28,17 +28,20 @@ final appVersionProvider = FutureProvider<String>((ref) async {
 class BackupDelivery {
   const BackupDelivery();
 
-  /// Opens the share sheet with the file.
-  Future<void> share(String fileName, String json) async {
+  /// Opens the share sheet with the file. Returns false if the user dismissed
+  /// it. Some platforms can't tell, and report "unavailable": that counts as
+  /// shared.
+  Future<bool> share(String fileName, String json) async {
     final dir = await getTemporaryDirectory();
     final file = File('${dir.path}/$fileName');
     await file.writeAsString(json);
-    await SharePlus.instance.share(
+    final result = await SharePlus.instance.share(
       ShareParams(
         files: [XFile(file.path, mimeType: 'application/json')],
         subject: 'FitPath backup',
       ),
     );
+    return result.status != ShareResultStatus.dismissed;
   }
 
   /// Asks where to save the file. Returns false if the user cancelled.
@@ -67,7 +70,8 @@ class BackupScreen extends ConsumerStatefulWidget {
 class _BackupScreenState extends ConsumerState<BackupScreen> {
   var _busy = false;
 
-  Future<void> _export({required bool save}) async {
+  /// Returns true only if the backup left the app (saved or shared).
+  Future<bool> _export({required bool save}) async {
     setState(() => _busy = true);
     final messenger = ScaffoldMessenger.of(context);
     try {
@@ -77,17 +81,17 @@ class _BackupScreenState extends ConsumerState<BackupScreen> {
       final json = ExportService.encode(doc);
       final name = ExportService.fileName(doc.exportedAt);
       final delivery = ref.read(backupDeliveryProvider);
-      if (save) {
-        if (await delivery.save(name, json)) {
-          messenger.showSnackBar(SnackBar(content: Text('Saved $name')));
-        }
-      } else {
-        await delivery.share(name, json);
+      if (!save) return await delivery.share(name, json);
+      final saved = await delivery.save(name, json);
+      if (saved) {
+        messenger.showSnackBar(SnackBar(content: Text('Saved $name')));
       }
+      return saved;
     } on Object {
       messenger.showSnackBar(
         const SnackBar(content: Text("Couldn't create the backup.")),
       );
+      return false;
     } finally {
       if (mounted) setState(() => _busy = false);
     }

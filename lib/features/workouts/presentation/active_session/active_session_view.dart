@@ -361,7 +361,13 @@ class _SetRowState extends State<_SetRow> {
 
   void _changed() {
     final loadText = _load.text.trim(), repsText = _reps.text.trim();
-    final load = loadText.isEmpty ? null : Units.parseDecimal(loadText);
+    // The field shows the load rounded to 1 decimal; keep the stored value
+    // unless the user actually changed what is displayed.
+    final load = loadText == _fmt(widget.data.load)
+        ? widget.data.load
+        : loadText.isEmpty
+        ? null
+        : Units.parseDecimal(loadText);
     final reps = repsText.isEmpty ? null : int.tryParse(repsText);
     final loadBad =
         loadText.isNotEmpty &&

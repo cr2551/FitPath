@@ -248,10 +248,13 @@ void main() {
 class _FakeDelivery extends BackupDelivery {
   final shared = <(String, String)>[];
   final saved = <(String, String)>[];
+  var shareResult = true;
 
   @override
-  Future<void> share(String fileName, String json) async =>
-      shared.add((fileName, json));
+  Future<bool> share(String fileName, String json) async {
+    shared.add((fileName, json));
+    return shareResult;
+  }
 
   @override
   Future<bool> save(String fileName, String json) async {

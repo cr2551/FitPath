@@ -83,6 +83,32 @@ void main() {
     expect(find.text('How these are calculated'), findsOneWidget);
   });
 
+  testWidgets('coming back after changing inputs recomputes the suggestion', (
+    tester,
+  ) async {
+    final container = await _pump(tester);
+    final before = container.read(onboardingControllerProvider).targets!;
+
+    // Back to an earlier step, change the weight, then return.
+    await tester.pumpWidget(const SizedBox());
+    container.read(onboardingControllerProvider.notifier).setWeightKg(100);
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: container,
+        child: MaterialApp(
+          theme: AppTheme.light,
+          home: const EstimatesScreen(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final d = container.read(onboardingControllerProvider);
+    expect(d.targets!.calories, suggestedTargets(d)!.calories);
+    expect(d.targets!.calories, isNot(before.calories));
+    expect(find.text('${d.targets!.calories}'), findsOneWidget);
+  });
+
   testWidgets('editing marks the targets as set by the user', (tester) async {
     final container = await _pump(tester);
     await tester.enterText(find.widgetWithText(TextField, 'Calories'), '2000');
