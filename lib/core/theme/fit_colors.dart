@@ -64,6 +64,11 @@ class FitColors extends ThemeExtension<FitColors> {
     error: AppColors.darkError,
   );
 
+  /// Logo colors. The brand mark looks the same in light and dark mode.
+  static const logoTile = AppColors.ink;
+  static const logoMark = AppColors.background;
+  static const logoDot = AppColors.darkAccent;
+
   final Color background;
   final Color surface;
 

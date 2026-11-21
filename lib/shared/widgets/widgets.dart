@@ -6,6 +6,7 @@ export 'app_dropdown.dart';
 export 'card_footer_strip.dart';
 export 'date_strip.dart';
 export 'feedback.dart';
+export 'fit_path_logo.dart';
 export 'list_row.dart';
 export 'macro_calorie_ring.dart';
 export 'macro_legend_row.dart';
