@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/router/app_router.dart';
+import 'core/startup/splash_overlay.dart';
 import 'core/theme/app_theme.dart';
 import 'features/profile/application/profile_providers.dart';
 
@@ -19,6 +20,7 @@ class FitPathApp extends ConsumerWidget {
       darkTheme: AppTheme.dark,
       themeMode: ref.watch(themeModeProvider).value ?? ThemeMode.system,
       routerConfig: ref.watch(appRouterProvider),
+      builder: (context, child) => SplashOverlay(child: child!),
     );
   }
 }
