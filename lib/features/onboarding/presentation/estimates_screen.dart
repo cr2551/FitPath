@@ -30,17 +30,20 @@ class _EstimatesScreenState extends ConsumerState<EstimatesScreen> {
   @override
   void initState() {
     super.initState();
-    // Start from the suggestion the first time.
+    // Start from the suggestion, recomputed on every visit so going back and
+    // changing weight, activity or goals is reflected. Targets the user
+    // edited are kept.
     final d = ref.read(onboardingControllerProvider);
-    if (d.targets == null) {
+    if (!_editedByUser(d)) {
       final s = suggestedTargets(d);
-      if (s != null) {
-        Future.microtask(
-          () => ref.read(onboardingControllerProvider.notifier).setTargets(s),
-        );
-      }
+      Future.microtask(
+        () => ref.read(onboardingControllerProvider.notifier).setTargets(s),
+      );
     }
   }
+
+  static bool _editedByUser(OnboardingDraft d) =>
+      d.targets?.editedByUser ?? false;
 
   void _edit(DraftTargets Function(DraftTargets t) change) {
     final current =
@@ -87,7 +90,7 @@ class _EstimatesScreenState extends ConsumerState<EstimatesScreen> {
     final d = ref.watch(onboardingControllerProvider);
     final e = MetabolicCalculator.estimate(metabolicProfileOf(d));
     // Until initState's microtask stores it, show the suggestion directly.
-    final t = d.targets ?? suggestedTargets(d);
+    final t = _editedByUser(d) ? d.targets : suggestedTargets(d);
 
     return EstimatesView(
       fieldsKey: ValueKey(_resets),
