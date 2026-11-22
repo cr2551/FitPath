@@ -167,9 +167,9 @@ void main() {
     final db = createTestDatabase();
     final ids = (await tester.runAsync(() => _seed(db)))!;
     await tester.runAsync(
-      () => WorkoutRepository(
-        db.workoutDao,
-      ).updateSet(ids.set, weightKg: const Value(81.25)),
+      () =>
+          WorkoutRepository(db.workoutDao)
+              .updateSet(ids.set, weightKg: const Value(81.25)),
     );
     final semantics = tester.ensureSemantics();
     await _pump(tester, db);
