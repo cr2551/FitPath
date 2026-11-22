@@ -353,7 +353,7 @@ void main() {
         child: MaterialApp(
           theme: AppTheme.light,
           home: Scaffold(
-            body: BackupRestoreSection(onExportFirst: () async {}),
+            body: BackupRestoreSection(onExportFirst: () async => true),
           ),
         ),
       ),
@@ -382,6 +382,38 @@ void main() {
       () => target.select(target.foodEntries).get(),
     );
     expect(entries, hasLength(3));
+
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump(const Duration(seconds: 5));
+  });
+
+  testWidgets('restore section: no restore when the export first fails', (
+    tester,
+  ) async {
+    final valid = (await tester.runAsync(() => _export(source)))!;
+    final before = await tester.runAsync(() => _snapshot(target));
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          appDatabaseProvider.overrideWithValue(target),
+          backupFilePickerProvider.overrideWithValue(() async => valid),
+        ],
+        child: MaterialApp(
+          theme: AppTheme.light,
+          home: Scaffold(
+            body: BackupRestoreSection(onExportFirst: () async => false),
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('CHOOSE BACKUP FILE'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Export current first'));
+    await tester.pumpAndSettle();
+    expect(find.text('Replace your data?'), findsNothing);
+    expect(find.textContaining('nothing was restored'), findsOneWidget);
+    expect(await tester.runAsync(() => _snapshot(target)), before);
 
     await tester.pumpWidget(const SizedBox());
     await tester.pump(const Duration(seconds: 5));

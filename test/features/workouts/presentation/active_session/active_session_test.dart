@@ -161,6 +161,30 @@ void main() {
     await _dispose(tester, db);
   });
 
+  testWidgets('editing reps keeps a load with more than one decimal', (
+    tester,
+  ) async {
+    final db = createTestDatabase();
+    final ids = (await tester.runAsync(() => _seed(db)))!;
+    await tester.runAsync(
+      () =>
+          WorkoutRepository(db.workoutDao)
+              .updateSet(ids.set, weightKg: const Value(81.25)),
+    );
+    final semantics = tester.ensureSemantics();
+    await _pump(tester, db);
+    expect(find.text('81.3'), findsOneWidget);
+
+    await tester.enterText(_field('Bench press set 1 reps'), '6');
+    await _settle(tester);
+    final set = (await _sets(tester, db)).single;
+    expect(set.repetitions, 6);
+    expect(set.weightKg, 81.25);
+
+    semantics.dispose();
+    await _dispose(tester, db);
+  });
+
   testWidgets('add a bodyweight exercise from the picker, move and remove', (
     tester,
   ) async {
