@@ -117,6 +117,11 @@ class _FoodSearchScreenState extends ConsumerState<FoodSearchScreen> {
       onCreateRecipe: widget.pickIngredient
           ? null
           : () => context.push(Routes.newRecipe),
+      onRecipeIdeas: widget.pickIngredient
+          ? null
+          : () => context.push(
+              Routes.recipeIdeas(meal: widget.meal, date: widget.date),
+            ),
       onRetry: () => ref.invalidate(foodSearchProvider(q)),
     );
   }

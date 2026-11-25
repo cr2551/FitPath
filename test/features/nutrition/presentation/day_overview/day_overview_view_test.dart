@@ -57,6 +57,7 @@ Future<List<String>> _pump(WidgetTester tester, DayBody body) async {
         onPreviousWeek: () => calls.add('prev'),
         onNextWeek: () => calls.add('next'),
         onSearch: () => calls.add('search'),
+        onRecipeIdeas: () => calls.add('ideas'),
         onCreateCustomFood: () => calls.add('custom'),
         onAddToMeal: (m) => calls.add('add ${m.name}'),
         onEditEntry: (id) => calls.add('edit $id'),

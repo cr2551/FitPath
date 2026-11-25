@@ -73,6 +73,23 @@ class RecipeDetails {
   final List<IngredientLine> ingredients;
 }
 
+/// A recipe as listed (one serving), without its ingredients.
+class RecipeSummary {
+  const RecipeSummary({
+    required this.foodId,
+    required this.name,
+    required this.perServing,
+    this.bundledId,
+  });
+
+  final int foodId;
+  final String name;
+  final Nutrients perServing;
+
+  /// Set only for bundled recipes.
+  final String? bundledId;
+}
+
 /// Recipes are stored as a `food_items` row (`source = recipe`, nutrients
 /// per serving) plus a `recipes` row and its ingredients. Search, logging
 /// and diary snapshots therefore work unchanged, and editing a recipe never
@@ -86,6 +103,19 @@ class RecipeRepository {
   final FoodDao _foods;
 
   static const servingDescription = '1 serving';
+
+  /// Every recipe the user can log (bundled and own), unordered.
+  Stream<List<RecipeSummary>> watchAll() => _recipes.watchActiveRecipes().map(
+    (rows) => [
+      for (final (recipe, food) in rows)
+        RecipeSummary(
+          foodId: food.id,
+          name: food.name,
+          perServing: FoodRepository.foodNutrition(food).nutrients,
+          bundledId: recipe.bundledId,
+        ),
+    ],
+  );
 
   Future<RecipeDetails?> byFoodId(int foodId) async {
     final food = await _foods.foodById(foodId);
