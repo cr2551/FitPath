@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/database/app_database.dart';
+import '../../../../core/database/seed/substitution_seed.dart';
 import '../../../../core/router/routes.dart';
 import '../../../../core/utils/formatters.dart';
 import '../../../../core/utils/units.dart';
@@ -13,10 +14,12 @@ import '../../data/local/food_repository.dart';
 import '../../data/local/recipe_repository.dart';
 import '../../domain/nutrients.dart';
 import '../../domain/nutrition_math.dart';
+import '../../domain/substitution_math.dart';
 import '../search/food_labels.dart';
 import '../search/food_search_screen.dart';
 import 'recipe_view.dart';
 import 'recipe_view_data.dart';
+import 'substitution_sheet.dart';
 
 final _recipeProvider = FutureProvider.autoDispose.family<RecipeDetails, int>((
   ref,
@@ -38,7 +41,7 @@ class _Line {
   _Line(this.key, this.food, this.quantityText, this.unit);
 
   final int key;
-  final FoodItem food;
+  FoodItem food;
   String quantityText;
   QuantityUnit unit;
 
@@ -155,7 +158,123 @@ class _RecipeScreenState extends ConsumerState<RecipeScreen> {
     );
   }
 
+  /// Bundled substitutions whose original is [food], matched by name.
+  List<BundledSubstitution> _substitutionsFor(FoodItem food) {
+    final name = food.name.trim().toLowerCase();
+    return [
+      for (final s
+          in ref.read(substitutionsProvider).value ??
+              const <BundledSubstitution>[])
+        if (s.fromFoodName.toLowerCase() == name) s,
+    ];
+  }
+
+  Future<FoodItem?> _foodNamed(String name) async {
+    final found = await ref.read(foodRepositoryProvider).searchLocal(name);
+    final key = name.toLowerCase();
+    return found.where((f) => f.name.trim().toLowerCase() == key).firstOrNull;
+  }
+
+  Future<void> _swap(int key) async {
+    final line = _line(key);
+    final servings = _servingCount;
+    final original = line?.nutrients;
+    if (line == null || servings == null || original == null) return;
+
+    final options = <(SubstitutionOptionData, FoodItem, double)>[];
+    for (final s in _substitutionsFor(line.food)) {
+      final food = await _foodNamed(s.toFoodName);
+      if (food == null) continue;
+      final quantity = SubstitutionMath.scaledQuantity(line.quantity!, s.ratio);
+      final scaled = NutritionMath.scale(
+        FoodRepository.foodNutrition(food),
+        quantity,
+        line.unit,
+      );
+      // The substitute must be measurable in the ingredient's unit.
+      if (scaled == null) continue;
+      final diff = SubstitutionMath.perServingDifference(
+        original,
+        scaled,
+        servings,
+      );
+      options.add((
+        SubstitutionOptionData(
+          name: food.name,
+          amount: [
+            '${_number(quantity)} ${_unitLabel(line.unit)}',
+            if (s.ratio != 1) '(${_number(s.ratio)} × the amount)',
+          ].join(' '),
+          note: s.note,
+          differences: [
+            _difference(diff.kcal, 'kcal', Formatters.integer),
+            _difference(diff.proteinG, 'protein', Formatters.grams),
+            _difference(diff.carbsG, 'carbs', Formatters.grams),
+            _difference(diff.fatG, 'fat', Formatters.grams),
+          ],
+        ),
+        food,
+        quantity,
+      ));
+    }
+    if (!mounted) return;
+    final messenger = ScaffoldMessenger.of(context);
+    if (options.isEmpty) {
+      messenger.showSnackBar(
+        const SnackBar(content: Text('No substitute foods are available.')),
+      );
+      return;
+    }
+    final picked = await showSubstitutionSheet(
+      context,
+      ingredient: line.food.name,
+      options: [for (final o in options) o.$1],
+    );
+    if (picked == null || !mounted) return;
+
+    final (_, food, quantity) = options[picked];
+    final before = (line.food, line.quantityText, line.unit);
+    setState(() {
+      line.food = food;
+      line.quantityText = _number(quantity);
+    });
+    messenger
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text('Swapped ${before.$1.name} for ${food.name}'),
+          action: SnackBarAction(
+            label: 'UNDO',
+            onPressed: () {
+              if (!mounted || !_lines.contains(line)) return;
+              setState(() {
+                line.food = before.$1;
+                line.quantityText = before.$2;
+                line.unit = before.$3;
+              });
+            },
+          ),
+        ),
+      );
+  }
+
+  /// "+12 kcal", "−3 g protein", "fat unknown".
+  static String _difference(
+    double? value,
+    String name,
+    String Function(double) format,
+  ) {
+    if (value == null) return '$name unknown';
+    final amount = format(value.abs());
+    final sign = value > 0 ? '+' : (value < 0 ? '−' : '±');
+    return '$sign$amount $name';
+  }
+
   void _onAction(int key, IngredientAction action) {
+    if (action == IngredientAction.swap) {
+      _swap(key);
+      return;
+    }
     final i = _lines.indexWhere((l) => l.key == key);
     if (i < 0) return;
     setState(() {
@@ -229,6 +348,8 @@ class _RecipeScreenState extends ConsumerState<RecipeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Rebuild once the bundled substitutions have loaded.
+    ref.watch(substitutionsProvider);
     final RecipeBody body;
     if (!_isEdit) {
       if (!_initialized) _init(null);
@@ -315,6 +436,10 @@ class _RecipeScreenState extends ConsumerState<RecipeScreen> {
             },
             canMoveUp: i > 0,
             canMoveDown: i < _lines.length - 1,
+            canSwap:
+                servings != null &&
+                l.nutrients != null &&
+                _substitutionsFor(l.food).isNotEmpty,
           ),
       ],
       perServing: perServing == null

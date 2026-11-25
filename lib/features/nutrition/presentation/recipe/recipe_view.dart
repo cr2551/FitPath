@@ -207,6 +207,11 @@ class _IngredientRow extends StatelessWidget {
               tooltip: 'Ingredient options',
               onSelected: (a) => view.onIngredientAction(row.key, a),
               itemBuilder: (_) => [
+                if (row.canSwap)
+                  const PopupMenuItem(
+                    value: IngredientAction.swap,
+                    child: Text('Swap'),
+                  ),
                 PopupMenuItem(
                   value: IngredientAction.moveUp,
                   enabled: row.canMoveUp,

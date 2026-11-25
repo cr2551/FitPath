@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/database/database_provider.dart';
 import '../../../core/database/seed/recipe_seed.dart';
+import '../../../core/database/seed/substitution_seed.dart';
 import '../data/local/recipe_repository.dart';
 
 final recipeRepositoryProvider = Provider<RecipeRepository>((ref) {
@@ -29,3 +30,10 @@ final bundledRecipeTagsProvider = FutureProvider<Map<String, RecipeTags>>((
       r.id: (category: r.category, diets: r.diets),
   };
 });
+
+/// The bundled ingredient substitutions (Wikibooks Cookbook, CC BY-SA 4.0).
+final substitutionsProvider = FutureProvider<List<BundledSubstitution>>(
+  (ref) async => parseSubstitutionCatalog(
+    await rootBundle.loadString(substitutionCatalogAsset),
+  ),
+);

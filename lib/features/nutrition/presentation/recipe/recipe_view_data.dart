@@ -2,7 +2,7 @@
 enum RecipeField { name, servings }
 
 /// What can be done to one ingredient from its menu.
-enum IngredientAction { moveUp, moveDown, remove }
+enum IngredientAction { swap, moveUp, moveDown, remove }
 
 /// One ingredient row. Plain strings only.
 class IngredientRowData {
@@ -17,6 +17,7 @@ class IngredientRowData {
     required this.kcal,
     required this.canMoveUp,
     required this.canMoveDown,
+    this.canSwap = false,
   });
 
   /// Stable while the row exists, also across reordering.
@@ -36,6 +37,9 @@ class IngredientRowData {
   final String kcal;
   final bool canMoveUp;
   final bool canMoveDown;
+
+  /// The food has known substitutions and the amount is valid.
+  final bool canSwap;
 }
 
 /// One per-serving nutrient, already formatted ("12 g", "—").
