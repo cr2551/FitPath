@@ -1,0 +1,146 @@
+{
+  "format": "fitpath-backup",
+  "format_version": 1,
+  "app_version": "1.0.0",
+  "exported_at": "2026-11-25T00:34:20.666084Z",
+  "tables": {
+    "app_settings": [
+      {
+        "id": 1,
+        "unitSystem": "metric",
+        "themeMode": "system"
+      }
+    ],
+    "user_profile": [
+      {
+        "id": 1,
+        "ageYears": 34,
+        "heightCm": 172.0,
+        "sex": "female",
+        "activityLevel": null,
+        "trainingExperience": null,
+        "trainingFrequencyPerWeek": null,
+        "createdAt": "2026-11-24T18:34:20.000",
+        "updatedAt": "2026-11-24T18:34:20.000"
+      }
+    ],
+    "fitness_goals": [
+      {
+        "id": 1,
+        "goalType": "maintainWeight",
+        "isPrimary": true,
+        "targetWeightKg": null,
+        "targetDate": null,
+        "isActive": true,
+        "createdAt": "2026-11-24T18:34:20.000",
+        "completedAt": null
+      }
+    ],
+    "weight_entries": [
+      {
+        "id": 1,
+        "weightKg": 71.4,
+        "recordedAt": "2026-10-20T12:00:00.000",
+        "notes": null
+      }
+    ],
+    "nutrition_targets": [
+      {
+        "id": 1,
+        "calories": 2300,
+        "proteinG": 120.0,
+        "carbsG": null,
+        "fatG": null,
+        "effectiveFrom": "2026-10-20",
+        "source": "user",
+        "createdAt": "2026-11-24T18:34:20.000"
+      }
+    ],
+    "food_items": [
+      {
+        "id": 1,
+        "name": "Lentil soup (v1 fixture)",
+        "brand": null,
+        "referenceBasis": "per100g",
+        "servingSize": null,
+        "servingUnit": null,
+        "servingDescription": null,
+        "kcal": 90.0,
+        "proteinG": 6.0,
+        "carbsG": 12.0,
+        "fatG": 2.0,
+        "fiberG": null,
+        "sugarG": null,
+        "sodiumMg": null,
+        "source": "custom",
+        "externalId": null,
+        "isActive": true,
+        "createdAt": "2026-11-24T18:34:20.000",
+        "updatedAt": "2026-11-24T18:34:20.000"
+      }
+    ],
+    "food_entries": [
+      {
+        "id": 1,
+        "foodItemId": 1,
+        "quantity": 350.0,
+        "quantityUnit": "g",
+        "mealType": "lunch",
+        "consumedAt": "2026-10-20T12:00:00.000",
+        "localDate": "2026-10-20",
+        "nameSnapshot": "Lentil soup (v1 fixture)",
+        "brandSnapshot": null,
+        "kcal": 315.0,
+        "proteinG": 21.0,
+        "carbsG": 42.0,
+        "fatG": 7.0,
+        "fiberG": null,
+        "sugarG": null,
+        "sodiumMg": null
+      }
+    ],
+    "exercises": [
+      {
+        "id": 1,
+        "name": "Goblet squat (v1 fixture)",
+        "muscleGroup": "legs",
+        "equipment": null,
+        "description": null,
+        "isBodyweight": false,
+        "isCustom": true,
+        "deletedAt": null
+      }
+    ],
+    "workout_sessions": [
+      {
+        "id": 1,
+        "name": "v1 legs",
+        "startedAt": "2026-10-20T12:00:00.000",
+        "completedAt": "2026-10-20T12:00:00.000",
+        "notes": null,
+        "status": "completed"
+      }
+    ],
+    "workout_exercises": [
+      {
+        "id": 1,
+        "sessionId": 1,
+        "exerciseId": 1,
+        "exerciseNameSnapshot": "Goblet squat (v1 fixture)",
+        "orderIndex": 0
+      }
+    ],
+    "workout_sets": [
+      {
+        "id": 1,
+        "workoutExerciseId": 1,
+        "setNumber": 1,
+        "repetitions": 10,
+        "weightKg": 24.0,
+        "completed": true,
+        "notes": null
+      }
+    ],
+    "dashboard_cards": []
+  }
+}
