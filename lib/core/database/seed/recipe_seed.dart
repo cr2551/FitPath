@@ -24,6 +24,8 @@ class BundledRecipe {
     required this.carbsG,
     required this.fatG,
     required this.ingredients,
+    this.category,
+    this.diets = const [],
   });
 
   final String id;
@@ -35,6 +37,12 @@ class BundledRecipe {
   final double carbsG;
   final double fatG;
   final List<BundledRecipeIngredient> ingredients;
+
+  /// E.g. "main", "soup"; from the dataset.
+  final String? category;
+
+  /// E.g. "vegetarian", "gluten-free"; from the dataset.
+  final List<String> diets;
 }
 
 class BundledRecipeIngredient {
@@ -175,8 +183,12 @@ BundledRecipe _parseRecipe(
   if (ingredients is! List || ingredients.isEmpty) {
     throw FormatException('Recipe $id has no ingredients');
   }
+  final category = row['category'];
+  final diets = row['diets'];
   return BundledRecipe(
     id: id,
+    category: category is String && category.isNotEmpty ? category : null,
+    diets: diets is List ? [...diets.whereType<String>()] : const [],
     name: string('name'),
     servings: servings,
     sourceVersion: sourceVersion,

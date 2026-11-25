@@ -122,6 +122,7 @@ class _DayOverviewScreenState extends ConsumerState<DayOverviewScreen> {
       onPreviousWeek: () => _shiftWeek(-1),
       onNextWeek: () => _shiftWeek(1),
       onSearch: () => context.push(Routes.foodSearch(date: _selected)),
+      onRecipeIdeas: () => context.push(Routes.recipeIdeas(date: _selected)),
       onCreateCustomFood: () => context.push(Routes.newCustomFood),
       onAddToMeal: (meal) =>
           context.push(Routes.foodSearch(meal: meal, date: _selected)),

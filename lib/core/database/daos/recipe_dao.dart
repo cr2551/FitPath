@@ -19,6 +19,18 @@ class RecipeDao extends DatabaseAccessor<AppDatabase> with _$RecipeDaoMixin {
     recipes,
   )..where((r) => r.bundledId.equals(bundledId))).getSingleOrNull();
 
+  /// Every recipe whose food is active (not deleted), with that food.
+  Stream<List<(Recipe, FoodItem)>> watchActiveRecipes() {
+    final query = select(recipes).join([
+      innerJoin(foodItems, foodItems.id.equalsExp(recipes.foodItemId)),
+    ])..where(foodItems.isActive.equals(true));
+    return query.watch().map(
+      (rows) => [
+        for (final r in rows) (r.readTable(recipes), r.readTable(foodItems)),
+      ],
+    );
+  }
+
   Future<int> insertRecipe(RecipesCompanion recipe) =>
       into(recipes).insert(recipe);
 

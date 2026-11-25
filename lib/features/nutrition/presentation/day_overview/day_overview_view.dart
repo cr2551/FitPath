@@ -18,6 +18,7 @@ class DayOverviewView extends StatelessWidget {
     required this.onPreviousWeek,
     required this.onNextWeek,
     required this.onSearch,
+    required this.onRecipeIdeas,
     required this.onCreateCustomFood,
     required this.onAddToMeal,
     required this.onEditEntry,
@@ -31,6 +32,7 @@ class DayOverviewView extends StatelessWidget {
   final VoidCallback onPreviousWeek;
   final VoidCallback onNextWeek;
   final VoidCallback onSearch;
+  final VoidCallback onRecipeIdeas;
   final VoidCallback onCreateCustomFood;
   final ValueChanged<MealType> onAddToMeal;
   final ValueChanged<int> onEditEntry;
@@ -80,7 +82,15 @@ class DayOverviewView extends StatelessWidget {
                 prefixIcon: Icon(Icons.search),
               ),
             ),
-            const SizedBox(height: AppSpacing.md),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                onPressed: onRecipeIdeas,
+                icon: const Icon(Icons.lightbulb_outline, size: 16),
+                label: const Text('Recipe ideas'),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.sm),
             ...switch (data.body) {
               DayLoading() => const [
                 Padding(

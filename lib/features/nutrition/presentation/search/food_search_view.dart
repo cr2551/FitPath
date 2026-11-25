@@ -16,6 +16,7 @@ class FoodSearchView extends StatelessWidget {
     required this.onCreateCustomFood,
     required this.onRetry,
     this.onCreateRecipe,
+    this.onRecipeIdeas,
     this.target,
   });
 
@@ -30,6 +31,9 @@ class FoodSearchView extends StatelessWidget {
 
   /// Null hides "Create recipe".
   final VoidCallback? onCreateRecipe;
+
+  /// Null hides "Recipe ideas".
+  final VoidCallback? onRecipeIdeas;
   final VoidCallback onRetry;
 
   @override
@@ -131,6 +135,12 @@ class FoodSearchView extends StatelessWidget {
           onPressed: onCreateRecipe,
           icon: const Icon(Icons.add, size: 16),
           label: const Text('Create recipe'),
+        ),
+      if (onRecipeIdeas != null)
+        TextButton.icon(
+          onPressed: onRecipeIdeas,
+          icon: const Icon(Icons.lightbulb_outline, size: 16),
+          label: const Text('Recipe ideas'),
         ),
     ],
   );
